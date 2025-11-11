@@ -386,22 +386,6 @@
         }
 
         // Background slider functionality
-        let currentBgSlide = 0;
-        const bgSlides = document.querySelectorAll('#background-slider .slider-image');
-        const totalBgSlides = bgSlides.length;
-
-        function showBgSlide(index) {
-            bgSlides.forEach(slide => slide.classList.remove('active'));
-            bgSlides[index].classList.add('active');
-        }
-
-        function nextBgSlide() {
-            currentBgSlide = (currentBgSlide + 1) % totalBgSlides;
-            showBgSlide(currentBgSlide);
-        }
-
-        // Auto slide background every 2 seconds
-        setInterval(nextBgSlide, 2000);
     </script>
 
     <!-- Logo Modal -->
