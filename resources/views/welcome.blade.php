@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PT ALMUBARAK WISATA INTERNATIONAL</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('public/images/logo.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -15,7 +15,7 @@
 <body class="bg-green-50 text-gray-900" onload="AOS.init();">
     <!-- Background Slider -->
     <div id="background-slider" class="fixed inset-0 z-0">
-        <div class="slider-image active" style="background-image: url('{{ asset('images/baground.png') }}');"></div>
+        <div class="slider-image active" style="background-image: url('{{ asset('public/images/baground.png') }}');"></div>
         <div class="slider-image" style="background-image: url('{{ asset('images/baground2.jpg') }}');"></div>
         <div class="slider-image" style="background-image: url('{{ asset('images/baground3.jpg') }}');"></div>
     </div>
