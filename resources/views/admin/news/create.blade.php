@@ -1,70 +1,62 @@
 @extends('admin.layout')
 
-@section('title', 'Tambah Berita')
-
 @section('content')
-<div class="max-w-4xl mx-auto">
-    <div class="bg-white rounded-lg shadow-md p-6">
-        <h1 class="text-2xl font-bold text-gray-900 mb-6">Tambah Berita Baru</h1>
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Tambah Berita Baru</h1>
 
-        <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
+        <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6">
             @csrf
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul Berita</label>
-                    <input type="text" name="title" id="title" value="{{ old('title') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                    @error('title')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
-                    <select name="category" id="category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <option value="Umroh" {{ old('category') == 'Umroh' ? 'selected' : '' }}>Umroh</option>
-                        <option value="Haji" {{ old('category') == 'Haji' ? 'selected' : '' }}>Haji</option>
-                        <option value="Wisata" {{ old('category') == 'Wisata' ? 'selected' : '' }}>Wisata</option>
-                    </select>
-                    @error('category')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="mt-6">
-                <label for="content" class="block text-sm font-medium text-gray-700 mb-2">Konten Berita</label>
-                <textarea name="content" id="content" rows="8" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>{{ old('content') }}</textarea>
-                @error('content')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul Berita</label>
+                <input type="text" name="title" id="title" value="{{ old('title') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                @error('title')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div>
-                    <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Gambar (Opsional)</label>
-                    <input type="file" name="image" id="image" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-                    @error('image')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="published_at" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Publikasi (Opsional)</label>
-                    <input type="date" name="published_at" id="published_at" value="{{ old('published_at') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-                    @error('published_at')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+            <div class="mb-4">
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
+                <select name="category" id="category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="wisata" {{ old('category') == 'wisata' ? 'selected' : '' }}>Wisata</option>
+                    <option value="bisnis" {{ old('category') == 'bisnis' ? 'selected' : '' }}>Bisnis</option>
+                    <option value="berita" {{ old('category') == 'berita' ? 'selected' : '' }}>Berita</option>
+                </select>
+                @error('category')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mt-6 flex justify-end space-x-3">
-                <a href="{{ route('admin.news.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
-                    Batal
-                </a>
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
-                    Simpan Berita
-                </button>
+            <div class="mb-4">
+                <label for="content" class="block text-sm font-medium text-gray-700 mb-2">Konten Berita</label>
+                <textarea name="content" id="content" rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ old('content') }}</textarea>
+                @error('content')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Gambar/Foto (Opsional)</label>
+                <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p class="text-sm text-gray-500 mt-1">Format yang didukung: JPG, PNG, GIF, PDF, DOC, DOCX. Maksimal 5MB.</p>
+                @error('image')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="published_at" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Publikasi (Opsional)</label>
+                <input type="date" name="published_at" id="published_at" value="{{ old('published_at') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @error('published_at')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <a href="{{ route('admin.news.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">Batal</a>
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Simpan</button>
             </div>
         </form>
     </div>
