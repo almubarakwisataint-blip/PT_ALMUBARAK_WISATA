@@ -1,4 +1,0 @@
-- [x] Update AdminController.php to store news and business images directly in storage/app/public without subfolders
-- [x] Update TeamController.php to store team images directly in storage/app/public without subfolders
-- [ ] Test uploading images for news, business, and team to verify direct storage
-- [ ] Ensure web access via /storage/filename works correctly

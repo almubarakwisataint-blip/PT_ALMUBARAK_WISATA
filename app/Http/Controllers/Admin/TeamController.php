@@ -41,7 +41,7 @@ class TeamController extends Controller
         $data = $request->only(['name', 'position', 'description']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('', 'public');
+            $data['image'] = $request->file('image')->store('team', 'public');
         }
 
         Team::create($data);
@@ -87,7 +87,7 @@ class TeamController extends Controller
             if ($team->image && Storage::disk('public')->exists($team->image)) {
                 Storage::disk('public')->delete($team->image);
             }
-            $data['image'] = $request->file('image')->store('', 'public');
+            $data['image'] = $request->file('image')->store('team', 'public');
         }
 
         $team->update($data);
