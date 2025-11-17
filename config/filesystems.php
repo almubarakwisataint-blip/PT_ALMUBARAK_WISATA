@@ -49,7 +49,7 @@ return [
 
         'direct_storage' => [
             'driver' => 'local',
-            'root' => storage_path(),
+            'root' => base_path('storage'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
