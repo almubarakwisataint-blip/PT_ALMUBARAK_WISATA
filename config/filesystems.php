@@ -47,10 +47,11 @@ return [
             'report' => false,
         ],
 
-        'news' => [
+        'direct_storage' => [
             'driver' => 'local',
-            'root' => storage_path('news'),
-            'visibility' => 'private',
+            'root' => storage_path(),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
             'throw' => false,
             'report' => false,
         ],

@@ -70,8 +70,8 @@ class AdminController extends Controller
         if ($request->hasFile('image')) {
             $category = $request->category;
             // Pastikan folder berdasarkan kategori ada
-            Storage::disk('public')->makeDirectory($category);
-            $data['image'] = $request->file('image')->store($category, 'public');
+            Storage::disk('direct_storage')->makeDirectory($category);
+            $data['image'] = $request->file('image')->store($category, 'direct_storage');
         }
 
         News::create($data);
@@ -98,12 +98,12 @@ class AdminController extends Controller
 
         if ($request->hasFile('image')) {
             if ($news->image) {
-                Storage::disk('public')->delete($news->image);
+                Storage::disk('direct_storage')->delete($news->image);
             }
             $category = $request->category;
             // Pastikan folder berdasarkan kategori ada
-            Storage::disk('public')->makeDirectory($category);
-            $data['image'] = $request->file('image')->store($category, 'public');
+            Storage::disk('direct_storage')->makeDirectory($category);
+            $data['image'] = $request->file('image')->store($category, 'direct_storage');
         }
 
         $news->update($data);
@@ -114,7 +114,7 @@ class AdminController extends Controller
     public function newsDestroy(News $news)
     {
         if ($news->image) {
-            Storage::disk('public')->delete($news->image);
+            Storage::disk('direct_storage')->delete($news->image);
         }
         $news->delete();
 
@@ -149,8 +149,8 @@ class AdminController extends Controller
         if ($request->hasFile('image')) {
             $type = $request->type;
             // Pastikan folder berdasarkan type ada
-            Storage::disk('public')->makeDirectory($type);
-            $data['image'] = $request->file('image')->store($type, 'public');
+            Storage::disk('direct_storage')->makeDirectory($type);
+            $data['image'] = $request->file('image')->store($type, 'direct_storage');
         }
 
         Business::create($data);
@@ -178,12 +178,12 @@ class AdminController extends Controller
 
         if ($request->hasFile('image')) {
             if ($business->image) {
-                Storage::disk('public')->delete($business->image);
+                Storage::disk('direct_storage')->delete($business->image);
             }
             $type = $request->type;
             // Pastikan folder berdasarkan type ada
-            Storage::disk('public')->makeDirectory($type);
-            $data['image'] = $request->file('image')->store($type, 'public');
+            Storage::disk('direct_storage')->makeDirectory($type);
+            $data['image'] = $request->file('image')->store($type, 'direct_storage');
         }
 
         $business->update($data);
@@ -194,7 +194,7 @@ class AdminController extends Controller
     public function businessDestroy(Business $business)
     {
         if ($business->image) {
-            Storage::disk('public')->delete($business->image);
+            Storage::disk('direct_storage')->delete($business->image);
         }
         $business->delete();
 

@@ -43,8 +43,8 @@ class TeamController extends Controller
         if ($request->hasFile('image')) {
             $position = $request->position;
             // Pastikan folder berdasarkan position ada
-            Storage::disk('public')->makeDirectory($position);
-            $data['image'] = $request->file('image')->store($position, 'public');
+            Storage::disk('direct_storage')->makeDirectory($position);
+            $data['image'] = $request->file('image')->store($position, 'direct_storage');
         }
 
         Team::create($data);
@@ -87,13 +87,13 @@ class TeamController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($team->image && Storage::disk('public')->exists($team->image)) {
-                Storage::disk('public')->delete($team->image);
+            if ($team->image && Storage::disk('direct_storage')->exists($team->image)) {
+                Storage::disk('direct_storage')->delete($team->image);
             }
             $position = $request->position;
             // Pastikan folder berdasarkan position ada
-            Storage::disk('public')->makeDirectory($position);
-            $data['image'] = $request->file('image')->store($position, 'public');
+            Storage::disk('direct_storage')->makeDirectory($position);
+            $data['image'] = $request->file('image')->store($position, 'direct_storage');
         }
 
         $team->update($data);
@@ -109,8 +109,8 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
 
         // Delete image if exists
-        if ($team->image && Storage::disk('public')->exists($team->image)) {
-            Storage::disk('public')->delete($team->image);
+        if ($team->image && Storage::disk('direct_storage')->exists($team->image)) {
+            Storage::disk('direct_storage')->delete($team->image);
         }
 
         $team->delete();
