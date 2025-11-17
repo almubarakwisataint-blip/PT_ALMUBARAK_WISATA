@@ -68,7 +68,10 @@ class AdminController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $category = $request->category;
+            // Pastikan folder berdasarkan kategori ada
+            Storage::disk('public')->makeDirectory($category);
+            $data['image'] = $request->file('image')->store($category, 'public');
         }
 
         News::create($data);
@@ -97,7 +100,10 @@ class AdminController extends Controller
             if ($news->image) {
                 Storage::disk('public')->delete($news->image);
             }
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $category = $request->category;
+            // Pastikan folder berdasarkan kategori ada
+            Storage::disk('public')->makeDirectory($category);
+            $data['image'] = $request->file('image')->store($category, 'public');
         }
 
         $news->update($data);
@@ -141,7 +147,10 @@ class AdminController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('bisnis', 'public');
+            $type = $request->type;
+            // Pastikan folder berdasarkan type ada
+            Storage::disk('public')->makeDirectory($type);
+            $data['image'] = $request->file('image')->store($type, 'public');
         }
 
         Business::create($data);
@@ -171,7 +180,10 @@ class AdminController extends Controller
             if ($business->image) {
                 Storage::disk('public')->delete($business->image);
             }
-            $data['image'] = $request->file('image')->store('bisnis', 'public');
+            $type = $request->type;
+            // Pastikan folder berdasarkan type ada
+            Storage::disk('public')->makeDirectory($type);
+            $data['image'] = $request->file('image')->store($type, 'public');
         }
 
         $business->update($data);
