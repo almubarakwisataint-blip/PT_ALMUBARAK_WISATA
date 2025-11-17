@@ -68,7 +68,7 @@ class AdminController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $data['image'] = $request->file('image')->store('berita', 'public');
         }
 
         News::create($data);
@@ -97,7 +97,7 @@ class AdminController extends Controller
             if ($news->image) {
                 Storage::disk('public')->delete($news->image);
             }
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $data['image'] = $request->file('image')->store('berita', 'public');
         }
 
         $news->update($data);
@@ -141,7 +141,7 @@ class AdminController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('business', 'public');
+            $data['image'] = $request->file('image')->store('bisnis', 'public');
         }
 
         Business::create($data);
@@ -171,7 +171,7 @@ class AdminController extends Controller
             if ($business->image) {
                 Storage::disk('public')->delete($business->image);
             }
-            $data['image'] = $request->file('image')->store('business', 'public');
+            $data['image'] = $request->file('image')->store('bisnis', 'public');
         }
 
         $business->update($data);
