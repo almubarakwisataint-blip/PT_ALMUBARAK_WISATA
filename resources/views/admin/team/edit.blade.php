@@ -48,6 +48,9 @@
                         <img src="{{ asset('storage/' . $team->image) }}" alt="{{ $team->name }}" class="w-20 h-20 rounded-full object-cover">
                     </div>
                 @endif
+                 @if($team->image)
+                        <p class="mt-2 text-sm text-gray-600">Gambar saat ini: {{ basename($news->image) }}</p>
+                    @endif
                 <input type="file" id="image" name="image" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 <p class="text-gray-500 text-xs mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
                 @error('image')

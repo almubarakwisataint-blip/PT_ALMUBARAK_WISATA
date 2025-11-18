@@ -68,10 +68,7 @@ class AdminController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $category = $request->category;
-            // Pastikan folder berdasarkan kategori ada
-            Storage::disk('direct_storage')->makeDirectory($category);
-            $data['image'] = $request->file('image')->store($category, 'direct_storage');
+            $data['image'] = $request->file('image')->store('', 'direct_storage');
         }
 
         News::create($data);
@@ -100,10 +97,7 @@ class AdminController extends Controller
             if ($news->image) {
                 Storage::disk('direct_storage')->delete($news->image);
             }
-            $category = $request->category;
-            // Pastikan folder berdasarkan kategori ada
-            Storage::disk('direct_storage')->makeDirectory($category);
-            $data['image'] = $request->file('image')->store($category, 'direct_storage');
+            $data['image'] = $request->file('image')->store('', 'direct_storage');
         }
 
         $news->update($data);
@@ -147,10 +141,7 @@ class AdminController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $type = $request->type;
-            // Pastikan folder berdasarkan type ada
-            Storage::disk('direct_storage')->makeDirectory($type);
-            $data['image'] = $request->file('image')->store($type, 'direct_storage');
+            $data['image'] = $request->file('image')->store('', 'direct_storage');
         }
 
         Business::create($data);
@@ -180,10 +171,7 @@ class AdminController extends Controller
             if ($business->image) {
                 Storage::disk('direct_storage')->delete($business->image);
             }
-            $type = $request->type;
-            // Pastikan folder berdasarkan type ada
-            Storage::disk('direct_storage')->makeDirectory($type);
-            $data['image'] = $request->file('image')->store($type, 'direct_storage');
+            $data['image'] = $request->file('image')->store('', 'direct_storage');
         }
 
         $business->update($data);

@@ -41,10 +41,7 @@ class TeamController extends Controller
         $data = $request->only(['name', 'position', 'description']);
 
         if ($request->hasFile('image')) {
-            $position = $request->position;
-            // Pastikan folder berdasarkan position ada
-            Storage::disk('direct_storage')->makeDirectory($position);
-            $data['image'] = $request->file('image')->store($position, 'direct_storage');
+            $data['image'] = $request->file('image')->store('', 'direct_storage');
         }
 
         Team::create($data);
@@ -90,10 +87,7 @@ class TeamController extends Controller
             if ($team->image && Storage::disk('direct_storage')->exists($team->image)) {
                 Storage::disk('direct_storage')->delete($team->image);
             }
-            $position = $request->position;
-            // Pastikan folder berdasarkan position ada
-            Storage::disk('direct_storage')->makeDirectory($position);
-            $data['image'] = $request->file('image')->store($position, 'direct_storage');
+            $data['image'] = $request->file('image')->store('', 'direct_storage');
         }
 
         $team->update($data);
