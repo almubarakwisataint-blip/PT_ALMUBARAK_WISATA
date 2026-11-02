@@ -455,43 +455,19 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- ================================================================ -->
-        <!-- 2. KATALOG PROMO TIKET KUPON (PERSIS GAMBAR 3 TRAVELOKA VOUCHER)  -->
-        <!--    DILENGKAPI FITUR OTOMATIS BERJALAN SENDIRI (AUTO-SCROLL)       -->
+        <!-- 2. KATALOG PROMO TIKET KUPON (KONTINU TERUS BERJALAN SEPERTI SURADE) -->
         <!-- ================================================================ -->
-        <div 
-            @mouseenter="stopPromoAutoScroll"
-            @mouseleave="startPromoAutoScroll"
-            class="relative w-full"
-        >
-            <!-- Header Penawaran -->
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-1">
-                        {{ locale === 'ID' ? 'PENAWARAN SPESIAL TERBATAS' : 'LIMITED SPECIAL OFFERS' }}
-                    </span>
-                    <h3 class="font-headline-md text-2xl sm:text-3xl font-extrabold text-[#005138]">
-                        {{ locale === 'ID' ? 'Katalog Promo & Diskon Spesial Keberangkatan' : 'Special Pilgrimage Offers & Deals' }}
-                    </h3>
-                </div>
-            </div>
-
-            <!-- Horizontal Scrollable Cards (Widescreen Ticket Voucher Card Tanpa Bar & Bisa Digeser Sendiri) -->
+        <div class="relative w-full overflow-hidden py-1">
+            <!-- Continuous Marquee Track (Terus Berjalan Otomatis Persis Surade, Pause saat Hover) -->
             <div 
-                ref="scrollContainer"
-                @mousedown="startDrag"
-                @mousemove="onDrag"
-                @mouseup="stopDrag"
-                @mouseleave="stopDrag"
-                @touchstart="onTouchStart"
-                @touchend="onTouchEnd"
-                class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 scroll-smooth select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                class="flex gap-5 animate-marquee-continuous select-none"
             >
                 <div 
-                    v-for="(card, idx) in promoCards" 
+                    v-for="(card, idx) in [...promoCards, ...promoCards]" 
                     :key="idx"
                     class="w-[340px] sm:w-[380px] lg:w-[400px] h-[195px] sm:h-[210px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-md hover:shadow-2xl transition-all duration-300 group flex border border-gray-200/90 bg-white"
                 >
-                    <!-- BAGIAN KIRI (42%): FOTO DENGAN BORDER BERWARNA (PERSIS GAMBAR 3) -->
+                    <!-- BAGIAN KIRI (42%): FOTO DENGAN BORDER BERWARNA -->
                     <div class="w-[42%] h-full p-2.5 sm:p-3 shrink-0 bg-white flex items-center justify-center">
                         <div :class="card.borderColor" class="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden border-[3px] shadow-xs relative">
                             <img 
@@ -502,7 +478,7 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
 
-                    <!-- BAGIAN KANAN (58%): KARTU WARNA TEBAL DENGAN TIKET VOUCHER PUTIH (PERSIS GAMBAR 3) -->
+                    <!-- BAGIAN KANAN (58%): KARTU WARNA TEBAL DENGAN TIKET VOUCHER PUTIH -->
                     <div :class="card.bgGradient" class="w-[58%] h-full p-3.5 sm:p-4 flex flex-col justify-between text-white relative">
                         
                         <!-- Top Header: Logo Brand & Judul Tujuan -->
@@ -516,7 +492,7 @@ onBeforeUnmount(() => {
                             </h4>
                         </div>
 
-                        <!-- TIKET KUPON VOUCHER PUTIH (CUTOUT NOTCHED TICKET PERSIS GAMBAR 3) -->
+                        <!-- TIKET KUPON VOUCHER PUTIH (CUTOUT NOTCHED TICKET) -->
                         <div class="relative bg-white text-gray-900 rounded-lg sm:rounded-xl p-2 sm:p-2.5 shadow-lg flex items-center gap-2 border border-black/5">
                             <!-- Left Notched Ticket Stub -->
                             <div class="pr-2 border-r border-dashed border-gray-300 flex flex-col justify-center items-center shrink-0">
@@ -535,7 +511,7 @@ onBeforeUnmount(() => {
                                 </span>
                             </div>
 
-                            <!-- Ticket Semicircular Cutouts (Top & Bottom) -->
+                            <!-- Ticket Semicircular Cutouts -->
                             <div class="absolute -top-1.5 left-7 w-3 h-3 rounded-full bg-black/10 sm:bg-transparent"></div>
                             <div class="absolute -bottom-1.5 left-7 w-3 h-3 rounded-full bg-black/10 sm:bg-transparent"></div>
                         </div>
@@ -560,3 +536,22 @@ onBeforeUnmount(() => {
 
     </section>
 </template>
+
+<style scoped>
+@keyframes marqueeContinuous {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+.animate-marquee-continuous {
+    display: flex;
+    width: max-content;
+    animation: marqueeContinuous 32s linear infinite;
+}
+.animate-marquee-continuous:hover {
+    animation-play-state: paused;
+}
+</style>

@@ -253,20 +253,23 @@ onUnmounted(() => {
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-surface-container-lowest rounded-3xl p-6 sm:p-10 border border-surface-container/70 shadow-sm">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                        <!-- Ceremony Photo Container -->
-                        <div class="lg:col-span-6 rounded-2xl overflow-hidden shadow-lg border-2 border-surface-container bg-black group relative cursor-pointer" @click="openAwardModal(awards[0])">
+                        <!-- Ceremony Photo Container (Klik Langsung Buka Halaman) -->
+                        <Link 
+                            :href="'/awards/' + awards[0].id" 
+                            class="lg:col-span-6 rounded-2xl overflow-hidden shadow-lg border-2 border-surface-container bg-black group relative cursor-pointer block"
+                        >
                             <img 
                                 src="/images/penghargaan.jpeg" 
                                 alt="Dokumentasi Penyerahan Penghargaan Via.com Indonesia" 
                                 class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span class="px-4 py-2 rounded-xl bg-white/95 text-primary text-xs font-bold flex items-center gap-2 shadow-lg">
-                                    <span class="material-symbols-outlined text-[18px]">zoom_in</span>
-                                    <span>{{ locale === 'ID' ? 'Klik untuk Memperbesar' : 'Click to Enlarge' }}</span>
+                                <span class="px-5 py-2.5 rounded-xl bg-white/95 text-primary text-xs font-bold flex items-center gap-2 shadow-lg">
+                                    <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+                                    <span>{{ locale === 'ID' ? 'Buka Halaman Bukti & Piagam' : 'Open Proof & Certificate Page' }}</span>
                                 </span>
                             </div>
-                        </div>
+                        </Link>
 
                         <!-- Ceremony Description -->
                         <div class="lg:col-span-6 flex flex-col gap-4">
@@ -285,7 +288,7 @@ onUnmounted(() => {
                                     : 'Presentation ceremony of the official award certificate from the management of Via.com Indonesia (PT Advaltis Asia Network) to the Board of Directors of PT Almubarak Wisata, acknowledging transparent, trusted group flight ticketing and exceptional reliability.'
                                 }}
                             </p>
-                            <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="grid grid-cols-2 gap-4 pt-1">
                                 <div class="p-3.5 rounded-xl bg-surface-container/60">
                                     <span class="block text-xs font-bold text-primary">{{ locale === 'ID' ? 'Penerbit Resmi:' : 'Official Issuer:' }}</span>
                                     <span class="text-xs text-on-surface-variant font-medium">PT Advaltis Asia Network</span>
@@ -294,6 +297,17 @@ onUnmounted(() => {
                                     <span class="block text-xs font-bold text-primary">{{ locale === 'ID' ? 'Kategori Prestasi:' : 'Category:' }}</span>
                                     <span class="text-xs text-on-surface-variant font-medium">B2B Umrah Group Ticketing</span>
                                 </div>
+                            </div>
+
+                            <div class="pt-2">
+                                <Link 
+                                    :href="'/awards/' + awards[0].id"
+                                    class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#005138] hover:bg-[#003b29] text-white font-bold text-xs shadow-md hover:scale-105 transition-all cursor-pointer"
+                                >
+                                    <span class="material-symbols-outlined text-[18px]">verified</span>
+                                    <span>{{ locale === 'ID' ? 'Buka Halaman Lengkap & Bukti Resmi' : 'Open Full Verification Page' }}</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -317,11 +331,11 @@ onUnmounted(() => {
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div 
+                    <Link 
                         v-for="award in awards" 
                         :key="award.id"
-                        class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5 cursor-pointer"
-                        @click="openAwardModal(award)"
+                        :href="'/awards/' + award.id"
+                        class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5 cursor-pointer block"
                     >
                         <div>
                             <!-- Formal Certificate Header -->
@@ -352,15 +366,15 @@ onUnmounted(() => {
                                 <span class="block text-on-surface font-semibold text-[10px] uppercase tracking-wider">{{ locale === 'ID' ? 'Lembaga Pemberi:' : 'Awarding Institution:' }}</span>
                                 <span class="text-on-surface font-medium">{{ award.institution }}</span>
                             </div>
-                            <button 
-                                type="button" 
-                                class="w-full py-2.5 px-4 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                            <div 
+                                class="w-full py-2.5 px-4 rounded-xl bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs"
                             >
                                 <span class="material-symbols-outlined text-[16px]">verified</span>
-                                <span>{{ locale === 'ID' ? 'Lihat Keterangan & Verifikasi' : 'View Details & Verification' }}</span>
-                            </button>
+                                <span>{{ locale === 'ID' ? 'Buka Halaman Lengkap & Bukti' : 'Open Full Verification Page' }}</span>
+                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
                 <!-- Back to About Link -->

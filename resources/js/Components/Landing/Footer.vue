@@ -63,12 +63,12 @@ const scrollToTop = () => {
         <!-- ==================================================================== -->
         <!-- WAVE (GELOMBANG) ORGANIK PEMBATAS DI ATAS FOOTER                     -->
         <!-- ==================================================================== -->
-        <div class="w-full overflow-hidden leading-none -mb-1 bg-white pointer-events-none">
-            <svg class="relative block w-full h-10 sm:h-14 lg:h-16 text-[#002b1c]" viewBox="0 0 1440 100" fill="none" preserveAspectRatio="none">
-                <!-- Layer 1 Wave (Transparan) -->
-                <path d="M0,30 C240,80 480,10 720,50 C960,90 1200,20 1440,40 L1440,100 L0,100 Z" fill="currentColor" opacity="0.35"></path>
-                <!-- Layer 2 Wave (Solid) -->
-                <path d="M0,50 C280,10 560,85 840,45 C1120,5 1300,70 1440,55 L1440,100 L0,100 Z" fill="currentColor"></path>
+        <div class="w-full overflow-hidden leading-none -mb-1.5 bg-white pointer-events-none select-none">
+            <svg class="relative block w-full h-12 sm:h-16 lg:h-24 align-bottom" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none">
+                <!-- Layer 1 Wave Crest (Emerald Elegan Bergradasi Lembut) -->
+                <path d="M0,50 C320,105 640,20 960,75 C1200,105 1360,35 1440,55 L1440,120 L0,120 Z" fill="#005138" opacity="0.45"></path>
+                <!-- Layer 2 Wave Body (Solid Deep Green Persis Warna Footer #002b1c) -->
+                <path d="M0,75 C360,30 720,100 1080,50 C1260,25 1380,75 1440,65 L1440,120 L0,120 Z" fill="#002b1c"></path>
             </svg>
         </div>
 

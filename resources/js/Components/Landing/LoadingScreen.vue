@@ -27,61 +27,48 @@ onMounted(() => {
     <Transition name="fade">
         <div 
             v-if="isLoading" 
-            class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#130d06] text-white select-none pointer-events-auto"
+            class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-[#001c12] via-[#002b1c] to-[#00140c] text-white select-none pointer-events-auto"
         >
-            <!-- Ambient Radial Glow di Tengah (Persis Gambar 1, 2, 3) -->
-            <div class="absolute w-[340px] sm:w-[420px] h-[340px] sm:h-[420px] rounded-full bg-gradient-to-tr from-amber-600/15 via-amber-500/10 to-transparent blur-3xl pointer-events-none"></div>
+            <!-- Ambient Radial Glow Emerald di Tengah (Warna Khas Almubarak) -->
+            <div class="absolute w-[360px] sm:w-[460px] h-[360px] sm:h-[460px] rounded-full bg-gradient-to-tr from-emerald-500/30 via-emerald-600/15 to-amber-500/10 blur-3xl pointer-events-none"></div>
 
             <div class="relative z-10 flex flex-col items-center justify-center gap-5">
-                <!-- Logo Emblem Almubarak Animated (Makna Logo: Kubah, Huruf M & A, Keberkahan) -->
-                <div class="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
-                    <!-- Outer Glowing Ring -->
-                    <div class="absolute inset-0 rounded-full border border-amber-500/20 animate-ping opacity-25"></div>
-                    <div class="absolute inset-2 rounded-full border border-amber-400/30 animate-pulse"></div>
+                <!-- Logo Resmi Almubarak Beranimasi (Sesuai Permintaan: Warna Website & Logo Asli) -->
+                <div class="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center">
+                    <!-- Outer Glowing & Pulsing Rings -->
+                    <div class="absolute inset-0 rounded-full border-2 border-emerald-400/30 animate-ping opacity-35"></div>
+                    <div class="absolute -inset-1.5 rounded-full border border-emerald-300/40 animate-pulse"></div>
+                    <div class="absolute inset-2 rounded-full border border-amber-400/30"></div>
 
-                    <!-- SVG Geometric Almubarak Emblem (Drawing Animation) -->
-                    <svg 
-                        class="w-16 h-16 sm:w-20 sm:h-20 text-amber-400 drop-shadow-[0_0_15px_rgba(245,158,11,0.6)]" 
-                        viewBox="0 0 100 100" 
-                        fill="none" 
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <!-- Geometric Mosque Minaret & Kaaba Dome Silhouette -->
-                        <path 
-                            d="M50 15 L82 45 L70 45 L70 80 L30 80 L30 45 L18 45 Z" 
-                            stroke="currentColor" 
-                            stroke-width="3" 
-                            stroke-linecap="round" 
-                            stroke-linejoin="round"
-                            class="draw-path"
+                    <!-- White Circular Badge Container for Official Almubarak Logo -->
+                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white p-3 shadow-[0_0_35px_rgba(16,185,129,0.45)] border-2 border-emerald-400/60 flex items-center justify-center transform transition-transform hover:scale-105">
+                        <img 
+                            src="/images/logo.png" 
+                            alt="Logo Resmi Almubarak Wisata" 
+                            class="w-full h-full object-contain filter drop-shadow-sm animate-pulse"
                         />
-                        <!-- Inner Mubarak Arch & Crescent -->
-                        <path 
-                            d="M50 32 L62 55 L38 55 Z" 
-                            stroke="#fcd34d" 
-                            stroke-width="2.5" 
-                            stroke-linecap="round" 
-                            stroke-linejoin="round"
-                            class="draw-path-delay"
-                        />
-                        <circle cx="50" cy="68" r="4" fill="#fbbf24" class="animate-pulse" />
-                    </svg>
+                    </div>
                 </div>
 
-                <!-- Brand Name & Subtitle -->
-                <div class="text-center flex flex-col items-center gap-1">
-                    <span class="font-headline-sm text-xl sm:text-2xl font-black tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-100 to-amber-400 drop-shadow-sm">
-                        ALMUBARAK
+                <!-- Brand Name & Subtitle (Persis Identitas Navbar & Footer Website) -->
+                <div class="text-center flex flex-col items-center gap-1.5">
+                    <span class="font-headline-sm text-2xl sm:text-3xl font-black tracking-tight text-white drop-shadow-md">
+                        Almubarak<span class="text-emerald-400 font-extrabold">.com</span>
                     </span>
-                    <span class="text-[10px] tracking-[0.3em] uppercase text-amber-200/70 font-semibold font-mono">
+                    <span class="text-[11px] sm:text-xs tracking-[0.28em] uppercase text-amber-300 font-bold font-mono">
                         HAJI &amp; UMRAH PREMIUM
                     </span>
                 </div>
 
-                <!-- Sleek Shimmering Loading Progress Line -->
-                <div class="w-44 h-1 bg-white/10 rounded-full overflow-hidden relative mt-2">
-                    <div class="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 rounded-full w-full animate-progress-slide"></div>
+                <!-- Sleek Shimmering Loading Progress Line (Emerald & Gold) -->
+                <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden relative mt-2 border border-emerald-400/20 shadow-inner">
+                    <div class="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-emerald-500 via-amber-300 to-emerald-400 rounded-full w-full animate-progress-slide"></div>
                 </div>
+
+                <!-- Subtle Status Indicator -->
+                <span class="text-[10px] tracking-wider text-white/60 font-medium">
+                    Menyiapkan Layanan Terbaik...
+                </span>
             </div>
         </div>
     </Transition>
@@ -90,39 +77,11 @@ onMounted(() => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.4s ease-out;
 }
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
-}
-
-/* SVG Line Drawing Keyframes */
-.draw-path {
-    stroke-dasharray: 260;
-    stroke-dashoffset: 260;
-    animation: drawStroke 2s ease-in-out infinite alternate;
-}
-
-.draw-path-delay {
-    stroke-dasharray: 120;
-    stroke-dashoffset: 120;
-    animation: drawStroke 2s ease-in-out infinite alternate 0.3s;
-}
-
-@keyframes drawStroke {
-    0% {
-        stroke-dashoffset: 260;
-        opacity: 0.3;
-    }
-    50% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-    }
-    100% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-    }
 }
 
 @keyframes progressSlide {
@@ -138,6 +97,6 @@ onMounted(() => {
 }
 
 .animate-progress-slide {
-    animation: progressSlide 1.5s ease-in-out infinite;
+    animation: progressSlide 1.4s ease-in-out infinite;
 }
 </style>
