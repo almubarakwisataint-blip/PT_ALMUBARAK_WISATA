@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import FivePillars from '@/Components/Landing/FivePillars.vue';
@@ -144,6 +144,29 @@ const openAwardModal = (award) => {
 const closeAwardModal = () => {
     selectedAward.value = null;
 };
+
+watch(selectedAward, (val) => {
+    if (typeof document !== 'undefined') {
+        document.body.style.overflow = val ? 'hidden' : '';
+    }
+});
+
+const onKeydown = (e) => {
+    if (e.key === 'Escape' && selectedAward.value) {
+        closeAwardModal();
+    }
+};
+
+onMounted(() => {
+    window.addEventListener('keydown', onKeydown);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('keydown', onKeydown);
+    if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+    }
+});
 
 const contactMember = (member) => {
     const text = encodeURIComponent(`Assalamu'alaikum, saya ingin menghubungi ${member.name} (${member.position}) terkait paket ibadah.`);
@@ -430,69 +453,76 @@ const contactMember = (member) => {
             </div>
         </section>
 
-        <!-- Award Detail Modal (Scrollable on all screens with sticky header & footer) -->
+        <!-- Award Detail Modal (Clean, Non-Clipping, Responsive Layout) -->
         <div 
             v-if="selectedAward" 
-            class="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+            class="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md p-4 sm:p-6 flex justify-center items-start"
             @click.self="closeAwardModal"
         >
-            <div class="bg-surface-container-lowest max-w-xl w-full rounded-3xl shadow-2xl border border-surface-container my-auto flex flex-col max-h-[88vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                <!-- Sticky Modal Header -->
-                <div class="flex items-center justify-between p-5 border-b border-surface-container bg-surface-container-lowest shrink-0">
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] uppercase tracking-wider">
+            <div class="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden my-4 sm:my-8 flex flex-col animate-in fade-in zoom-in-95 duration-200">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-emerald-50/50 shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-400/20 text-amber-900 border border-amber-400/40 font-bold text-xs uppercase tracking-wider">
+                            <span class="material-symbols-outlined text-[15px] text-amber-700">verified</span>
                             {{ selectedAward.badge }}
                         </span>
-                        <span class="text-xs text-outline font-mono">{{ selectedAward.certNumber }}</span>
+                        <span class="text-xs text-gray-500 font-mono">{{ selectedAward.certNumber }}</span>
                     </div>
                     <button 
                         @click="closeAwardModal" 
-                        class="w-9 h-9 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface transition-colors cursor-pointer"
+                        class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-black flex items-center justify-center transition-colors cursor-pointer"
                         type="button"
                         aria-label="Tutup Modal"
                     >
-                        <span class="material-symbols-outlined text-[20px]">close</span>
+                        <span class="material-symbols-outlined text-[18px]">close</span>
                     </button>
                 </div>
 
-                <!-- Scrollable Modal Body -->
-                <div class="overflow-y-auto p-5 sm:p-6 space-y-4 max-h-[calc(88vh-130px)] overscroll-contain">
+                <!-- Modal Body -->
+                <div class="p-6 space-y-4">
                     <!-- Preview Image -->
-                    <div class="rounded-2xl overflow-hidden shadow-md max-h-64 bg-black flex items-center justify-center">
+                    <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-slate-100 h-48 sm:h-56 w-full">
                         <img 
                             :src="selectedAward.image" 
                             :alt="selectedAward.title" 
-                            class="w-full h-auto max-h-64 object-contain"
+                            class="w-full h-full object-cover"
                         />
                     </div>
 
-                    <h3 class="font-headline-sm text-xl text-primary font-bold leading-snug">
-                        {{ selectedAward.title }}
-                    </h3>
-                    <p class="text-xs text-outline font-semibold">
-                        Lembaga Penerbit: <span class="text-on-surface">{{ selectedAward.institution }}</span> (Tahun {{ selectedAward.year }})
-                    </p>
-                    <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                    <div>
+                        <h3 class="font-headline-sm text-lg sm:text-xl text-[#005138] font-extrabold leading-snug">
+                            {{ selectedAward.title }}
+                        </h3>
+                        <p class="text-xs text-gray-500 font-medium mt-1">
+                            Lembaga Penerbit: <strong class="text-gray-800">{{ selectedAward.institution }}</strong> (Tahun {{ selectedAward.year }})
+                        </p>
+                    </div>
+
+                    <p class="font-body-md text-sm text-gray-600 leading-relaxed">
                         {{ selectedAward.desc }}
                     </p>
 
                     <!-- Details Points -->
-                    <div v-if="selectedAward.details && selectedAward.details.length > 0" class="p-4 rounded-2xl bg-surface-container/60 space-y-1.5">
-                        <span class="block text-xs font-bold text-primary mb-2">Poin Legalitas &amp; Pengakuan:</span>
-                        <div v-for="(d, i) in selectedAward.details" :key="i" class="flex items-center gap-2 text-xs text-on-surface-variant">
-                            <span class="material-symbols-outlined text-primary text-[15px]">check_circle</span>
+                    <div v-if="selectedAward.details && selectedAward.details.length > 0" class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 space-y-2">
+                        <span class="block text-xs font-bold text-[#005138] uppercase tracking-wider">Poin Legalitas &amp; Pengakuan:</span>
+                        <div v-for="(d, i) in selectedAward.details" :key="i" class="flex items-start gap-2 text-xs text-gray-700 leading-relaxed">
+                            <span class="material-symbols-outlined text-[#005138] text-[16px] shrink-0 mt-0.5">check_circle</span>
                             <span>{{ d }}</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sticky Modal Footer -->
-                <div class="p-4 sm:p-5 border-t border-surface-container bg-surface-container-low/40 flex items-center justify-between shrink-0">
-                    <span class="text-[11px] text-outline font-mono">Status: Terverifikasi Aktif</span>
+                <!-- Modal Footer -->
+                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between shrink-0">
+                    <span class="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Terverifikasi Aktif
+                    </span>
                     <button 
                         @click="closeAwardModal" 
                         type="button" 
-                        class="px-5 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container transition-all cursor-pointer shadow-sm"
+                        class="px-6 py-2.5 rounded-xl bg-[#005138] hover:bg-[#003d2b] text-white text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow"
                     >
                         Tutup
                     </button>
