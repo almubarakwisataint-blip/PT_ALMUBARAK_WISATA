@@ -184,7 +184,7 @@ const awardsData = [
 ];
 
 const award = computed(() => {
-    const found = awardsData.find(a => a.id === props.awardId) || awardsData[0];
+    const found = awardsData.find(a => a.id === props.awardId || (a.id === 'airlines-partner' && props.awardId === 'airline-partner')) || awardsData[0];
     const isEn = locale.value === 'EN';
     return {
         id: found.id,
@@ -200,6 +200,21 @@ const award = computed(() => {
         desc: isEn ? found.descEn : found.descId,
         details: isEn ? found.detailsEn : found.detailsId,
     };
+});
+
+const otherAwards = computed(() => {
+    const isEn = locale.value === 'EN';
+    return awardsData
+        .filter(a => a.id !== award.value.id)
+        .map(a => ({
+            id: a.id,
+            title: isEn ? a.titleEn : a.titleId,
+            institution: isEn ? a.institutionEn : a.institutionId,
+            badge: isEn ? a.badgeEn : a.badgeId,
+            year: a.year,
+            certNumber: a.certNumber,
+            desc: isEn ? a.descEn : a.descId,
+        }));
 });
 </script>
 
@@ -362,6 +377,58 @@ const award = computed(() => {
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Section: Jelajahi Prestasi & Sertifikasi Resmi Lainnya (Semua Halaman Terhubung) -->
+        <section class="py-14 bg-surface-container-low/40 border-t border-surface-container">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                    <div>
+                        <span class="text-xs font-bold text-secondary uppercase tracking-widest font-mono">
+                            {{ locale === 'ID' ? 'Kredibilitas & Rekam Jejak' : 'Track Record & Credentials' }}
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight mt-1">
+                            {{ locale === 'ID' ? 'Sertifikasi & Penghargaan Lainnya' : 'Other Official Accreditations' }}
+                        </h2>
+                    </div>
+                    <Link 
+                        href="/awards" 
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-secondary transition-colors"
+                    >
+                        <span>{{ locale === 'ID' ? 'Lihat Semua (6 Penghargaan)' : 'View All (6 Awards)' }}</span>
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </Link>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <Link 
+                        v-for="item in otherAwards" 
+                        :key="item.id"
+                        :href="'/awards/' + item.id"
+                        class="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between hover:-translate-y-1"
+                    >
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-bold text-[10px] uppercase">
+                                    {{ item.badge }}
+                                </span>
+                                <span class="text-xs font-mono text-gray-500 font-bold">{{ item.year }}</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-gray-400 block mb-1">{{ item.certNumber }}</span>
+                            <h3 class="font-bold text-sm text-gray-900 group-hover:text-[#005138] transition-colors leading-snug">
+                                {{ item.title }}
+                            </h3>
+                            <p class="text-xs text-gray-600 mt-2 line-clamp-2 leading-relaxed">
+                                {{ item.desc }}
+                            </p>
+                        </div>
+                        <div class="pt-4 mt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#005138]">
+                            <span>{{ locale === 'ID' ? 'Lihat Sertifikat & Bukti' : 'View Certificate & Proof' }}</span>
+                            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </div>
+                    </Link>
+                </div>
             </div>
         </section>
 

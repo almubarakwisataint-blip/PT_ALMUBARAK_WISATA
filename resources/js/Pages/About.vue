@@ -88,30 +88,6 @@ const teamList = computed(() => {
 
 const rawAwards = [
     {
-        id: 'via-com',
-        titleId: 'Top B2B Travel & Umrah Ticketing Partner',
-        titleEn: 'Top B2B Travel & Umrah Ticketing Partner',
-        institutionId: 'Via.com Indonesia (PT Advaltis Asia Network)',
-        institutionEn: 'Via.com Indonesia (PT Advaltis Asia Network)',
-        badgeId: 'Top Agent Award',
-        badgeEn: 'Top Agent Award',
-        year: '2024',
-        certNumber: 'VIA/ID/AGT/2024-088',
-        descId: 'Apresiasi resmi atas kinerja luar biasa dan keandalan sistem penerbitan tiket penerbangan grup umrah serta transaksi B2B terpercaya.',
-        descEn: 'Official recognition for outstanding performance and reliability in group flight ticketing and trusted B2B transactions.',
-        image: '/images/penghargaan.jpeg',
-        detailsId: [
-            'Diterima langsung oleh jajaran Direksi PT Almubarak Wisata',
-            'Penghargaan kategori B2B Travel Partner & Group Ticketing',
-            'Sinergi rute penerbangan Saudia Airlines, Emirates, dan Garuda Indonesia',
-        ],
-        detailsEn: [
-            'Received directly by the Board of Directors of PT Almubarak Wisata',
-            'Award category: B2B Travel Partner & Group Ticketing',
-            'Route synergies with Saudia Airlines, Emirates, and Garuda Indonesia',
-        ],
-    },
-    {
         id: 'kemenag-ppiu',
         titleId: 'Akreditasi A Resmi PPIU Kemenag RI',
         titleEn: 'Official Grade A Accreditation PPIU Ministry of Religious Affairs',
@@ -136,7 +112,31 @@ const rawAwards = [
         ],
     },
     {
-        id: 'airline-partner',
+        id: 'via-com',
+        titleId: 'Top B2B Travel & Umrah Ticketing Partner',
+        titleEn: 'Top B2B Travel & Umrah Ticketing Partner',
+        institutionId: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        institutionEn: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        badgeId: 'Top Agent Award',
+        badgeEn: 'Top Agent Award',
+        year: '2024',
+        certNumber: 'VIA/ID/AGT/2024-088',
+        descId: 'Apresiasi resmi atas kinerja luar biasa dan keandalan sistem penerbitan tiket penerbangan grup umrah serta transaksi B2B terpercaya.',
+        descEn: 'Official recognition for outstanding performance and reliability in group flight ticketing and trusted B2B transactions.',
+        image: '/images/penghargaan.jpeg',
+        detailsId: [
+            'Diterima langsung oleh jajaran Direksi PT Almubarak Wisata',
+            'Penghargaan kategori B2B Travel Partner & Group Ticketing',
+            'Sinergi rute penerbangan Saudia Airlines, Emirates, dan Garuda Indonesia',
+        ],
+        detailsEn: [
+            'Received directly by the Board of Directors of PT Almubarak Wisata',
+            'Award category: B2B Travel Partner & Group Ticketing',
+            'Route synergies with Saudia Airlines, Emirates, and Garuda Indonesia',
+        ],
+    },
+    {
+        id: 'airlines-partner',
         titleId: 'Strategic Group Partner Saudia & Garuda',
         titleEn: 'Strategic Group Partner Saudia & Garuda',
         institutionId: 'Saudi Arabian Airlines & Garuda Indonesia',
@@ -161,10 +161,10 @@ const rawAwards = [
     },
     {
         id: 'asita-member',
-        titleId: 'Sertifikasi Keanggotaan Penuh ASITA & HIMPUH',
-        titleEn: 'Full Certification Membership ASITA & HIMPUH',
-        institutionId: 'Dewan Pengurus Pusat ASITA & HIMPUH Indonesia',
-        institutionEn: 'Central Executive Board ASITA & HIMPUH Indonesia',
+        titleId: 'Sertifikasi Keanggotaan Penuh ASITA Indonesia',
+        titleEn: 'Full Certification Membership ASITA Indonesia',
+        institutionId: 'Dewan Pengurus Pusat ASITA (Asosiasi Perusahaan Perjalanan Wisata)',
+        institutionEn: 'Central Executive Board ASITA Indonesia',
         badgeId: 'Verified Travel Agency',
         badgeEn: 'Verified Travel Agency',
         year: '2023 - 2025',
@@ -181,6 +181,54 @@ const rawAwards = [
             'Officially registered member in ASITA Jakarta & West Java',
             'Fully compliant with national Travel Bureau regulations',
             'Integrated international ground handling network',
+        ],
+    },
+    {
+        id: 'himpuh-member',
+        titleId: 'Sertifikasi Keanggotaan HIMPUH (Haji & Umrah Khusus)',
+        titleEn: 'Certified Member of HIMPUH (Special Hajj & Umrah)',
+        institutionId: 'Dewan Pimpinan Pusat HIMPUH Indonesia',
+        institutionEn: 'Central Leadership Council HIMPUH Indonesia',
+        badgeId: 'Official Member HIMPUH',
+        badgeEn: 'Official Member HIMPUH',
+        year: '2024',
+        certNumber: 'HMP/PPIU/JKT-1502',
+        descId: 'Sertifikasi keanggotaan asosiasi penyelenggara haji khusus dan umrah terpercaya dalam mewujudkan ibadah yang aman, transparan, dan sesuai sunnah.',
+        descEn: 'Certification in the association of special hajj and umrah operators dedicated to transparent, Sunnah-compliant spiritual journeys.',
+        image: '/images/landing/package-haji-furoda.jpg',
+        detailsId: [
+            'Mitra strategis e-Hajj Kementerian Haji Kerajaan Arab Saudi',
+            'Standardisasi tenda AC Maktab VIP Mina dan Arafah',
+            'Pendampingan intensif dokter dan asatidzah berkompeten',
+        ],
+        detailsEn: [
+            'Strategic partner with Saudi Ministry of Hajj e-portal',
+            'Standardized VIP air-conditioned Mina & Arafat tents',
+            'Comprehensive accompaniment by physicians and certified scholars',
+        ],
+    },
+    {
+        id: 'halal-tourism',
+        titleId: 'Keunggulan Wisata Religi & Halal Mancanegara',
+        titleEn: 'Excellence in Global Halal & Heritage Tourism',
+        institutionId: 'Indonesia Halal Tourism & Travel Forum',
+        institutionEn: 'Indonesia Halal Tourism & Travel Forum',
+        badgeId: 'Halal Tourism Award',
+        badgeEn: 'Halal Tourism Award',
+        year: '2023',
+        certNumber: 'HTTF/2023/EXC-042',
+        descId: 'Pengakuan keunggulan dalam merancang paket wisata halal ke Turki, Jordan, Mesir, dan Uzbekistan dengan jaminan makanan halal dan shalat terjaga.',
+        descEn: 'Honored for exceptional halal travel itineraries in Turkey, Jordan, Egypt, and Uzbekistan with 100% halal gastronomy.',
+        image: '/images/landing/package-turki-plus.jpg',
+        detailsId: [
+            'Pemandu wisata Muslim bersertifikasi sejarah peradaban Islam',
+            'Restoran halal berstandar kebersihan dan mutu internasional',
+            'Kombinasi spiritual umrah dengan tadabbur alam dan sejarah',
+        ],
+        detailsEn: [
+            'Certified Muslim historians and licensed guides',
+            'Internationally audited halal dining establishments',
+            'Spiritual Umrah seamlessly paired with Islamic civilizational history',
         ],
     },
 ];
@@ -471,7 +519,7 @@ const contactMember = (member) => {
                 </div>
 
                 <!-- Awards Grid (Authentic Certificate Cards with Real Data, No Emojis) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <Link 
                         v-for="award in awards" 
                         :key="award.id"

@@ -205,34 +205,73 @@ const promoCards = computed(() => {
     }));
 });
 
-// Auto-scroll & Drag interaktif untuk kartu promo (otomatis jalan & bisa digerakkan sendiri)
+// Auto-scroll & Drag interaktif 60fps untuk kartu promo (otomatis meluncur halus & responsif digerakkan)
 const isDragging = ref(false);
 let startX = 0;
 let startScrollLeft = 0;
-let autoScrollTimer = null;
+let rafId = null;
+let lastTimestamp = 0;
+let currentScroll = 0;
 let isUserInteracting = false;
+const speed = 0.07; // pixels per ms (~70px/sec, pergerakan halus mantap tanpa lag)
+
+const autoScrollLoop = (timestamp) => {
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const elapsed = Math.min(timestamp - lastTimestamp, 50);
+    lastTimestamp = timestamp;
+
+    if (scrollContainer.value && !isDragging.value && !isUserInteracting) {
+        currentScroll += speed * elapsed;
+        const segmentWidth = scrollContainer.value.scrollWidth / 3;
+        if (segmentWidth > 0 && currentScroll >= segmentWidth * 2) {
+            currentScroll -= segmentWidth;
+        }
+        scrollContainer.value.scrollLeft = currentScroll;
+    }
+    rafId = requestAnimationFrame(autoScrollLoop);
+};
+
+const startPromoContinuousScroll = () => {
+    stopPromoContinuousScroll();
+    lastTimestamp = 0;
+    if (scrollContainer.value) {
+        currentScroll = scrollContainer.value.scrollLeft;
+    }
+    rafId = requestAnimationFrame(autoScrollLoop);
+};
+
+const stopPromoContinuousScroll = () => {
+    if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+    }
+};
 
 const startDrag = (e) => {
     isDragging.value = true;
     isUserInteracting = true;
     startX = e.pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
+    currentScroll = startScrollLeft;
 };
 
 const onDrag = (e) => {
     if (!isDragging.value || !scrollContainer.value) return;
     e.preventDefault();
     const x = e.pageX - scrollContainer.value.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    scrollContainer.value.scrollLeft = startScrollLeft - walk;
+    const walk = (x - startX);
+    currentScroll = startScrollLeft - walk;
+    scrollContainer.value.scrollLeft = currentScroll;
 };
 
 const stopDrag = () => {
     if (isDragging.value) {
         isDragging.value = false;
-        setTimeout(() => {
-            isUserInteracting = false;
-        }, 1200);
+        isUserInteracting = false;
+        lastTimestamp = 0;
+        if (scrollContainer.value) {
+            currentScroll = scrollContainer.value.scrollLeft;
+        }
     }
 };
 
@@ -240,53 +279,22 @@ const onTouchStart = (e) => {
     isUserInteracting = true;
     startX = e.touches[0].pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
+    currentScroll = startScrollLeft;
 };
 
 const onTouchMove = (e) => {
     if (!scrollContainer.value) return;
     const x = e.touches[0].pageX - scrollContainer.value.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    scrollContainer.value.scrollLeft = startScrollLeft - walk;
+    const walk = (x - startX);
+    currentScroll = startScrollLeft - walk;
+    scrollContainer.value.scrollLeft = currentScroll;
 };
 
 const onTouchEnd = () => {
-    setTimeout(() => {
-        isUserInteracting = false;
-    }, 1200);
-};
-
-const pauseAutoScroll = () => {
-    isUserInteracting = true;
-};
-
-const resumeAutoScroll = () => {
-    if (!isDragging.value) {
-        isUserInteracting = false;
-    }
-};
-
-const handleMouseLeave = () => {
-    stopDrag();
-    resumeAutoScroll();
-};
-
-const startPromoContinuousScroll = () => {
-    stopPromoContinuousScroll();
-    autoScrollTimer = setInterval(() => {
-        if (!scrollContainer.value || isUserInteracting || isDragging.value) return;
-        const maxScroll = scrollContainer.value.scrollWidth - scrollContainer.value.clientWidth;
-        if (scrollContainer.value.scrollLeft >= maxScroll - 10) {
-            scrollContainer.value.scrollLeft = 0;
-        } else {
-            scrollContainer.value.scrollLeft += 1.5;
-        }
-    }, 25);
-};
-
-const stopPromoContinuousScroll = () => {
-    if (autoScrollTimer) {
-        clearInterval(autoScrollTimer);
-        autoScrollTimer = null;
+    isUserInteracting = false;
+    lastTimestamp = 0;
+    if (scrollContainer.value) {
+        currentScroll = scrollContainer.value.scrollLeft;
     }
 };
 
@@ -512,12 +520,11 @@ onBeforeUnmount(() => {
                 @mousedown="startDrag"
                 @mousemove="onDrag"
                 @mouseup="stopDrag"
+                @mouseleave="stopDrag"
                 @touchstart="onTouchStart"
                 @touchmove="onTouchMove"
                 @touchend="onTouchEnd"
-                @mouseenter="pauseAutoScroll"
-                @mouseleave="handleMouseLeave"
-                class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 scroll-smooth select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                 <div 
                     v-for="(card, idx) in [...promoCards, ...promoCards, ...promoCards]" 
