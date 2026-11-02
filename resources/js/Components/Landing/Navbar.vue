@@ -81,25 +81,40 @@ const isLinkActive = (path) => {
                 </Link>
             </nav>
 
-            <!-- Right Controls: Language pill switch & Masuk Button -->
+            <!-- Right Controls: Country Flag Language Switcher (Image 5) & Masuk Button -->
             <div class="flex items-center gap-space-md">
-                <!-- ID / EN Toggle Pill -->
-                <div class="inline-flex items-center p-0.5 rounded-full bg-surface-container border border-surface-container-high text-label-sm font-label-sm">
+                <!-- Country Flag Toggle Pill (No ID/EN text - Flags Only) -->
+                <div class="inline-flex items-center p-1 rounded-full bg-surface-container border border-surface-container-high shadow-xs">
+                    <!-- Indonesia Flag Button -->
                     <button 
                         @click="toggleLang('ID')"
-                        :class="locale === 'ID' ? 'bg-primary text-white font-bold shadow-xs' : 'text-on-surface-variant hover:text-primary'"
-                        class="px-2.5 py-1 rounded-full transition-all cursor-pointer" 
+                        :class="locale === 'ID' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
+                        class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
                         type="button"
+                        title="Indonesia"
+                        aria-label="Bahasa Indonesia"
                     >
-                        ID
+                        <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
+                            <path fill="#e70011" d="M0 0h512v256H0z"/>
+                            <path fill="#ffffff" d="M0 256h512v256H0z"/>
+                        </svg>
                     </button>
+                    <!-- English / UK Flag Button -->
                     <button 
                         @click="toggleLang('EN')"
-                        :class="locale === 'EN' ? 'bg-primary text-white font-bold shadow-xs' : 'text-on-surface-variant hover:text-primary'"
-                        class="px-2.5 py-1 rounded-full transition-all cursor-pointer" 
+                        :class="locale === 'EN' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
+                        class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
                         type="button"
+                        title="English"
+                        aria-label="English"
                     >
-                        EN
+                        <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
+                            <path fill="#00247d" d="M0 0h512v512H0z"/>
+                            <path stroke="#fff" stroke-width="60" d="M0 0l512 512M512 0L0 512"/>
+                            <path stroke="#cf142b" stroke-width="40" d="M0 0l512 512M512 0L0 512"/>
+                            <path stroke="#fff" stroke-width="100" d="M256 0v512M0 256h512"/>
+                            <path stroke="#cf142b" stroke-width="60" d="M256 0v512M0 256h512"/>
+                        </svg>
                     </button>
                 </div>
 
@@ -169,9 +184,43 @@ const isLinkActive = (path) => {
                 >
                     {{ t('nav_contact') }}
                 </Link>
+                <!-- Mobile Country Flag Language Switcher -->
+                <div class="flex items-center justify-between p-3 rounded-xl bg-surface-container mt-2">
+                    <span class="text-xs font-bold text-on-surface-variant">Pilih Negara / Bahasa:</span>
+                    <div class="inline-flex items-center p-1 rounded-full bg-white border border-surface-container-high shadow-xs">
+                        <button 
+                            @click="toggleLang('ID')"
+                            :class="locale === 'ID' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
+                            class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
+                            type="button"
+                            title="Indonesia"
+                        >
+                            <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
+                                <path fill="#e70011" d="M0 0h512v256H0z"/>
+                                <path fill="#ffffff" d="M0 256h512v256H0z"/>
+                            </svg>
+                        </button>
+                        <button 
+                            @click="toggleLang('EN')"
+                            :class="locale === 'EN' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
+                            class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
+                            type="button"
+                            title="English"
+                        >
+                            <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
+                                <path fill="#00247d" d="M0 0h512v512H0z"/>
+                                <path stroke="#fff" stroke-width="60" d="M0 0l512 512M512 0L0 512"/>
+                                <path stroke="#cf142b" stroke-width="40" d="M0 0l512 512M512 0L0 512"/>
+                                <path stroke="#fff" stroke-width="100" d="M256 0v512M0 256h512"/>
+                                <path stroke="#cf142b" stroke-width="60" d="M256 0v512M0 256h512"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
                 <a 
                     href="/admin/login" 
-                    class="mt-2 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-white font-bold shadow-sm"
+                    class="mt-1 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-white font-bold shadow-sm"
                 >
                     <span class="material-symbols-outlined text-[20px]">login</span>
                     <span>{{ t('nav_login') }}</span>
