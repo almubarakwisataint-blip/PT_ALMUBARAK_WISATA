@@ -42,3 +42,4 @@ import AppLayout from '@/Layouts/AppLayout.vue';
         </section>
     </AppLayout>
 </template>
+

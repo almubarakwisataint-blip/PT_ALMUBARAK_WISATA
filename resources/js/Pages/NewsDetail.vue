@@ -137,3 +137,4 @@ const shareOnWhatsApp = () => {
         <CtaBanner />
     </AppLayout>
 </template>
+

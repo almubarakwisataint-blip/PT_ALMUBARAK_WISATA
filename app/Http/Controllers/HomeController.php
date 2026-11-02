@@ -28,12 +28,15 @@ class HomeController extends Controller
     public function about()
     {
         try {
+            $teams = Team::all();
             $news = News::latest('published_at')->take(3)->get();
         } catch (\Throwable $e) {
+            $teams = collect();
             $news = collect();
         }
 
         return Inertia::render('About', [
+            'teams' => $teams,
             'news' => $news,
         ]);
     }
@@ -161,12 +164,20 @@ class HomeController extends Controller
 
     public function awards()
     {
-        return redirect()->route('about');
+        return Inertia::render('Awards');
     }
 
     public function team()
     {
-        return redirect()->route('about');
+        try {
+            $teams = Team::all();
+        } catch (\Throwable $e) {
+            $teams = collect();
+        }
+
+        return Inertia::render('Team', [
+            'teams' => $teams,
+        ]);
     }
 
     public function travelPromos()
