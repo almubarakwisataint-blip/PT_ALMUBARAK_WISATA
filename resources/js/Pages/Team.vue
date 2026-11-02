@@ -16,28 +16,32 @@ const defaultTeams = [
         name: 'H. Ahmad Mubarak, Lc., M.A.',
         position: 'Direktur Utama / CEO',
         description: 'Alumni Universitas Islam Madinah dengan pengalaman lebih dari 15 tahun dalam bimbingan syar\'i dan manasik haji/umrah di Tanah Suci.',
-        image: '/images/ceo-face.jpg',
+        image: '/images/ceo.jpg',
+        positionStyle: 'object-position: 50% 25%;',
         phone: '6281260003484',
     },
     {
         name: 'Ust. H. Abdullah Syarif, Lc.',
         position: 'Ketua Dewan Pembimbing Syariah',
         description: 'Membimbing jamaah dalam manasik dan pelaksanaan thawaf, sa\'i, serta kajian fiqih ibadah sesuai sunnah Rasulullah ﷺ.',
-        image: '/images/landing/member-ustadz.jpg',
+        image: '/images/landing/testi-fachri.jpg',
+        positionStyle: 'object-position: 50% 30%;',
         phone: '6281260003484',
     },
     {
         name: 'Hj. Siti Fatimah, S.E.',
         position: 'Direktur Operasional & Pelayanan Jamaah',
         description: 'Mengawasi kenyamanan akomodasi hotel pelataran ring 1, handling bandara, serta pendampingan jamaah lansia dan keluarga.',
-        image: '/images/landing/member-siti.jpg',
+        image: '/images/landing/testi-siti.jpg',
+        positionStyle: 'object-position: 70% 25%;',
         phone: '6281180002807',
     },
     {
         name: 'H. Firman Hidayat, S.Kom.',
         position: 'Manajer Tiket, Hotel & Visa Provider',
         description: 'Spesialis reservasi maskapai direct (Saudia/Garuda), tasreh visa Saudi, dan tiket kereta cepat Haramain Express.',
-        image: '/images/landing/member-firman.jpg',
+        image: '/images/landing/testi-hendra.jpg',
+        positionStyle: 'object-position: 50% 12%;',
         phone: '6281180002807',
     },
     {
@@ -45,13 +49,15 @@ const defaultTeams = [
         position: 'Muthawif Senior & Pemandu Ziarah',
         description: 'Berpengalaman memandu ziarah tapak tilas jejak Rasulullah ﷺ di Jabal Uhud, Masjid Quba, Jabal Rahmah, dan Gua Hira.',
         image: '/images/landing/gallery-uhud.jpg',
+        positionStyle: 'object-position: center;',
         phone: '6281260003484',
     },
     {
         name: 'Nurul Aisyah, S.Tr.Par.',
         position: 'Koordinator Konsultasi & Perlengkapan',
         description: 'Melayani persiapan dokumen paspor, vaksinasi internasional, pembagian koper, dan pendataan kesehatan jamaah.',
-        image: '/images/landing/member-siti.jpg',
+        image: '/images/landing/testi-siti.jpg',
+        positionStyle: 'object-position: 70% 25%;',
         phone: '6281180002807',
     },
 ];
@@ -62,7 +68,8 @@ const teamList = computed(() => {
             name: t.name,
             position: t.position,
             description: t.description || 'Profesional berpengalaman dalam penyelenggaraan ibadah umrah dan haji.',
-            image: t.image ? (t.image.startsWith('http') || t.image.startsWith('/') ? t.image : `/storage/${t.image}`) : (defaultTeams[idx]?.image || '/images/ceo-face.jpg'),
+            image: t.image ? (t.image.startsWith('http') || t.image.startsWith('/') ? t.image : `/storage/${t.image}`) : (defaultTeams[idx]?.image || '/images/ceo.jpg'),
+            positionStyle: defaultTeams[idx]?.positionStyle || 'object-position: center;',
             phone: t.phone || '6281260003484',
         }));
     }
@@ -135,12 +142,13 @@ const contactMember = (member) => {
                         class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5"
                     >
                         <div>
-                            <!-- Member Photo Container with object-center for face focus -->
-                            <div class="relative h-72 overflow-hidden bg-surface-container flex items-center justify-center">
+                            <!-- Member Photo Container with natural cover and position style -->
+                            <div class="relative h-72 overflow-hidden bg-surface-container">
                                 <img 
                                     :src="member.image" 
                                     :alt="member.name"
-                                    class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    :style="member.positionStyle"
                                 />
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end p-4">
                                     <span class="px-3 py-1 rounded-full bg-white/95 text-primary font-bold text-xs shadow-sm">

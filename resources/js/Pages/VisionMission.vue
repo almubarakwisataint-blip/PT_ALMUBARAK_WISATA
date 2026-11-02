@@ -196,3 +196,4 @@ const coreValues = [
         <CtaBanner />
     </AppLayout>
 </template>
+
