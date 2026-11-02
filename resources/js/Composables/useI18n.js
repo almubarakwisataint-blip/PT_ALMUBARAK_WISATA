@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 const savedLang = typeof window !== 'undefined' ? (localStorage.getItem('app_lang') || 'ID') : 'ID';
 const currentLang = ref(savedLang);
@@ -59,20 +59,64 @@ const translations = {
         cta_desc: 'Tim layanan kami siap membantu menghitung estimasi biaya, pemilihan tipe kamar (Double/Triple/Quad), dan pengurusan paspor & vaksinasi secara komprehensif.',
         cta_btn_wa: 'Chat WhatsApp',
 
+        // Promo & Consultation
+        promo_title: 'Katalog Penawaran & Diskon Eksklusif',
+        promo_badge: 'PROMO SPESIAL KEBERANGKATAN 1446 H',
+        promo_claim: 'Klaim Promo',
+        consult_title: 'Bingung Menentukan Pilihan Paket?',
+        consult_btn: 'TANYA ALMA DULU',
+
         // Footer
-        footer_brand_desc: 'Penyelenggara Perjalanan Ibadah Umrah (PPIU) dan Haji Khusus resmi terdaftar di Kementerian Agama Republik Indonesia.',
+        footer_brand_desc: 'Penyelenggara Perjalanan Ibadah Umrah (PPIU) No. U.412 dan Haji Khusus (PIHK) resmi terpercaya di bawah naungan Kementerian Agama Republik Indonesia.',
         footer_nav_title: 'Navigasi',
-        footer_contact_title: 'Info Kontak',
-        footer_address: 'Jl. Ciremei Ujung No.210, Bantarjati, Kec. Bogor Utara, Kota Bogor, Jawa Barat 16153',
-        footer_rights: 'Hak Cipta Dilindungi Undang-Undang.',
-        footer_developer: 'Dikembangkan oleh ADDTeam.'
+        footer_services_title: 'Produk & Layanan',
+        footer_contact_title: 'Kantor & Info Kontak',
+        footer_follow_title: 'Follow kami di',
+        footer_payment_title: 'Partner Pembayaran Resmi',
+        footer_partner_btn: 'Jadi Partner Almubarak',
+        footer_rights: 'Seluruh Hak Cipta Dilindungi.',
+        footer_privacy: 'Privasi',
+        footer_terms: 'Syarat & Ketentuan',
+        footer_sitemap: 'Sitemap',
+        footer_contact: 'Hubungi Kami',
+
+        // About Page
+        about_title: 'Melayani Tamu Allah dengan Amanah & Penuh Keberkahan',
+        about_subtitle: 'Profil resmi PT Almubarak Wisata Internasional sebagai penyelenggara haji khusus & umrah berizin Kemenag RI.',
+        about_vision_btn: 'Buka Halaman Visi & Misi',
+        about_team_title: 'Dewan Direksi & Tim Pembimbing Ibadah',
+        about_team_subtitle: 'Para asatidz dan profesional berpengalaman yang siap melayani dan membimbing ibadah Anda.',
+        about_awards_title: 'Penghargaan & Akreditasi Resmi',
+
+        // Vision Mission Page
+        vision_title: 'Visi & Misi Almubarak',
+        vision_subtitle: 'Arah dan prinsip utama PT Almubarak Wisata Internasional dalam menghadirkan pelayanan ibadah berkualitas tinggi.',
+        vision_card_title: 'Visi Kami',
+        mission_card_title: 'Misi Kami',
+
+        // Business Page
+        business_title: 'Unit Bisnis & Layanan Unggulan',
+        business_subtitle: 'Solusi lengkap perjalanan ibadah umrah, haji khusus, wisata halal dunia, reservasi tiket pesawat, dan hotel ring 1.',
+
+        // News Page
+        news_title: 'Wawasan, Berita & Panduan Ibadah',
+        news_subtitle: 'Informasi terkini seputar kebijakan haji & umrah, regulasi Saudi, dan panduan fiqih ibadah praktis.',
+
+        // Contact Page
+        contact_title: 'Hubungi Layanan Jamaah Almubarak',
+        contact_subtitle: 'Tim customer care kami siap memberikan pendampingan dan konsultasi informasi 24 jam.',
+        contact_form_name: 'Nama Lengkap',
+        contact_form_email: 'Alamat Email',
+        contact_form_phone: 'Nomor WhatsApp',
+        contact_form_msg: 'Pesan / Pertanyaan Anda',
+        contact_form_send: 'Kirim Pesan Sekarang'
     },
     EN: {
         // Navbar
         nav_home: 'Home',
         nav_about: 'About Us',
         nav_business: 'Our Services',
-        nav_news: 'News',
+        nav_news: 'News & Articles',
         nav_contact: 'Contact Us',
         nav_vision: 'Vision & Mission',
         nav_team: 'Our Team',
@@ -81,10 +125,10 @@ const translations = {
         nav_subtitle: 'Premium Hajj & Umrah',
 
         // Hero Section
-        hero_badge: 'Official Hajj & Umrah Licensed Operator',
+        hero_badge: 'Official Hajj & Umrah Operator Licensed by Ministry of Religious Affairs',
         hero_title_1: 'Fulfill Your Sacred Journey that is',
         hero_title_2: 'Safe, Comfortable & Mabrur',
-        hero_desc: 'Serving pilgrims wholeheartedly with 5-star ring 1 courtyard hotels, professional sunnah-compliant spiritual guidance, and 100% verified departure schedules.',
+        hero_desc: 'Serving pilgrims wholeheartedly with 5-star ring 1 courtyard hotels, sunnah-compliant spiritual guidance, and 100% verified departure schedules.',
         hero_btn_explore: 'Explore Packages',
         hero_btn_contact: 'Contact Us',
         hero_stat_1_num: '50,000+',
@@ -96,18 +140,18 @@ const translations = {
 
         // Five Pillars
         pillars_tag: 'CORE SERVICE STANDARDS',
-        pillars_title: '5 Guaranteed Umrah & Premium Quality',
-        pillars_subtitle: 'A genuine commitment to safeguard and enrich your pilgrimage from booking until return.',
+        pillars_title: '5 Guaranteed Umrah & Service Excellence',
+        pillars_subtitle: 'A genuine commitment to safeguard and enrich your pilgrimage from registration until return.',
         pillar_1_title: 'Guaranteed Official License',
-        pillar_1_desc: 'Officially registered and Grade A accredited under the Ministry of Religious Affairs.',
-        pillar_2_title: 'Guaranteed Direct Flights',
-        pillar_2_desc: 'Confirmed direct round-trip flights to Jeddah/Madinah via premier 5-star airlines.',
+        pillar_1_desc: 'Officially registered under the Ministry of Religious Affairs with an active Grade A accredited license.',
+        pillar_2_title: 'Guaranteed Flight Schedules',
+        pillar_2_desc: 'Direct confirmed flights to Jeddah/Madinah operated by premier 5-star international airlines.',
         pillar_3_title: 'Guaranteed Ring 1 Hotels',
-        pillar_3_desc: 'First-ring hotels right on the courtyards of Masjidil Haram and Nabawi.',
+        pillar_3_desc: 'First-ring courtyard hotels right in front of Masjidil Haram and Nabawi for prayer convenience.',
         pillar_4_title: 'Guaranteed e-Visa & Tasreh',
-        pillar_4_desc: 'Official e-Hajj visas and Rawdah permits issued directly by certified Saudi providers.',
+        pillar_4_desc: 'Official e-Hajj visas and Rawdah permits issued directly through certified Saudi muassasah.',
         pillar_5_title: 'Guaranteed Sharia Guidance',
-        pillar_5_desc: 'Accompanied by scholars graduated from Islamic University of Madinah.',
+        pillar_5_desc: 'Supervised by qualified scholars graduated from Islamic University of Madinah.',
 
         // Packages
         pkg_tag: 'FEATURED PACKAGES',
@@ -117,18 +161,62 @@ const translations = {
         pkg_price_from: 'Starts from',
 
         // CTA Banner
-        cta_badge: 'OFFICIAL HAJJ & UMRAH HELP & GUIDANCE',
+        cta_badge: 'OFFICIAL HAJJ & UMRAH GUIDANCE & SUPPORT',
         cta_title: 'Still Deciding on Your Schedule & Package?',
-        cta_desc: 'Our customer support team is ready to calculate estimated costs, room type selections (Double/Triple/Quad), and provide full assistance for passports & vaccinations.',
+        cta_desc: 'Our customer support team is ready to calculate estimated costs, assist with room selections (Double/Triple/Quad), and guide your passports & vaccinations.',
         cta_btn_wa: 'Chat WhatsApp',
 
+        // Promo & Consultation
+        promo_title: 'Special Deals & Exclusive Seasonal Offers',
+        promo_badge: 'SPECIAL 1446 H PILGRIMAGE PROMOTION',
+        promo_claim: 'Claim Offer',
+        consult_title: 'Need Help Choosing the Right Package?',
+        consult_btn: 'ASK ALMA NOW',
+
         // Footer
-        footer_brand_desc: 'Licensed Umrah (PPIU) and Special Hajj Operator registered with the Ministry of Religious Affairs of the Republic of Indonesia.',
+        footer_brand_desc: 'Licensed Umrah (PPIU No. U.412) and Special Hajj Operator under the Ministry of Religious Affairs of the Republic of Indonesia.',
         footer_nav_title: 'Navigation',
-        footer_contact_title: 'Contact Information',
-        footer_address: 'Jl. Ciremei Ujung No.210, Bantarjati, North Bogor, Bogor City, West Java 16153',
+        footer_services_title: 'Products & Services',
+        footer_contact_title: 'Office & Contact Info',
+        footer_follow_title: 'Follow us on',
+        footer_payment_title: 'Official Payment Partners',
+        footer_partner_btn: 'Become Almubarak Partner',
         footer_rights: 'All Rights Reserved.',
-        footer_developer: 'Developed by ADDTeam.'
+        footer_privacy: 'Privacy',
+        footer_terms: 'Terms & Conditions',
+        footer_sitemap: 'Sitemap',
+        footer_contact: 'Contact Us',
+
+        // About Page
+        about_title: 'Serving the Guests of Allah with Integrity & Blessing',
+        about_subtitle: 'Official company profile of PT Almubarak Wisata Internasional as a premier licensed Hajj & Umrah provider.',
+        about_vision_btn: 'View Vision & Mission Page',
+        about_team_title: 'Board of Directors & Spiritual Guidance Team',
+        about_team_subtitle: 'Experienced scholars and travel professionals dedicated to escorting your pilgrimage.',
+        about_awards_title: 'Official Awards & Accreditations',
+
+        // Vision Mission Page
+        vision_title: 'Vision & Mission of Almubarak',
+        vision_subtitle: 'Core principles guiding PT Almubarak Wisata Internasional in delivering superior spiritual journey experiences.',
+        vision_card_title: 'Our Vision',
+        mission_card_title: 'Our Mission',
+
+        // Business Page
+        business_title: 'Business Units & Premier Services',
+        business_subtitle: 'Complete pilgrimage solutions including Umrah packages, Special VIP Hajj, Halal tourism, flight bookings, and ring 1 accommodations.',
+
+        // News Page
+        news_title: 'Pilgrimage Insights, News & Guidance',
+        news_subtitle: 'Latest updates on Saudi travel regulations, Hajj & Umrah policies, and practical ritual guides.',
+
+        // Contact Page
+        contact_title: 'Contact Almubarak Customer Care',
+        contact_subtitle: 'Our dedicated customer service team is ready to provide guidance and assistance 24/7.',
+        contact_form_name: 'Full Name',
+        contact_form_email: 'Email Address',
+        contact_form_phone: 'WhatsApp Number',
+        contact_form_msg: 'Your Message / Inquiry',
+        contact_form_send: 'Send Message Now'
     }
 };
 
@@ -152,4 +240,3 @@ export function useI18n() {
         t
     };
 }
-

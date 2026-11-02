@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useI18n } from '@/Composables/useI18n';
 
-const { t } = useI18n();
+const { locale, t } = useI18n();
 const searchQuery = ref('');
 const activeCategory = ref('paket');
 
@@ -34,17 +34,17 @@ const handleSearch = () => {
             <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center mt-6 md:mt-10 w-full">
                 <!-- Main Title -->
                 <h1 class="font-headline-xl text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.15] text-white font-extrabold tracking-tight drop-shadow-md">
-                    Temukan Perjalanan Ibadah &amp; Umrah Terpercaya
+                    {{ locale === 'ID' ? 'Temukan Perjalanan Ibadah & Umrah Terpercaya' : 'Discover Trusted Pilgrimage & Sacred Journeys' }}
                 </h1>
 
                 <!-- Subtitle -->
                 <p class="font-body-lg text-white/90 text-[16px] sm:text-[19px] mt-4 max-w-2xl font-normal leading-relaxed drop-shadow">
-                    Platform resmi bimbingan umrah &amp; haji khusus berizin Kemenag RI di Indonesia.
+                    {{ locale === 'ID' ? 'Platform resmi bimbingan umrah & haji khusus berizin Kemenag RI di Indonesia.' : 'Official platform for verified Umrah and VIP Hajj accredited by the Ministry of Religious Affairs.' }}
                 </p>
 
                 <!-- Accent Highlight Text -->
                 <p class="text-[#fbbd23] font-label-lg text-[15px] sm:text-[17px] font-bold mt-2 tracking-wide drop-shadow">
-                    Wujudkan keberangkatan &amp; kuota Anda di almubarak.com
+                    {{ locale === 'ID' ? 'Wujudkan keberangkatan & kuota Anda di almubarak.com' : 'Secure your seat and pilgrimage quota at almubarak.com' }}
                 </p>
 
                 <!-- Dual Category Pills Toggle directly above search bar -->
@@ -55,7 +55,7 @@ const handleSearch = () => {
                         class="px-6 py-2 rounded-full font-label-md text-label-md font-bold shadow-sm transition-all cursor-pointer" 
                         type="button"
                     >
-                        Paket Umrah &amp; Haji
+                        {{ locale === 'ID' ? 'Paket Umrah & Haji' : 'Umrah & Hajj Packages' }}
                     </button>
                 </div>
 
@@ -68,7 +68,7 @@ const handleSearch = () => {
                         <input 
                             v-model="searchQuery"
                             class="w-full bg-transparent border-0 text-on-surface placeholder:text-outline font-body-md text-[14px] sm:text-[15px] focus:outline-none" 
-                            placeholder="Cari paket umrah, maskapai, tanggal keberangkatan..." 
+                            :placeholder="locale === 'ID' ? 'Cari paket umrah, maskapai, tanggal keberangkatan...' : 'Search umrah packages, airlines, departure dates...'" 
                             type="text"
                         />
                     </div>
@@ -77,7 +77,7 @@ const handleSearch = () => {
                         class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-full bg-black text-white hover:bg-neutral-800 transition-colors font-label-md text-[14px] font-bold shrink-0 shadow-md cursor-pointer" 
                     >
                         <span class="material-symbols-outlined text-[18px]">search</span>
-                        <span>Search</span>
+                        <span>{{ locale === 'ID' ? 'Cari' : 'Search' }}</span>
                     </button>
                 </form>
             </div>
@@ -90,7 +90,7 @@ const handleSearch = () => {
                     class="w-full h-14 rounded-full bg-[#005d42]/90 hover:bg-[#007d5c] backdrop-blur-md border border-white/20 text-white font-label-md text-[14px] sm:text-[15px] font-bold tracking-wide whitespace-nowrap transition-all duration-300 inline-flex items-center justify-center gap-2.5 shadow-2xl group cursor-pointer"
                 >
                     <span class="material-symbols-outlined text-[20px] text-tertiary-fixed group-hover:scale-110 transition-transform">support_agent</span>
-                    <span class="tracking-wide">{{ t('hero_btn_contact') }}</span>
+                    <span class="tracking-wide">{{ locale === 'ID' ? 'Konsultasi Jadwal & Kuota' : 'Schedule & Quota Consultation' }}</span>
                     <span class="material-symbols-outlined text-[18px] text-tertiary-fixed group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
             </div>

@@ -3,6 +3,9 @@ import { ref, computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import CtaBanner from '@/Components/Landing/CtaBanner.vue';
+import { useI18n } from '@/Composables/useI18n';
+
+const { locale, t } = useI18n();
 
 const props = defineProps({
     news: {
@@ -30,54 +33,79 @@ const newsList = computed(() => {
 const sampleArticles = [
     {
         id: 1,
-        title: 'Panduan Lengkap Persiapan Fisik & Mental Menjelang Musim Haji 1446 H',
-        content: 'Ibadah haji menuntut kesiapan fisik dan ruhani yang optimal. Pelajari tips menjaga kesehatan, latihan fisik harian, serta persiapan manasik ilmiah sesuai sunnah.',
+        titleId: 'Panduan Lengkap Persiapan Fisik & Mental Menjelang Musim Haji 1446 H',
+        titleEn: 'Complete Guide to Physical & Mental Preparation for Hajj Season 1446 H',
+        contentId: 'Ibadah haji menuntut kesiapan fisik dan ruhani yang optimal. Pelajari tips menjaga kesehatan, latihan fisik harian, serta persiapan manasik ilmiah sesuai sunnah.',
+        contentEn: 'Hajj requires optimal physical endurance and spiritual devotion. Learn health preservation tips, daily exercises, and authentic ritual teachings based on the Sunnah.',
         image: '/images/landing/gallery-jamaah.jpg',
-        category: 'Panduan Ibadah',
+        categoryId: 'Panduan Ibadah',
+        categoryEn: 'Ritual Guides',
         published_at: '2026-10-25',
         author: 'Ustadz Pembimbing',
     },
     {
         id: 2,
-        title: 'Kemenag RI Rilis Jadwal Resmi Keberangkatan Umrah Awal Musim Dingin',
-        content: 'Ditjen Penyelenggaraan Haji dan Umrah Kemenag RI mengumumkan regulasi terbaru terkait visa biometrik dan slot penerbangan langsung maskapai nasional.',
+        titleId: 'Kemenag RI Rilis Jadwal Resmi Keberangkatan Umrah Awal Musim Dingin',
+        titleEn: 'Ministry of Religious Affairs Releases Official Early Winter Umrah Schedule',
+        contentId: 'Ditjen Penyelenggaraan Haji dan Umrah Kemenag RI mengumumkan regulasi terbaru terkait visa biometrik dan slot penerbangan langsung maskapai nasional.',
+        contentEn: 'The Directorate General of Hajj & Umrah announces latest regulations on biometric e-visas and direct flight slots for national airlines.',
         image: '/images/landing/package-reguler-9hari.jpg',
-        category: 'Regulasi Resmi',
+        categoryId: 'Regulasi Resmi',
+        categoryEn: 'Official Regulations',
         published_at: '2026-10-18',
         author: 'Redaksi Almubarak',
     },
     {
         id: 3,
-        title: 'Sensasi Nyaman Melintasi Gurun Pasir dengan Kereta Cepat Haramain',
-        content: 'Kini perjalanan antara Makkah dan Madinah hanya memakan waktu 2 jam 15 menit dengan kereta modern Haramain High Speed Rail yang telah menjadi fasilitas standar paket Almubarak.',
+        titleId: 'Sensasi Nyaman Melintasi Gurun Pasir dengan Kereta Cepat Haramain',
+        titleEn: 'Comfort Experience Crossing the Desert via Haramain High Speed Rail',
+        contentId: 'Kini perjalanan antara Makkah dan Madinah hanya memakan waktu 2 jam 15 menit dengan kereta modern Haramain High Speed Rail yang telah menjadi fasilitas standar paket Almubarak.',
+        contentEn: 'Journeying between Makkah and Madinah now takes only 2 hours 15 minutes aboard modern Haramain bullet trains, an inclusive feature in Almubarak packages.',
         image: '/images/landing/gallery-kereta.jpg',
-        category: 'Fasilitas & Layanan',
+        categoryId: 'Fasilitas & Layanan',
+        categoryEn: 'Facilities & Services',
         published_at: '2026-10-10',
         author: 'Tour Leader',
     },
     {
         id: 4,
-        title: 'Menyelami Sejarah Jejak Khilafah Utsmaniyah di Hagia Sophia & Istanbul',
-        content: 'Perpaduan agung peradaban Islam di Turki menjadi salah satu destinasi wisata halal paling diminati jamaah keluarga dan korporasi.',
+        titleId: 'Menyelami Sejarah Jejak Khilafah Utsmaniyah di Hagia Sophia & Istanbul',
+        titleEn: 'Exploring Ottoman Heritage in Hagia Sophia & Istanbul Historical Landmarks',
+        contentId: 'Perpaduan agung peradaban Islam di Turki menjadi salah satu destinasi wisata halal paling diminati jamaah keluarga dan korporasi.',
+        contentEn: 'The majestic Islamic civilizational history in Turkey is among the most sought-after halal tourism destinations for families and corporations.',
         image: '/images/landing/package-turki-plus.jpg',
-        category: 'Wisata Halal',
+        categoryId: 'Wisata Halal',
+        categoryEn: 'Halal Tourism',
         published_at: '2026-09-28',
         author: 'Pemandu Sejarah',
     },
 ];
 
 const articles = computed(() => {
-    return newsList.value.length > 0 ? newsList.value : sampleArticles;
+    const isEn = locale.value === 'EN';
+    const source = newsList.value.length > 0 ? newsList.value : sampleArticles;
+    return source.map(item => ({
+        ...item,
+        title: isEn && item.titleEn ? item.titleEn : (item.title || item.titleId),
+        content: isEn && item.contentEn ? item.contentEn : (item.content || item.contentId),
+        category: isEn && item.categoryEn ? item.categoryEn : (item.category || item.categoryId || (isEn ? 'General News' : 'Berita Ibadah')),
+    }));
 });
 
 const searchQuery = ref('');
 const activeCategory = ref('Semua');
 
-const categories = ['Semua', 'Panduan Ibadah', 'Regulasi Resmi', 'Fasilitas & Layanan', 'Wisata Halal'];
+const categories = computed(() => {
+    return locale.value === 'EN' 
+        ? ['All', 'Ritual Guides', 'Official Regulations', 'Facilities & Services', 'Halal Tourism']
+        : ['Semua', 'Panduan Ibadah', 'Regulasi Resmi', 'Fasilitas & Layanan', 'Wisata Halal'];
+});
 
 const filteredArticles = computed(() => {
+    const isEn = locale.value === 'EN';
+    const allLabel = isEn ? 'All' : 'Semua';
     return articles.value.filter(item => {
-        const matchesCategory = activeCategory.value === 'Semua' || (item.category && item.category === activeCategory.value);
+        const matchesCategory = activeCategory.value === allLabel || activeCategory.value === 'Semua' || (item.category && item.category === activeCategory.value);
         const matchesSearch = !searchQuery.value.trim() || 
             item.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
             (item.content && item.content.toLowerCase().includes(searchQuery.value.toLowerCase()));
@@ -87,7 +115,7 @@ const filteredArticles = computed(() => {
 </script>
 
 <template>
-    <Head title="Berita &amp; Informasi - Almubarak Wisata Internasional" />
+    <Head :title="locale === 'ID' ? 'Berita & Informasi - Almubarak Wisata Internasional' : 'News & Insights - Almubarak Wisata Internasional'" />
 
     <AppLayout>
         <!-- Hero Header -->
@@ -104,13 +132,13 @@ const filteredArticles = computed(() => {
                 <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-tertiary-fixed font-label-sm text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
                         <span class="material-symbols-outlined text-[16px]">newspaper</span>
-                        Warta &amp; Edukasi
+                        {{ locale === 'ID' ? 'Warta & Edukasi' : 'News & Insights' }}
                     </span>
                     <h1 class="font-headline-xl text-[34px] sm:text-[46px] lg:text-[54px] text-white font-extrabold tracking-tight leading-tight">
-                        Kabar Baitullah &amp; Edukasi Ibadah
+                        {{ locale === 'ID' ? 'Kabar Baitullah & Edukasi Ibadah' : 'Holy Sanctuaries News & Education' }}
                     </h1>
                     <p class="font-body-lg text-white/90 text-[16px] sm:text-[18px] mt-4 leading-relaxed max-w-2xl">
-                        Informasi terkini seputar regulasi haji, umrah, tips manasik, dan agenda keberangkatan Almubarak Wisata.
+                        {{ locale === 'ID' ? 'Informasi terkini seputar regulasi haji, umrah, tips manasik, dan agenda keberangkatan Almubarak Wisata.' : 'Latest updates on Hajj regulations, Umrah policies, practical ritual tips, and official departure schedules.' }}
                     </p>
 
                     <!-- Search Input Inside Hero -->
@@ -118,12 +146,12 @@ const filteredArticles = computed(() => {
                         <input 
                             v-model="searchQuery"
                             type="text" 
-                            placeholder="Cari artikel, tips manasik, jadwal..." 
+                            :placeholder="locale === 'ID' ? 'Cari artikel, tips manasik, jadwal...' : 'Search articles, ritual guides, schedules...'" 
                             class="w-full bg-transparent border-0 text-on-surface text-sm focus:outline-none placeholder:text-outline"
                         />
                         <button class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-primary text-white text-xs font-bold shrink-0">
                             <span class="material-symbols-outlined text-[16px]">search</span>
-                            <span>Cari</span>
+                            <span>{{ locale === 'ID' ? 'Cari' : 'Search' }}</span>
                         </button>
                     </div>
                 </div>
@@ -153,8 +181,8 @@ const filteredArticles = computed(() => {
             <div class="max-w-7xl mx-auto px-gutter">
                 <div v-if="filteredArticles.length === 0" class="text-center py-16 bg-surface-container-lowest rounded-2xl border border-surface-container">
                     <span class="material-symbols-outlined text-4xl text-outline mb-2">search_off</span>
-                    <h3 class="text-lg font-bold text-on-surface">Tidak ada artikel yang sesuai</h3>
-                    <p class="text-sm text-outline mt-1">Coba gunakan kata kunci pencarian yang lain.</p>
+                    <h3 class="text-lg font-bold text-on-surface">{{ locale === 'ID' ? 'Tidak ada artikel yang sesuai' : 'No articles found' }}</h3>
+                    <p class="text-sm text-outline mt-1">{{ locale === 'ID' ? 'Coba gunakan kata kunci pencarian yang lain.' : 'Try using different search keywords.' }}</p>
                 </div>
 
                 <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -171,7 +199,7 @@ const filteredArticles = computed(() => {
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary/90 backdrop-blur-md text-white font-label-sm text-[11px] font-bold shadow-sm">
-                                {{ art.category || 'Berita Ibadah' }}
+                                {{ art.category }}
                             </span>
                         </div>
 
@@ -180,7 +208,7 @@ const filteredArticles = computed(() => {
                             <div>
                                 <div class="flex items-center gap-2 text-xs text-outline mb-2.5">
                                     <span class="material-symbols-outlined text-[16px]">calendar_today</span>
-                                    <span>{{ art.published_at || 'Terbaru' }}</span>
+                                    <span>{{ art.published_at || (locale === 'ID' ? 'Terbaru' : 'Latest') }}</span>
                                     <span>•</span>
                                     <span class="text-primary font-medium">{{ art.author || 'Tim Almubarak' }}</span>
                                 </div>
@@ -197,7 +225,7 @@ const filteredArticles = computed(() => {
                                     :href="`/news/${art.id}`"
                                     class="inline-flex items-center gap-1.5 text-primary hover:text-primary-container font-semibold text-xs transition-colors group-hover:translate-x-1 duration-200"
                                 >
-                                    <span>Baca Selengkapnya</span>
+                                    <span>{{ locale === 'ID' ? 'Baca Selengkapnya' : 'Read Full Article' }}</span>
                                     <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                                 </Link>
                                 <span class="material-symbols-outlined text-[18px] text-outline">bookmark_border</span>

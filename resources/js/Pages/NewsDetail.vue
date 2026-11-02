@@ -2,6 +2,9 @@
 import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import CtaBanner from '@/Components/Landing/CtaBanner.vue';
+import { useI18n } from '@/Composables/useI18n';
+
+const { locale, t } = useI18n();
 
 const props = defineProps({
     newsItem: {
@@ -37,9 +40,9 @@ const shareOnWhatsApp = () => {
         <article class="w-full max-w-4xl mx-auto px-gutter pt-8 pb-16">
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-outline mb-6">
-                <Link href="/" class="hover:text-primary transition-colors">Beranda</Link>
+                <Link href="/" class="hover:text-primary transition-colors">{{ t('nav_home') }}</Link>
                 <span>/</span>
-                <Link href="/news" class="hover:text-primary transition-colors">Berita</Link>
+                <Link href="/news" class="hover:text-primary transition-colors">{{ t('nav_news') }}</Link>
                 <span>/</span>
                 <span class="text-on-surface truncate max-w-xs font-medium">{{ newsItem.title }}</span>
             </nav>
@@ -47,7 +50,7 @@ const shareOnWhatsApp = () => {
             <!-- Article Title -->
             <div class="mb-6">
                 <span class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-xs font-bold uppercase tracking-wider mb-3">
-                    {{ newsItem.category || 'Warta Ibadah' }}
+                    {{ newsItem.category || (locale === 'ID' ? 'Warta Ibadah' : 'Pilgrimage News') }}
                 </span>
                 <h1 class="font-headline-xl text-2xl sm:text-4xl text-on-surface font-extrabold tracking-tight leading-tight">
                     {{ newsItem.title }}
@@ -60,7 +63,7 @@ const shareOnWhatsApp = () => {
                     <span>•</span>
                     <div class="flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-[16px]">calendar_today</span>
-                        <span>{{ newsItem.published_at || 'Terbaru' }}</span>
+                        <span>{{ newsItem.published_at || (locale === 'ID' ? 'Terbaru' : 'Latest') }}</span>
                     </div>
                     <span>•</span>
                     <button 
@@ -69,7 +72,7 @@ const shareOnWhatsApp = () => {
                         type="button"
                     >
                         <span class="material-symbols-outlined text-[16px]">share</span>
-                        <span>Bagikan ke WhatsApp</span>
+                        <span>{{ locale === 'ID' ? 'Bagikan ke WhatsApp' : 'Share to WhatsApp' }}</span>
                     </button>
                 </div>
             </div>
@@ -89,15 +92,22 @@ const shareOnWhatsApp = () => {
                     {{ newsItem.content }}
                 </p>
                 <p class="text-on-surface-variant font-normal leading-relaxed">
-                    Bagi calon jamaah yang hendak merencanakan keberangkatan ke Tanah Suci, PT Almubarak Wisata Internasional senantiasa menyediakan bimbingan manasik komprehensif, kepastian jadwal, akomodasi hotel pelataran ring utama, dan maskapai penerbangan langsung tanpa transit.
+                    {{ locale === 'ID' 
+                        ? 'Bagi calon jamaah yang hendak merencanakan keberangkatan ke Tanah Suci, PT Almubarak Wisata Internasional senantiasa menyediakan bimbingan manasik komprehensif, kepastian jadwal, akomodasi hotel pelataran ring utama, dan maskapai penerbangan langsung tanpa transit.'
+                        : 'For prospective pilgrims planning their sacred departure to the Holy Land, PT Almubarak Wisata Internasional consistently provides comprehensive ritual guidance, flight certainty, 5-star ring 1 hotels, and direct non-stop flights.'
+                    }}
                 </p>
             </div>
 
             <!-- Share & Contact Customer Care Box -->
             <div class="mt-12 p-6 rounded-2xl bg-surface-container-low border border-surface-container flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <h4 class="font-headline-sm text-base text-primary font-bold">Punya Pertanyaan Seputar Artikel Ini?</h4>
-                    <p class="text-xs text-on-surface-variant mt-1">Tim layanan kami siap berdiskusi langsung melalui WhatsApp.</p>
+                    <h4 class="font-headline-sm text-base text-primary font-bold">
+                        {{ locale === 'ID' ? 'Punya Pertanyaan Seputar Artikel Ini?' : 'Questions About This Article?' }}
+                    </h4>
+                    <p class="text-xs text-on-surface-variant mt-1">
+                        {{ locale === 'ID' ? 'Tim layanan kami siap berdiskusi langsung melalui WhatsApp.' : 'Our customer care team is available to consult directly via WhatsApp.' }}
+                    </p>
                 </div>
                 <a 
                     href="https://wa.me/6281260003484" 
@@ -105,13 +115,15 @@ const shareOnWhatsApp = () => {
                     class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primary-container text-white font-bold text-xs shadow-sm transition-all whitespace-nowrap"
                 >
                     <span class="material-symbols-outlined text-[18px]">chat</span>
-                    <span>Tanya Layanan</span>
+                    <span>{{ locale === 'ID' ? 'Tanya Layanan' : 'Contact Support' }}</span>
                 </a>
             </div>
 
             <!-- Related News Section -->
             <div v-if="relatedNews && relatedNews.length > 0" class="mt-16 pt-8 border-t border-surface-container">
-                <h3 class="font-headline-sm text-xl text-primary font-bold mb-6">Artikel Terkait Lainnya</h3>
+                <h3 class="font-headline-sm text-xl text-primary font-bold mb-6">
+                    {{ locale === 'ID' ? 'Artikel Terkait Lainnya' : 'Other Related Articles' }}
+                </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <Link 
                         v-for="rel in relatedNews" 
@@ -126,7 +138,7 @@ const shareOnWhatsApp = () => {
                             <h4 class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors line-clamp-2">
                                 {{ rel.title }}
                             </h4>
-                            <span class="text-xs text-outline mt-1 block">{{ rel.published_at || 'Terbaru' }}</span>
+                            <span class="text-xs text-outline mt-1 block">{{ rel.published_at || (locale === 'ID' ? 'Terbaru' : 'Latest') }}</span>
                         </div>
                     </Link>
                 </div>

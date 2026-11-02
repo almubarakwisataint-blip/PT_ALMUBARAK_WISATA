@@ -1,15 +1,32 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { useI18n } from '@/Composables/useI18n';
 
 const page = usePage();
 const isMobileMenuOpen = ref(false);
+const isLangDropdownOpen = ref(false);
+const langDropdownRef = ref(null);
 const { locale, setLocale, t } = useI18n();
 
-const toggleLang = (lang) => {
+const selectLang = (lang) => {
     setLocale(lang);
+    isLangDropdownOpen.value = false;
 };
+
+const handleClickOutside = (event) => {
+    if (langDropdownRef.value && !langDropdownRef.value.contains(event.target)) {
+        isLangDropdownOpen.value = false;
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 
 const currentUrl = computed(() => page.url);
 
@@ -81,41 +98,87 @@ const isLinkActive = (path) => {
                 </Link>
             </nav>
 
-            <!-- Right Controls: Country Flag Language Switcher (Image 5) & Masuk Button -->
+            <!-- Right Controls: Multilingual Dropdown & Masuk Button -->
             <div class="flex items-center gap-space-md">
-                <!-- Country Flag Toggle Pill (No ID/EN text - Flags Only) -->
-                <div class="inline-flex items-center p-1 rounded-full bg-surface-container border border-surface-container-high shadow-xs">
-                    <!-- Indonesia Flag Button -->
+                <!-- Dropdown Pilihan Bahasa (Elegan & Minimalis Sesuai Spesifikasi) -->
+                <div class="relative" ref="langDropdownRef">
                     <button 
-                        @click="toggleLang('ID')"
-                        :class="locale === 'ID' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
-                        class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
+                        @click.stop="isLangDropdownOpen = !isLangDropdownOpen"
                         type="button"
-                        title="Indonesia"
-                        aria-label="Bahasa Indonesia"
+                        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-surface-container-high text-xs font-bold text-on-surface transition-all cursor-pointer shadow-xs"
+                        aria-label="Pilih Bahasa"
+                        :aria-expanded="isLangDropdownOpen"
                     >
-                        <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
-                            <path fill="#e70011" d="M0 0h512v256H0z"/>
-                            <path fill="#ffffff" d="M0 256h512v256H0z"/>
-                        </svg>
+                        <!-- Bendera Aktif -->
+                        <span v-if="locale === 'ID'" class="w-5 h-5 rounded-full overflow-hidden shrink-0 border border-black/10 inline-flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 512 512">
+                                <path fill="#e70011" d="M0 0h512v256H0z"/>
+                                <path fill="#ffffff" d="M0 256h512v256H0z"/>
+                            </svg>
+                        </span>
+                        <span v-else class="w-5 h-5 rounded-full overflow-hidden shrink-0 border border-black/10 inline-flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 512 512">
+                                <path fill="#00247d" d="M0 0h512v512H0z"/>
+                                <path stroke="#fff" stroke-width="60" d="M0 0l512 512M512 0L0 512"/>
+                                <path stroke="#cf142b" stroke-width="40" d="M0 0l512 512M512 0L0 512"/>
+                                <path stroke="#fff" stroke-width="100" d="M256 0v512M0 256h512"/>
+                                <path stroke="#cf142b" stroke-width="60" d="M256 0v512M0 256h512"/>
+                            </svg>
+                        </span>
+                        
+                        <!-- Nama Bahasa Aktif -->
+                        <span class="font-semibold text-neutral-800">{{ locale === 'ID' ? 'Indonesia' : 'English' }}</span>
+                        <span class="material-symbols-outlined text-[16px] text-neutral-500 transition-transform duration-200" :class="{ 'rotate-180': isLangDropdownOpen }">
+                            expand_more
+                        </span>
                     </button>
-                    <!-- English / UK Flag Button -->
-                    <button 
-                        @click="toggleLang('EN')"
-                        :class="locale === 'EN' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
-                        class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
-                        type="button"
-                        title="English"
-                        aria-label="English"
+
+                    <!-- Dropdown Menu -->
+                    <div 
+                        v-if="isLangDropdownOpen"
+                        class="absolute right-0 mt-2 w-44 rounded-2xl bg-white shadow-xl border border-gray-100 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
                     >
-                        <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
-                            <path fill="#00247d" d="M0 0h512v512H0z"/>
-                            <path stroke="#fff" stroke-width="60" d="M0 0l512 512M512 0L0 512"/>
-                            <path stroke="#cf142b" stroke-width="40" d="M0 0l512 512M512 0L0 512"/>
-                            <path stroke="#fff" stroke-width="100" d="M256 0v512M0 256h512"/>
-                            <path stroke="#cf142b" stroke-width="60" d="M256 0v512M0 256h512"/>
-                        </svg>
-                    </button>
+                        <!-- Pilihan 1: Indonesia -->
+                        <button 
+                            @click="selectLang('ID')"
+                            type="button"
+                            class="w-full px-3.5 py-2.5 text-left flex items-center justify-between gap-2.5 text-xs font-semibold hover:bg-emerald-50 transition-colors cursor-pointer"
+                            :class="locale === 'ID' ? 'text-[#005138] bg-emerald-50/70 font-bold' : 'text-gray-700'"
+                        >
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-5 h-5 rounded-full overflow-hidden shrink-0 border border-black/10 inline-flex items-center justify-center">
+                                    <svg class="w-full h-full" viewBox="0 0 512 512">
+                                        <path fill="#e70011" d="M0 0h512v256H0z"/>
+                                        <path fill="#ffffff" d="M0 256h512v256H0z"/>
+                                    </svg>
+                                </span>
+                                <span>🇮🇩 Indonesia</span>
+                            </div>
+                            <span v-if="locale === 'ID'" class="material-symbols-outlined text-[16px] text-[#005138]">check</span>
+                        </button>
+
+                        <!-- Pilihan 2: English -->
+                        <button 
+                            @click="selectLang('EN')"
+                            type="button"
+                            class="w-full px-3.5 py-2.5 text-left flex items-center justify-between gap-2.5 text-xs font-semibold hover:bg-emerald-50 transition-colors cursor-pointer"
+                            :class="locale === 'EN' ? 'text-[#005138] bg-emerald-50/70 font-bold' : 'text-gray-700'"
+                        >
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-5 h-5 rounded-full overflow-hidden shrink-0 border border-black/10 inline-flex items-center justify-center">
+                                    <svg class="w-full h-full" viewBox="0 0 512 512">
+                                        <path fill="#00247d" d="M0 0h512v512H0z"/>
+                                        <path stroke="#fff" stroke-width="60" d="M0 0l512 512M512 0L0 512"/>
+                                        <path stroke="#cf142b" stroke-width="40" d="M0 0l512 512M512 0L0 512"/>
+                                        <path stroke="#fff" stroke-width="100" d="M256 0v512M0 256h512"/>
+                                        <path stroke="#cf142b" stroke-width="60" d="M256 0v512M0 256h512"/>
+                                    </svg>
+                                </span>
+                                <span>🇬🇧 English</span>
+                            </div>
+                            <span v-if="locale === 'EN'" class="material-symbols-outlined text-[16px] text-[#005138]">check</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Masuk / Admin Login Button -->
@@ -184,36 +247,28 @@ const isLinkActive = (path) => {
                 >
                     {{ t('nav_contact') }}
                 </Link>
-                <!-- Mobile Country Flag Language Switcher -->
+
+                <!-- Mobile Language Selector -->
                 <div class="flex items-center justify-between p-3 rounded-xl bg-surface-container mt-2">
-                    <span class="text-xs font-bold text-on-surface-variant">Pilih Negara / Bahasa:</span>
-                    <div class="inline-flex items-center p-1 rounded-full bg-white border border-surface-container-high shadow-xs">
+                    <span class="text-xs font-bold text-on-surface-variant">{{ locale === 'ID' ? 'Pilihan Bahasa:' : 'Language Selection:' }}</span>
+                    <div class="flex items-center gap-1.5">
                         <button 
-                            @click="toggleLang('ID')"
-                            :class="locale === 'ID' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
-                            class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
+                            @click="selectLang('ID')"
+                            :class="locale === 'ID' ? 'bg-[#005138] text-white shadow-xs' : 'bg-white text-gray-700'"
+                            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
                             type="button"
-                            title="Indonesia"
                         >
-                            <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
-                                <path fill="#e70011" d="M0 0h512v256H0z"/>
-                                <path fill="#ffffff" d="M0 256h512v256H0z"/>
-                            </svg>
+                            <span>🇮🇩</span>
+                            <span>Indonesia</span>
                         </button>
                         <button 
-                            @click="toggleLang('EN')"
-                            :class="locale === 'EN' ? 'bg-[#005138] shadow-xs ring-2 ring-[#005138]/20' : 'hover:bg-black/5 opacity-60 hover:opacity-100'"
-                            class="p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center" 
+                            @click="selectLang('EN')"
+                            :class="locale === 'EN' ? 'bg-[#005138] text-white shadow-xs' : 'bg-white text-gray-700'"
+                            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
                             type="button"
-                            title="English"
                         >
-                            <svg class="w-6 h-6 rounded-full shadow-xs border border-white/50 shrink-0 overflow-hidden" viewBox="0 0 512 512">
-                                <path fill="#00247d" d="M0 0h512v512H0z"/>
-                                <path stroke="#fff" stroke-width="60" d="M0 0l512 512M512 0L0 512"/>
-                                <path stroke="#cf142b" stroke-width="40" d="M0 0l512 512M512 0L0 512"/>
-                                <path stroke="#fff" stroke-width="100" d="M256 0v512M0 256h512"/>
-                                <path stroke="#cf142b" stroke-width="60" d="M256 0v512M0 256h512"/>
-                            </svg>
+                            <span>🇬🇧</span>
+                            <span>English</span>
                         </button>
                     </div>
                 </div>

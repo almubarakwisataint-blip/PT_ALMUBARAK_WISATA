@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import CtaBanner from '@/Components/Landing/CtaBanner.vue';
+import { useI18n } from '@/Composables/useI18n';
+
+const { locale, t } = useI18n();
 
 const form = useForm({
     name: '',
@@ -27,24 +30,40 @@ const submitForm = () => {
     });
 };
 
-const faqs = [
+const rawFaqs = [
     {
-        q: 'Bagaimana cara mendaftar paket umrah di Almubarak Wisata?',
-        a: 'Pendaftaran dapat dilakukan secara online melalui website, via WhatsApp Customer Care, atau datang langsung ke kantor kami. Anda cukup menyiapkan fotokopi KTP, KK, dan paspor (jika sudah ada), serta membayar uang muka (DP) pendaftaran.',
+        qId: 'Bagaimana cara mendaftar paket umrah di Almubarak Wisata?',
+        qEn: 'How do I register for an Umrah package at Almubarak Wisata?',
+        aId: 'Pendaftaran dapat dilakukan secara online melalui website, via WhatsApp Customer Care, atau datang langsung ke kantor kami. Anda cukup menyiapkan fotokopi KTP, KK, dan paspor (jika sudah ada), serta membayar uang muka (DP) pendaftaran.',
+        aEn: 'Registration can be done online through our website, WhatsApp Customer Care, or by visiting our branch offices. You only need a copy of your National ID (KTP/Passport), Family Card, and a registration deposit (DP).',
     },
     {
-        q: 'Apakah Almubarak Wisata memiliki izin resmi dari Kemenag RI?',
-        a: 'Ya, PT Almubarak Wisata Internasional berizin resmi PPIU (Penyelenggara Perjalanan Ibadah Umrah) No. U.412 dan PIHK (Penyelenggara Ibadah Haji Khusus) berakreditasi A dari Kementerian Agama Republik Indonesia.',
+        qId: 'Apakah Almubarak Wisata memiliki izin resmi dari Kemenag RI?',
+        qEn: 'Does Almubarak Wisata hold official licenses from the Ministry of Religious Affairs?',
+        aId: 'Ya, PT Almubarak Wisata Internasional berizin resmi PPIU (Penyelenggara Perjalanan Ibadah Umrah) No. U.412 dan PIHK (Penyelenggara Ibadah Haji Khusus) berakreditasi A dari Kementerian Agama Republik Indonesia.',
+        aEn: 'Yes, PT Almubarak Wisata Internasional holds official PPIU (Umrah Organizer) License No. U.412 and PIHK (Special Hajj Organizer) with Grade A Accreditation from the Ministry of Religious Affairs of Indonesia.',
     },
     {
-        q: 'Apakah biaya paket sudah termasuk perlengkapan dan manasik?',
-        a: 'Seluruh paket umrah kami sudah all-in termasuk bimbingan manasik, perlengkapan eksklusif (koper bagasi, tas kabin, kain ihram/mukena, batik seragam), asuransi perjalanan internasional, visa, dan handling bandara.',
+        qId: 'Apakah biaya paket sudah termasuk perlengkapan dan manasik?',
+        qEn: 'Are travel gear and ritual training (manasik) included in the package cost?',
+        aId: 'Seluruh paket umrah kami sudah all-in termasuk bimbingan manasik, perlengkapan eksklusif (koper bagasi, tas kabin, kain ihram/mukena, batik seragam), asuransi perjalanan internasional, visa, dan handling bandara.',
+        aEn: 'All of our Umrah packages are fully inclusive: ritual workshops (manasik), exclusive luggage sets, Ihram/prayer garments, batik uniforms, international travel insurance, Saudi visas, and VIP airport handling.',
     },
     {
-        q: 'Bagaimana jika belum memiliki paspor atau vaksinasi meningitis?',
-        a: 'Tim layanan kami siap memberikan surat rekomendasi resmi dan panduan lengkap pengurusan paspor di kantor imigrasi terdekat serta rekomendasi klinik vaksinasi meningitis resmi.',
+        qId: 'Bagaimana jika belum memiliki paspor atau vaksinasi meningitis?',
+        qEn: 'What if I do not have a passport or meningitis vaccination yet?',
+        aId: 'Tim layanan kami siap memberikan surat rekomendasi resmi dan panduan lengkap pengurusan paspor di kantor imigrasi terdekat serta rekomendasi klinik vaksinasi meningitis resmi.',
+        aEn: 'Our support team issues official recommendation letters and step-by-step guidance for immigration passport applications, along with certified meningitis vaccination clinics.',
     },
 ];
+
+const faqs = computed(() => {
+    const isEn = locale.value === 'EN';
+    return rawFaqs.map(f => ({
+        q: isEn ? f.qEn : f.qId,
+        a: isEn ? f.aEn : f.aId,
+    }));
+});
 
 const openFaq = ref(null);
 const toggleFaq = (idx) => {
@@ -53,7 +72,7 @@ const toggleFaq = (idx) => {
 </script>
 
 <template>
-    <Head title="Hubungi Kami - Almubarak Wisata Internasional" />
+    <Head :title="locale === 'ID' ? 'Hubungi Kami - Almubarak Wisata Internasional' : 'Contact Us - Almubarak Wisata Internasional'" />
 
     <AppLayout>
         <!-- Hero Header -->
@@ -70,13 +89,13 @@ const toggleFaq = (idx) => {
                 <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-tertiary-fixed font-label-sm text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
                         <span class="material-symbols-outlined text-[16px]">support_agent</span>
-                        Layanan 24/7
+                        {{ locale === 'ID' ? 'Layanan 24/7' : '24/7 Support' }}
                     </span>
                     <h1 class="font-headline-xl text-[34px] sm:text-[46px] lg:text-[54px] text-white font-extrabold tracking-tight leading-tight">
-                        Hubungi Tim Layanan Kami
+                        {{ locale === 'ID' ? 'Hubungi Tim Layanan Kami' : 'Contact Our Service Team' }}
                     </h1>
                     <p class="font-body-lg text-white/90 text-[16px] sm:text-[18px] mt-4 leading-relaxed max-w-2xl">
-                        Kami siap mendengarkan dan membantu merencanakan perjalanan ibadah Anda dan keluarga dengan sepenuh hati.
+                        {{ locale === 'ID' ? 'Kami siap mendengarkan dan membantu merencanakan perjalanan ibadah Anda dan keluarga dengan sepenuh hati.' : 'We are dedicated to helping you and your family plan a peaceful, blessed pilgrimage to the Holy Land.' }}
                     </p>
                 </div>
             </div>
@@ -90,13 +109,13 @@ const toggleFaq = (idx) => {
                     <div class="lg:col-span-5 flex flex-col gap-6">
                         <div>
                             <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                                Informasi Kontak
+                                {{ locale === 'ID' ? 'Informasi Kontak' : 'Contact Information' }}
                             </span>
                             <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight mt-1">
-                                Mari Terhubung
+                                {{ locale === 'ID' ? 'Mari Terhubung' : 'Get in Touch' }}
                             </h2>
                             <p class="font-body-md text-sm sm:text-base text-on-surface-variant mt-2 leading-relaxed">
-                                Silakan hubungi kami melalui sambungan telepon, pesan WhatsApp, atau kunjungi kantor representatif kami.
+                                {{ locale === 'ID' ? 'Silakan hubungi kami melalui sambungan telepon, pesan WhatsApp, atau kunjungi kantor representatif kami.' : 'Reach out to our customer care via WhatsApp, direct phone call, or visit our representative office.' }}
                             </p>
                         </div>
 
@@ -111,10 +130,10 @@ const toggleFaq = (idx) => {
                             </div>
                             <div class="flex-1">
                                 <h3 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-primary transition-colors">
-                                    Customer Care 1 (Informasi Paket)
+                                    {{ locale === 'ID' ? 'Customer Care 1 (Informasi Paket)' : 'Customer Care 1 (Package Info)' }}
                                 </h3>
                                 <p class="text-sm text-primary font-semibold mt-0.5">+62 812-6000-3484</p>
-                                <p class="text-xs text-outline mt-1">Layanan WhatsApp &amp; Telepon • Respons Cepat</p>
+                                <p class="text-xs text-outline mt-1">{{ locale === 'ID' ? 'Layanan WhatsApp & Telepon • Respons Cepat' : 'WhatsApp & Phone Service • Quick Response' }}</p>
                             </div>
                         </a>
 
@@ -129,10 +148,10 @@ const toggleFaq = (idx) => {
                             </div>
                             <div class="flex-1">
                                 <h3 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-primary transition-colors">
-                                    Customer Care 2 (Dokumen &amp; Paspor)
+                                    {{ locale === 'ID' ? 'Customer Care 2 (Dokumen & Paspor)' : 'Customer Care 2 (Documents & Passports)' }}
                                 </h3>
                                 <p class="text-sm text-primary font-semibold mt-0.5">+62 811-8000-2807</p>
-                                <p class="text-xs text-outline mt-1">Bantuan visa, tiket &amp; keberangkatan</p>
+                                <p class="text-xs text-outline mt-1">{{ locale === 'ID' ? 'Bantuan visa, tiket & keberangkatan' : 'Visa assistance, tickets & departure schedules' }}</p>
                             </div>
                         </a>
 
@@ -143,12 +162,12 @@ const toggleFaq = (idx) => {
                             </div>
                             <div>
                                 <h3 class="font-headline-sm text-base text-on-surface font-bold">
-                                    Email Resmi
+                                    {{ locale === 'ID' ? 'Email Resmi' : 'Official Email' }}
                                 </h3>
                                 <a href="mailto:almubarak.wisata@gmail.com" class="text-sm text-primary font-semibold hover:underline mt-0.5 block">
                                     almubarak.wisata@gmail.com
                                 </a>
-                                <p class="text-xs text-outline mt-1">Untuk korespondensi resmi &amp; kerjasama corporate</p>
+                                <p class="text-xs text-outline mt-1">{{ locale === 'ID' ? 'Untuk korespondensi resmi & kerjasama corporate' : 'For corporate inquiries & official correspondence' }}</p>
                             </div>
                         </div>
 
@@ -159,12 +178,12 @@ const toggleFaq = (idx) => {
                             </div>
                             <div>
                                 <h3 class="font-headline-sm text-base text-on-surface font-bold">
-                                    Kantor Operasional Bogor
+                                    {{ locale === 'ID' ? 'Kantor Operasional Bogor' : 'Bogor Operational Office' }}
                                 </h3>
                                 <p class="text-sm text-on-surface-variant mt-1 leading-relaxed">
                                     Jl. Ciremei Ujung No.210, Bantarjati, Kec. Bogor Utara, Kota Bogor, Jawa Barat 16153
                                 </p>
-                                <p class="text-xs text-outline mt-2">Buka Senin - Sabtu (08.30 - 17.30 WIB)</p>
+                                <p class="text-xs text-outline mt-2">{{ locale === 'ID' ? 'Buka Senin - Sabtu (08.30 - 17.30 WIB)' : 'Open Monday - Saturday (08:30 - 17:30 WIB)' }}</p>
                             </div>
                         </div>
                     </div>
@@ -174,33 +193,35 @@ const toggleFaq = (idx) => {
                         <div class="bg-surface-container-lowest p-8 sm:p-10 rounded-3xl shadow-xl border border-surface-container">
                             <div class="mb-6">
                                 <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                                    Kirim Pesan
+                                    {{ locale === 'ID' ? 'Kirim Pesan' : 'Send Message' }}
                                 </span>
                                 <h3 class="font-headline-sm text-2xl text-primary font-extrabold mt-1">
-                                    Bantuan &amp; Pertanyaan Online
+                                    {{ locale === 'ID' ? 'Bantuan & Pertanyaan Online' : 'Online Assistance & Inquiries' }}
                                 </h3>
                                 <p class="text-sm text-on-surface-variant mt-1">
-                                    Isi formulir di bawah ini dan tim layanan kami akan menghubungi Anda sesegera mungkin.
+                                    {{ locale === 'ID' ? 'Isi formulir di bawah ini dan tim layanan kami akan menghubungi Anda sesegera mungkin.' : 'Fill in the form below and our care team will contact you promptly.' }}
                                 </p>
                             </div>
 
                             <!-- Success Banner -->
                             <div v-if="isSubmitted" class="mb-6 p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center gap-3">
                                 <span class="material-symbols-outlined text-[24px]">check_circle</span>
-                                <span class="text-sm font-semibold">Alhamdulillah, pesan Anda telah terkirim! Tim layanan kami akan segera menghubungi Anda.</span>
+                                <span class="text-sm font-semibold">
+                                    {{ locale === 'ID' ? 'Alhamdulillah, pesan Anda telah terkirim! Tim layanan kami akan segera menghubungi Anda.' : 'Alhamdulillah, your message has been sent successfully! Our care team will contact you shortly.' }}
+                                </span>
                             </div>
 
                             <form @submit.prevent="submitForm" class="space-y-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1.5">
-                                            Nama Lengkap *
+                                            {{ locale === 'ID' ? 'Nama Lengkap *' : 'Full Name *' }}
                                         </label>
                                         <input 
                                             v-model="form.name"
                                             required
                                             type="text" 
-                                            placeholder="Contoh: H. Fulan bin Fulan"
+                                            :placeholder="locale === 'ID' ? 'Contoh: H. Fulan bin Fulan' : 'e.g. John Doe'"
                                             class="w-full px-4 py-3 rounded-xl border border-surface-container bg-surface-container-lowest text-on-surface placeholder:text-outline text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                                         />
                                         <span v-if="form.errors.name" class="text-xs text-error mt-1 block">{{ form.errors.name }}</span>
@@ -208,13 +229,13 @@ const toggleFaq = (idx) => {
 
                                     <div>
                                         <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1.5">
-                                            Nomor WhatsApp / HP *
+                                            {{ locale === 'ID' ? 'Nomor WhatsApp / HP *' : 'WhatsApp / Mobile Number *' }}
                                         </label>
                                         <input 
                                             v-model="form.phone"
                                             required
                                             type="tel" 
-                                            placeholder="Contoh: 081234567890"
+                                            :placeholder="locale === 'ID' ? 'Contoh: 081234567890' : 'e.g. +62 812 3456 7890'"
                                             class="w-full px-4 py-3 rounded-xl border border-surface-container bg-surface-container-lowest text-on-surface placeholder:text-outline text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                                         />
                                         <span v-if="form.errors.phone" class="text-xs text-error mt-1 block">{{ form.errors.phone }}</span>
@@ -224,13 +245,13 @@ const toggleFaq = (idx) => {
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1.5">
-                                            Alamat Email *
+                                            {{ locale === 'ID' ? 'Alamat Email *' : 'Email Address *' }}
                                         </label>
                                         <input 
                                             v-model="form.email"
                                             required
                                             type="email" 
-                                            placeholder="nama@email.com"
+                                            placeholder="name@example.com"
                                             class="w-full px-4 py-3 rounded-xl border border-surface-container bg-surface-container-lowest text-on-surface placeholder:text-outline text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                                         />
                                         <span v-if="form.errors.email" class="text-xs text-error mt-1 block">{{ form.errors.email }}</span>
@@ -238,20 +259,20 @@ const toggleFaq = (idx) => {
 
                                     <div>
                                         <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1.5">
-                                            Pilihan Paket / Topik *
+                                            {{ locale === 'ID' ? 'Pilihan Paket / Topik *' : 'Package / Inquiry Topic *' }}
                                         </label>
                                         <select 
                                             v-model="form.subject"
                                             required
                                             class="w-full px-4 py-3 rounded-xl border border-surface-container bg-surface-container-lowest text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                                         >
-                                            <option value="" disabled selected>Pilih Program Ibadah</option>
-                                            <option value="Umrah Reguler">Paket Umrah Reguler (9-12 Hari)</option>
-                                            <option value="Umrah Ramadhan">Paket Umrah Ramadhan &amp; I'tikaf</option>
-                                            <option value="Haji Furoda / Khusus">Haji Khusus &amp; Haji Furoda</option>
-                                            <option value="Wisata Halal Mancanegara">Wisata Halal Internasional</option>
-                                            <option value="Custom Group / Corporate">Group Corporate / Keluarga</option>
-                                            <option value="Lainnya">Pertanyaan Lainnya</option>
+                                            <option value="" disabled selected>{{ locale === 'ID' ? 'Pilih Program Ibadah' : 'Select Pilgrimage Program' }}</option>
+                                            <option value="Umrah Reguler">{{ locale === 'ID' ? 'Paket Umrah Reguler (9-12 Hari)' : 'Regular Umrah (9-12 Days)' }}</option>
+                                            <option value="Umrah Ramadhan">{{ locale === 'ID' ? 'Paket Umrah Ramadhan & I\'tikaf' : 'Ramadan & I\'tikaf Umrah' }}</option>
+                                            <option value="Haji Furoda / Khusus">{{ locale === 'ID' ? 'Haji Khusus & Haji Furoda' : 'VIP Special & Furoda Hajj' }}</option>
+                                            <option value="Wisata Halal Mancanegara">{{ locale === 'ID' ? 'Wisata Halal Internasional' : 'International Halal Tourism' }}</option>
+                                            <option value="Custom Group / Corporate">{{ locale === 'ID' ? 'Group Corporate / Keluarga' : 'Corporate / Family Custom Group' }}</option>
+                                            <option value="Lainnya">{{ locale === 'ID' ? 'Pertanyaan Lainnya' : 'Other Inquiries' }}</option>
                                         </select>
                                         <span v-if="form.errors.subject" class="text-xs text-error mt-1 block">{{ form.errors.subject }}</span>
                                     </div>
@@ -259,13 +280,13 @@ const toggleFaq = (idx) => {
 
                                 <div>
                                     <label class="block text-xs font-bold text-on-surface uppercase tracking-wider mb-1.5">
-                                        Pesan atau Kebutuhan Khusus *
+                                        {{ locale === 'ID' ? 'Pesan atau Kebutuhan Khusus *' : 'Message or Special Requests *' }}
                                     </label>
                                     <textarea 
                                         v-model="form.message"
                                         required
                                         rows="4" 
-                                        placeholder="Tuliskan jumlah jamaah, rencana bulan keberangkatan, atau pertanyaan Anda..."
+                                        :placeholder="locale === 'ID' ? 'Tuliskan jumlah jamaah, rencana bulan keberangkatan, atau pertanyaan Anda...' : 'Specify pilgrim count, preferred departure month, or detailed requests...'"
                                         class="w-full px-4 py-3 rounded-xl border border-surface-container bg-surface-container-lowest text-on-surface placeholder:text-outline text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                                     ></textarea>
                                     <span v-if="form.errors.message" class="text-xs text-error mt-1 block">{{ form.errors.message }}</span>
@@ -277,7 +298,7 @@ const toggleFaq = (idx) => {
                                     class="w-full py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-container text-white font-bold text-base transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                                 >
                                     <span class="material-symbols-outlined text-[20px]">send</span>
-                                    <span>{{ form.processing ? 'Mengirim Pesan...' : 'Kirim Pesan' }}</span>
+                                    <span>{{ form.processing ? (locale === 'ID' ? 'Mengirim Pesan...' : 'Sending Message...') : (locale === 'ID' ? 'Kirim Pesan' : 'Send Message Now') }}</span>
                                 </button>
                             </form>
                         </div>
@@ -291,10 +312,10 @@ const toggleFaq = (idx) => {
             <div class="max-w-4xl mx-auto px-gutter">
                 <div class="text-center mb-10">
                     <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                        Tanya Jawab
+                        {{ locale === 'ID' ? 'Tanya Jawab' : 'Q & A' }}
                     </span>
                     <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight mt-1">
-                        Pertanyaan Sering Diajukan (FAQ)
+                        {{ locale === 'ID' ? 'Pertanyaan Sering Diajukan (FAQ)' : 'Frequently Asked Questions (FAQ)' }}
                     </h2>
                 </div>
 

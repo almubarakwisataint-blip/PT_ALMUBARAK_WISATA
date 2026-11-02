@@ -1,36 +1,66 @@
 <script setup>
-const pillars = [
+import { computed } from 'vue';
+import { useI18n } from '@/Composables/useI18n';
+
+const { locale, t } = useI18n();
+
+const rawPillars = [
     {
-        number: 'Pilar 01',
-        title: 'Pasti Izinnya',
+        numberId: 'Pilar 01',
+        numberEn: 'Pillar 01',
+        titleId: 'Pasti Izinnya',
+        titleEn: 'Guaranteed License',
         icon: 'verified_user',
-        description: 'Izin PPIU No. U.412 & PIHK Terakreditasi A Resmi oleh Ditjen Penyelenggaraan Haji & Umrah Kemenag RI.',
+        descId: 'Izin PPIU No. U.412 & PIHK Terakreditasi A Resmi oleh Ditjen Penyelenggaraan Haji & Umrah Kemenag RI.',
+        descEn: 'Official PPIU No. U.412 & Grade A Accreditation by the Directorate General of Hajj & Umrah Ministry of Religious Affairs.',
     },
     {
-        number: 'Pilar 02',
-        title: 'Pasti Jadwalnya',
+        numberId: 'Pilar 02',
+        numberEn: 'Pillar 02',
+        titleId: 'Pasti Jadwalnya',
+        titleEn: 'Guaranteed Schedule',
         icon: 'calendar_clock',
-        description: 'Tanggal keberangkatan dan kepulangan terbit sebelum jamaah melakukan pelunasan biaya ibadah.',
+        descId: 'Tanggal keberangkatan dan kepulangan terbit sebelum jamaah melakukan pelunasan biaya ibadah.',
+        descEn: 'Exact departure and return dates confirmed before final payment is settled.',
     },
     {
-        number: 'Pilar 03',
-        title: 'Pasti Terbangnya',
+        numberId: 'Pilar 03',
+        numberEn: 'Pillar 03',
+        titleId: 'Pasti Terbangnya',
+        titleEn: 'Guaranteed Flights',
         icon: 'flight',
-        description: 'Nomor PNR Tiket PP Maskapai kelas dunia (Saudia / Garuda Indonesia) terbit resmi & berstatus confirmed.',
+        descId: 'Nomor PNR Tiket PP Maskapai kelas dunia (Saudia / Garuda Indonesia) terbit resmi & berstatus confirmed.',
+        descEn: 'Official confirmed PNR round-trip ticket issued with top airlines (Saudia / Garuda Indonesia).',
     },
     {
-        number: 'Pilar 04',
-        title: 'Pasti Hotelnya',
+        numberId: 'Pilar 04',
+        numberEn: 'Pillar 04',
+        titleId: 'Pasti Hotelnya',
+        titleEn: 'Guaranteed Hotels',
         icon: 'apartment',
-        description: 'Kamar hotel telah dipesan resmi di pelataran Masjidil Haram & Masjid Nabawi (bukan hotel bayangan).',
+        descId: 'Kamar hotel telah dipesan resmi di pelataran Masjidil Haram & Masjid Nabawi (bukan hotel bayangan).',
+        descEn: 'Confirmed hotel reservations directly in the courtyard of Masjidil Haram & Nabawi.',
     },
     {
-        number: 'Pilar 05',
-        title: 'Pasti Visanya',
+        numberId: 'Pilar 05',
+        numberEn: 'Pillar 05',
+        titleId: 'Pasti Visanya',
+        titleEn: 'Guaranteed Visas',
         icon: 'badge',
-        description: 'Sebagai Provider Visa Resmi Saudi, visa diterbitkan tepat waktu tanpa risiko tertahan di bandara.',
+        descId: 'Sebagai Provider Visa Resmi Saudi, visa diterbitkan tepat waktu tanpa risiko tertahan di bandara.',
+        descEn: 'As an Official Saudi Visa Provider, visas are issued on time without transit delays.',
     },
 ];
+
+const pillars = computed(() => {
+    const isEn = locale.value === 'EN';
+    return rawPillars.map(p => ({
+        number: isEn ? p.numberEn : p.numberId,
+        title: isEn ? p.titleEn : p.titleId,
+        icon: p.icon,
+        description: isEn ? p.descEn : p.descId,
+    }));
+});
 </script>
 
 <template>
@@ -40,13 +70,13 @@ const pillars = [
             <!-- Section Title -->
             <div class="text-center max-w-3xl mx-auto mb-space-xl">
                 <span class="font-label-md text-label-md text-secondary uppercase tracking-widest font-bold">
-                    Komitmen Pelayanan Paripurna
+                    {{ locale === 'ID' ? 'Komitmen Pelayanan Paripurna' : 'Excellence Commitment' }}
                 </span>
                 <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mt-1">
-                    5 Pilar Kepastian Kemenag RI Bersama Almubarak
+                    {{ locale === 'ID' ? '5 Pilar Kepastian Kemenag RI Bersama Almubarak' : '5 Certainty Pillars of Religious Ministry with Almubarak' }}
                 </h2>
                 <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">
-                    Kami menjamin seluruh elemen keberangkatan Anda terproteksi secara transparan, aman, dan legal tanpa keraguan sedikit pun.
+                    {{ locale === 'ID' ? 'Kami menjamin seluruh elemen keberangkatan Anda terproteksi secara transparan, aman, dan legal tanpa keraguan sedikit pun.' : 'We guarantee every element of your departure is protected transparently, safely, and legally with full certainty.' }}
                 </p>
             </div>
 
@@ -80,10 +110,10 @@ const pillars = [
                     </div>
                     <div>
                         <h4 class="font-label-lg text-label-lg text-on-surface font-bold">
-                            Dana Perlindungan Jamaah Terjamin
+                            {{ locale === 'ID' ? 'Dana Perlindungan Jamaah Terjamin' : 'Pilgrim Protection Funds Guaranteed' }}
                         </h4>
                         <p class="font-body-sm text-[13px] text-on-surface-variant">
-                            Sistem pembayaran via Virtual Account Resmi Bank Syariah Indonesia &amp; Mandiri dengan jaminan asuransi perjalanan internasional.
+                            {{ locale === 'ID' ? 'Sistem pembayaran via Virtual Account Resmi Bank Syariah Indonesia & Mandiri dengan jaminan asuransi perjalanan internasional.' : 'Payments via Official Virtual Accounts (BSI & Mandiri) with comprehensive international travel insurance coverage.' }}
                         </p>
                     </div>
                 </div>
@@ -91,7 +121,7 @@ const pillars = [
                     href="/about" 
                     class="px-space-md py-2 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors font-label-md text-label-md font-semibold whitespace-nowrap cursor-pointer shrink-0"
                 >
-                    Lihat Sertifikat Akreditasi
+                    {{ locale === 'ID' ? 'Lihat Sertifikat Akreditasi' : 'View Accreditation Certificate' }}
                 </a>
             </div>
         </div>

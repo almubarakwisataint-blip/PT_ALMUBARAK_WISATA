@@ -4,6 +4,9 @@ import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import FivePillars from '@/Components/Landing/FivePillars.vue';
 import CtaBanner from '@/Components/Landing/CtaBanner.vue';
+import { useI18n } from '@/Composables/useI18n';
+
+const { locale, t } = useI18n();
 
 const props = defineProps({
     teams: {
@@ -21,32 +24,40 @@ const selectedAward = ref(null);
 const defaultTeams = [
     {
         name: 'H. Ahmad Mubarak, Lc., M.A.',
-        position: 'Direktur Utama / CEO',
-        description: 'Alumni Universitas Islam Madinah dengan pengalaman lebih dari 15 tahun dalam bimbingan syar\'i dan manasik haji/umrah di Tanah Suci.',
+        positionId: 'Direktur Utama / CEO',
+        positionEn: 'President Director / CEO',
+        descId: 'Alumni Universitas Islam Madinah dengan pengalaman lebih dari 15 tahun dalam bimbingan syar\'i dan manasik haji/umrah di Tanah Suci.',
+        descEn: 'Alumnus of Islamic University of Madinah with over 15 years experience in Sharia and pilgrimage ritual guidance.',
         image: '/images/ceo-face.jpg',
         positionStyle: 'object-position: center;',
         phone: '6281260003484',
     },
     {
         name: 'Ust. H. Abdullah Syarif, Lc.',
-        position: 'Ketua Dewan Pembimbing Syariah',
-        description: 'Membimbing jamaah dalam manasik dan pelaksanaan thawaf, sa\'i, serta kajian fiqih ibadah sesuai sunnah Rasulullah ﷺ.',
+        positionId: 'Ketua Dewan Pembimbing Syariah',
+        positionEn: 'Head of Sharia Advisory Board',
+        descId: 'Membimbing jamaah dalam manasik dan pelaksanaan thawaf, sa\'i, serta kajian fiqih ibadah sesuai sunnah Rasulullah ﷺ.',
+        descEn: 'Guiding pilgrims in ritual training, Tawaf, Sa\'i, and Islamic jurisprudence in accordance with the Prophetic Sunnah ﷺ.',
         image: '/images/landing/member-ustadz.jpg',
         positionStyle: 'object-position: center;',
         phone: '6281260003484',
     },
     {
         name: 'Hj. Siti Fatimah, S.E.',
-        position: 'Direktur Operasional & Pelayanan Jamaah',
-        description: 'Mengawasi kenyamanan akomodasi hotel pelataran ring 1, handling bandara, serta pendampingan jamaah lansia dan keluarga.',
+        positionId: 'Direktur Operasional & Pelayanan Jamaah',
+        positionEn: 'Operations & Pilgrim Care Director',
+        descId: 'Mengawasi kenyamanan akomodasi hotel pelataran ring 1, handling bandara, serta pendampingan jamaah lansia dan keluarga.',
+        descEn: 'Overseeing first-ring hotel accommodations, airport handling, and dedicated assistance for families and seniors.',
         image: '/images/landing/member-siti.jpg',
         positionStyle: 'object-position: center;',
         phone: '6281180002807',
     },
     {
         name: 'H. Firman Hidayat, S.Kom.',
-        position: 'Manajer Tiket, Hotel & Visa Provider',
-        description: 'Spesialis reservasi maskapai direct (Saudia/Garuda), tasreh visa Saudi, dan tiket kereta cepat Haramain Express.',
+        positionId: 'Manajer Tiket, Hotel & Visa Provider',
+        positionEn: 'Ticketing, Hotel & Visa Manager',
+        descId: 'Spesialis reservasi maskapai direct (Saudia/Garuda), tasreh visa Saudi, dan tiket kereta cepat Haramain Express.',
+        descEn: 'Specialist in non-stop airline reservations (Saudia/Garuda), Saudi e-visas, and Haramain High Speed Rail tickets.',
         image: '/images/landing/member-firman.jpg',
         positionStyle: 'object-position: center;',
         phone: '6281180002807',
@@ -54,81 +65,140 @@ const defaultTeams = [
 ];
 
 const teamList = computed(() => {
+    const isEn = locale.value === 'EN';
     if (props.teams && props.teams.length > 0) {
         return props.teams.map((t, idx) => ({
             name: t.name,
             position: t.position,
-            description: t.description || 'Profesional berpengalaman dalam penyelenggaraan ibadah umrah dan haji.',
+            description: t.description || (isEn ? 'Experienced professional in Hajj and Umrah pilgrimage hospitality.' : 'Profesional berpengalaman dalam penyelenggaraan ibadah umrah dan haji.'),
             image: t.image ? (t.image.startsWith('http') || t.image.startsWith('/') ? t.image : `/storage/${t.image}`) : (defaultTeams[idx]?.image || '/images/ceo-face.jpg'),
             positionStyle: defaultTeams[idx]?.positionStyle || 'object-position: center;',
             phone: t.phone || '6281260003484',
         }));
     }
-    return defaultTeams;
+    return defaultTeams.map(t => ({
+        name: t.name,
+        position: isEn ? t.positionEn : t.positionId,
+        description: isEn ? t.descEn : t.descId,
+        image: t.image,
+        positionStyle: t.positionStyle,
+        phone: t.phone,
+    }));
 });
 
-const awards = [
+const rawAwards = [
     {
         id: 'via-com',
-        title: 'Top B2B Travel & Umrah Ticketing Partner',
-        institution: 'Via.com Indonesia (PT Advaltis Asia Network)',
-        badge: 'Top Agent Award',
+        titleId: 'Top B2B Travel & Umrah Ticketing Partner',
+        titleEn: 'Top B2B Travel & Umrah Ticketing Partner',
+        institutionId: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        institutionEn: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        badgeId: 'Top Agent Award',
+        badgeEn: 'Top Agent Award',
         year: '2024',
         certNumber: 'VIA/ID/AGT/2024-088',
-        desc: 'Apresiasi resmi atas kinerja luar biasa dan keandalan sistem penerbitan tiket penerbangan grup umrah serta transaksi B2B terpercaya.',
+        descId: 'Apresiasi resmi atas kinerja luar biasa dan keandalan sistem penerbitan tiket penerbangan grup umrah serta transaksi B2B terpercaya.',
+        descEn: 'Official recognition for outstanding performance and reliability in group flight ticketing and trusted B2B transactions.',
         image: '/images/penghargaan.jpeg',
-        details: [
+        detailsId: [
             'Diterima langsung oleh jajaran Direksi PT Almubarak Wisata',
             'Penghargaan kategori B2B Travel Partner & Group Ticketing',
             'Sinergi rute penerbangan Saudia Airlines, Emirates, dan Garuda Indonesia',
         ],
+        detailsEn: [
+            'Received directly by the Board of Directors of PT Almubarak Wisata',
+            'Award category: B2B Travel Partner & Group Ticketing',
+            'Route synergies with Saudia Airlines, Emirates, and Garuda Indonesia',
+        ],
     },
     {
         id: 'kemenag-ppiu',
-        title: 'Akreditasi A Resmi PPIU Kemenag RI',
-        institution: 'Ditjen Penyelenggaraan Haji & Umrah Kemenag RI',
-        badge: 'Akreditasi A Resmi',
+        titleId: 'Akreditasi A Resmi PPIU Kemenag RI',
+        titleEn: 'Official Grade A Accreditation PPIU Ministry of Religious Affairs',
+        institutionId: 'Ditjen Penyelenggaraan Haji & Umrah Kemenag RI',
+        institutionEn: 'DG of Hajj & Umrah Ministry of Religious Affairs RI',
+        badgeId: 'Akreditasi A Resmi',
+        badgeEn: 'Official Grade A',
         year: '2024',
         certNumber: 'SK Kemenag No. U.412 Tahun 2020',
-        desc: 'Predikat Akreditasi A untuk kepatuhan tata kelola manasik, proteksi dana jamaah melalui virtual account, standar akomodasi hotel pelataran ring 1, dan jaminan 5 Pasti Umrah.',
+        descId: 'Predikat Akreditasi A untuk kepatuhan tata kelola manasik, proteksi dana jamaah melalui virtual account, standar akomodasi hotel pelataran ring 1, dan jaminan 5 Pasti Umrah.',
+        descEn: 'Grade A rating for ritual governance compliance, virtual account fund security, 5-star ring 1 hotels, and the 5 Certainty Guarantees.',
         image: '/images/penghargaan.jpeg',
-        details: [
+        detailsId: [
             'Terdaftar dan Terverifikasi Aktif di SISKOPATUH Kemenag RI',
             'Audit kepatuhan syariat dan kelayakan operasional secara periodik',
             'Perlindungan asuransi jiwa dan perjalanan internasional',
         ],
+        detailsEn: [
+            'Officially verified and active in SISKOPATUH Ministry system',
+            'Periodic Sharia compliance and operational feasibility audits',
+            'International travel and life insurance coverage',
+        ],
     },
     {
         id: 'airline-partner',
-        title: 'Strategic Group Partner Saudia & Garuda',
-        institution: 'Saudi Arabian Airlines & Garuda Indonesia',
-        badge: 'Official Airlines Partner',
+        titleId: 'Strategic Group Partner Saudia & Garuda',
+        titleEn: 'Strategic Group Partner Saudia & Garuda',
+        institutionId: 'Saudi Arabian Airlines & Garuda Indonesia',
+        institutionEn: 'Saudi Arabian Airlines & Garuda Indonesia',
+        badgeId: 'Official Airlines Partner',
+        badgeEn: 'Official Airlines Partner',
         year: '2024',
         certNumber: 'SV-GA/GRP/UMR-1445',
-        desc: 'Penghargaan atas loyalitas dan kontribusi penyediaan seat direct tanpa transit bagi jamaah umrah reguler dan haji khusus.',
+        descId: 'Penghargaan atas loyalitas dan kontribusi penyediaan seat direct tanpa transit bagi jamaah umrah reguler dan haji khusus.',
+        descEn: 'Honored for continuous seat allocations and direct non-stop flights for Umrah and VIP Hajj pilgrims.',
         image: '/images/landing/hero-kaaba.jpg',
-        details: [
+        detailsId: [
             'Alokasi seat grup terkonfirmasi nomor PNR resmi',
             'Kemudahan fasilitas bagasi zam-zam dan bagasi ekstra jamaah',
             'Penerbangan direct tanpa resiko delay transit di negara ketiga',
         ],
+        detailsEn: [
+            'Confirmed group seats with official PNR verification',
+            'Convenient Zamzam water handling and extra baggage allowances',
+            'Direct flights without third-country transit delays',
+        ],
     },
     {
         id: 'asita-member',
-        title: 'Sertifikasi Keanggotaan Penuh ASITA & HIMPUH',
-        institution: 'Dewan Pengurus Pusat ASITA & HIMPUH Indonesia',
-        badge: 'Verified Travel Agency',
+        titleId: 'Sertifikasi Keanggotaan Penuh ASITA & HIMPUH',
+        titleEn: 'Full Certification Membership ASITA & HIMPUH',
+        institutionId: 'Dewan Pengurus Pusat ASITA & HIMPUH Indonesia',
+        institutionEn: 'Central Executive Board ASITA & HIMPUH Indonesia',
+        badgeId: 'Verified Travel Agency',
+        badgeEn: 'Verified Travel Agency',
         year: '2023 - 2025',
         certNumber: 'ASITA-REG/0912/DPP/2023',
-        desc: 'Standarisasi profesionalisme biro perjalanan wisata berizin nasional dengan perlindungan hukum konsumen dan kepatuhan kode etik pariwisata.',
+        descId: 'Standarisasi profesionalisme biro perjalanan wisata berizin nasional dengan perlindungan hukum konsumen dan kepatuhan kode etik pariwisata.',
+        descEn: 'National professional accreditation guaranteeing consumer rights protection and adherence to travel ethics.',
         image: '/images/landing/gallery-jamaah.jpg',
-        details: [
+        detailsId: [
             'Anggota resmi terdaftar di ASITA DPP Jakarta & Jawa Barat',
             'Kepatuhan regulasi BPW (Biro Perjalanan Wisata)',
             'Jaringan kemitraan ground handling terintegrasi di luar negeri',
         ],
+        detailsEn: [
+            'Officially registered member in ASITA Jakarta & West Java',
+            'Fully compliant with national Travel Bureau regulations',
+            'Integrated international ground handling network',
+        ],
     },
 ];
+
+const awards = computed(() => {
+    const isEn = locale.value === 'EN';
+    return rawAwards.map(a => ({
+        id: a.id,
+        title: isEn ? a.titleEn : a.titleId,
+        institution: isEn ? a.institutionEn : a.institutionId,
+        badge: isEn ? a.badgeEn : a.badgeId,
+        year: a.year,
+        certNumber: a.certNumber,
+        desc: isEn ? a.descEn : a.descId,
+        image: a.image,
+        details: isEn ? a.detailsEn : a.detailsId,
+    }));
+});
 
 const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -175,7 +245,7 @@ const contactMember = (member) => {
 </script>
 
 <template>
-    <Head title="Tentang Kami - PT ALMUBARAK WISATA INTERNATIONAL" />
+    <Head :title="locale === 'ID' ? 'Tentang Kami - PT ALMUBARAK WISATA INTERNATIONAL' : 'About Us - PT ALMUBARAK WISATA INTERNATIONAL'" />
 
     <AppLayout>
         <!-- Hero Header -->
@@ -192,13 +262,13 @@ const contactMember = (member) => {
                 <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-tertiary-fixed font-label-sm text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
                         <span class="material-symbols-outlined text-[16px]">verified</span>
-                        Profil Resmi Perusahaan
+                        {{ locale === 'ID' ? 'Profil Resmi Perusahaan' : 'Official Corporate Profile' }}
                     </span>
                     <h1 class="font-headline-xl text-[34px] sm:text-[46px] lg:text-[54px] text-white font-extrabold tracking-tight leading-tight">
-                        Tentang Kami
+                        {{ t('nav_about') }}
                     </h1>
                     <p class="font-body-lg text-white/90 text-[16px] sm:text-[18px] mt-4 leading-relaxed max-w-2xl">
-                        Mengenal Lebih Dalam PT ALMUBARAK WISATA INTERNATIONAL — Penyelenggara Perjalanan Religi dan Wisata Halal Terpercaya Berizin Kemenag RI.
+                        {{ locale === 'ID' ? 'Mengenal Lebih Dalam PT ALMUBARAK WISATA INTERNATIONAL — Penyelenggara Perjalanan Religi dan Wisata Halal Terpercaya Berizin Kemenag RI.' : 'Discover PT ALMUBARAK WISATA INTERNATIONAL — Premier Licensed Provider of Sacred Pilgrimages and Halal Global Journeys.' }}
                     </p>
                 </div>
             </div>
@@ -212,17 +282,24 @@ const contactMember = (member) => {
                     <div class="lg:col-span-7 flex flex-col gap-6">
                         <div>
                             <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                                Profil Perusahaan
+                                {{ locale === 'ID' ? 'Profil Perusahaan' : 'Company Profile' }}
                             </span>
                             <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight mt-1">
                                 PT ALMUBARAK WISATA INTERNATIONAL
                             </h2>
                         </div>
                         <p class="font-body-md text-base text-on-surface-variant leading-relaxed">
-                            <strong class="text-on-surface">PT ALMUBARAK WISATA INTERNATIONAL</strong> adalah perusahaan travel terkemuka yang didirikan pada tanggal 15 Maret 2009 di Jakarta dan memiliki kantor operasional di Bogor. Sejak awal berdirinya, kami telah berkomitmen untuk menjadi spesialis dalam layanan perjalanan religi dan wisata halal, dengan visi memberikan pengalaman perjalanan yang berkesan, penuh berkah, dan sesuai dengan nilai-nilai syariat Islam.
+                            <strong class="text-on-surface">PT ALMUBARAK WISATA INTERNATIONAL</strong>
+                            {{ locale === 'ID' 
+                                ? ' adalah perusahaan travel terkemuka yang didirikan pada tanggal 15 Maret 2009 di Jakarta dan memiliki kantor operasional di Bogor. Sejak awal berdirinya, kami telah berkomitmen untuk menjadi spesialis dalam layanan perjalanan religi dan wisata halal, dengan visi memberikan pengalaman perjalanan yang berkesan, penuh berkah, dan sesuai dengan nilai-nilai syariat Islam.'
+                                : ' is a premier pilgrimage agency established on March 15, 2009 in Jakarta with operations in Bogor. Since our inception, we have been committed to excellence in Islamic travel, providing spiritually uplifting, secure, and blessed journeys adhering to authentic Islamic jurisprudence.'
+                            }}
                         </p>
                         <p class="font-body-md text-base text-on-surface-variant leading-relaxed">
-                            Kami telah melayani lebih dari <strong class="text-primary font-bold">50.000 jamaah umroh dan haji</strong>, serta ribuan wisatawan muslim dari seluruh Indonesia dan mancanegara, membawa mereka ke Tanah Suci dan destinasi wisata halal dunia dengan hotel bintang lima yang strategis di pelataran ring 1, transportasi nyaman, serta pendampingan oleh tour leader dan muthawif berpengalaman lebih dari 15 tahun.
+                            {{ locale === 'ID'
+                                ? 'Kami telah melayani lebih dari 50.000 jamaah umroh dan haji, serta ribuan wisatawan muslim dari seluruh Indonesia dan mancanegara, membawa mereka ke Tanah Suci dan destinasi wisata halal dunia dengan hotel bintang lima yang strategis di pelataran ring 1, transportasi nyaman, serta pendampingan oleh tour leader dan muthawif berpengalaman lebih dari 15 tahun.'
+                                : 'We have served more than 50,000 Umrah and Hajj pilgrims as well as global travelers, providing 5-star ring 1 courtyard hotels, luxury transportation, and certified guidance from scholars with over 15 years of field experience.'
+                            }}
                         </p>
 
                         <!-- Quick Navigation Buttons (Tim Kami & Penghargaan) -->
@@ -237,9 +314,9 @@ const contactMember = (member) => {
                                     <span class="material-symbols-outlined text-[28px]">groups</span>
                                 </div>
                                 <h4 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-primary transition-colors">
-                                    Tim Kami
+                                    {{ locale === 'ID' ? 'Tim Kami' : 'Our Team' }}
                                 </h4>
-                                <p class="font-body-sm text-xs text-outline">Profesional Berpengalaman</p>
+                                <p class="font-body-sm text-xs text-outline">{{ locale === 'ID' ? 'Profesional Berpengalaman' : 'Experienced Professionals' }}</p>
                             </button>
 
                             <!-- Button Penghargaan -->
@@ -252,9 +329,9 @@ const contactMember = (member) => {
                                     <span class="material-symbols-outlined text-[28px]">military_tech</span>
                                 </div>
                                 <h4 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-secondary transition-colors">
-                                    Penghargaan
+                                    {{ locale === 'ID' ? 'Penghargaan' : 'Awards' }}
                                 </h4>
-                                <p class="font-body-sm text-xs text-outline">Prestasi Resmi</p>
+                                <p class="font-body-sm text-xs text-outline">{{ locale === 'ID' ? 'Prestasi Resmi' : 'Official Accolades' }}</p>
                             </button>
                         </div>
                     </div>
@@ -271,7 +348,7 @@ const contactMember = (member) => {
                                 />
                             </div>
                             <span class="px-3.5 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-xs font-bold uppercase tracking-widest mb-1">
-                                Direktur Utama
+                                {{ locale === 'ID' ? 'Direktur Utama' : 'President Director' }}
                             </span>
                             <h3 class="font-headline-sm text-2xl text-on-surface font-extrabold mt-1">
                                 Ahmad Mubarak
@@ -280,7 +357,7 @@ const contactMember = (member) => {
                                 CEO - PT ALMUBARAK WISATA INTERNATIONAL
                             </p>
                             <p class="font-body-sm text-sm text-on-surface-variant mt-3 leading-relaxed italic">
-                                "Komitmen kami adalah menghadirkan ketenangan, kepastian, dan kemabruran dalam setiap detak langkah ibadah Anda ke Baitullah."
+                                "{{ locale === 'ID' ? 'Komitmen kami adalah menghadirkan ketenangan, kepastian, dan kemabruran dalam setiap detak langkah ibadah Anda ke Baitullah.' : 'Our commitment is to bring peace of mind, certainty, and an accepted pilgrimage (mabrur) at every step of your journey to Baitullah.' }}"
                             </p>
                             <div class="w-full mt-5 pt-4 border-t border-surface-container">
                                 <a 
@@ -289,7 +366,7 @@ const contactMember = (member) => {
                                     class="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm"
                                 >
                                     <span class="material-symbols-outlined text-[16px]">chat</span>
-                                    <span>Hubungi Direktur</span>
+                                    <span>{{ locale === 'ID' ? 'Hubungi Direktur' : 'Contact Director' }}</span>
                                 </a>
                             </div>
                         </div>
@@ -304,20 +381,20 @@ const contactMember = (member) => {
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
                     <div>
                         <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                            Sumber Daya Manusia
+                            {{ locale === 'ID' ? 'Sumber Daya Manusia' : 'Human Resources' }}
                         </span>
                         <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight mt-1">
-                            Tim Profesional Kami
+                            {{ locale === 'ID' ? 'Tim Profesional Kami' : 'Our Professional Team' }}
                         </h2>
                         <p class="font-body-md text-on-surface-variant mt-2 text-sm sm:text-base max-w-2xl">
-                            Para ahli dan pembimbing syar'i berpengalaman yang berdedikasi mendampingi setiap tahapan ibadah Anda.
+                            {{ locale === 'ID' ? 'Para ahli dan pembimbing syar\'i berpengalaman yang berdedikasi mendampingi setiap tahapan ibadah Anda.' : 'Experienced scholars and mentors dedicated to guiding every stage of your sacred journey.' }}
                         </p>
                     </div>
                     <Link 
                         href="/team" 
                         class="inline-flex items-center gap-1.5 text-primary hover:text-primary-container font-semibold text-sm whitespace-nowrap group"
                     >
-                        <span>Lihat Seluruh Anggota Tim</span>
+                        <span>{{ locale === 'ID' ? 'Lihat Seluruh Anggota Tim' : 'View All Team Members' }}</span>
                         <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </Link>
                 </div>
@@ -359,7 +436,7 @@ const contactMember = (member) => {
                                 type="button"
                             >
                                 <span class="material-symbols-outlined text-[16px]">chat</span>
-                                <span>Hubungi WhatsApp</span>
+                                <span>{{ locale === 'ID' ? 'Hubungi WhatsApp' : 'Chat WhatsApp' }}</span>
                             </button>
                         </div>
                     </div>
@@ -382,13 +459,13 @@ const contactMember = (member) => {
                     <div class="relative z-10 max-w-2xl mx-auto">
                         <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/20 text-[#ffdcc3] font-label-sm text-xs font-bold uppercase tracking-wider mb-3 backdrop-blur-md border border-white/20">
                             <span class="material-symbols-outlined text-[16px]">verified</span>
-                            Prestasi &amp; Legalitas Resmi
+                            {{ locale === 'ID' ? 'Prestasi & Legalitas Resmi' : 'Official Honors & Legalities' }}
                         </span>
                         <h2 class="font-headline-lg text-3xl sm:text-4xl font-extrabold tracking-tight">
-                            Penghargaan &amp; Pengakuan Resmi
+                            {{ locale === 'ID' ? 'Penghargaan & Pengakuan Resmi' : 'Official Awards & Accreditations' }}
                         </h2>
                         <p class="font-body-md text-white/90 text-sm sm:text-base mt-2 leading-relaxed">
-                            Bentuk dedikasi dan standar mutu PT ALMUBARAK WISATA INTERNATIONAL yang diakui secara resmi oleh Kemenag RI, maskapai penerbangan, dan asosiasi B2B internasional.
+                            {{ locale === 'ID' ? 'Bentuk dedikasi dan standar mutu PT ALMUBARAK WISATA INTERNATIONAL yang diakui secara resmi oleh Kemenag RI, maskapai penerbangan, dan asosiasi B2B internasional.' : 'A testament to PT ALMUBARAK WISATA INTERNATIONAL\'s quality standards, officially recognized by the Ministry of Religious Affairs, airlines, and B2B associations.' }}
                         </p>
                     </div>
                 </div>
@@ -427,7 +504,7 @@ const contactMember = (member) => {
 
                         <div class="p-5 pt-0">
                             <div class="p-3 rounded-xl bg-surface-container text-[11px] text-outline mb-3">
-                                <span class="block text-on-surface font-semibold text-[10px] uppercase tracking-wider">Lembaga Penerbit:</span>
+                                <span class="block text-on-surface font-semibold text-[10px] uppercase tracking-wider">{{ locale === 'ID' ? 'Lembaga Penerbit:' : 'Issuing Body:' }}</span>
                                 <span class="text-on-surface font-medium">{{ award.institution }}</span>
                             </div>
                             <button 
@@ -435,7 +512,7 @@ const contactMember = (member) => {
                                 class="w-full py-2 px-3 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
                             >
                                 <span class="material-symbols-outlined text-[16px]">visibility</span>
-                                <span>Lihat Dokumentasi &amp; Bukti</span>
+                                <span>{{ locale === 'ID' ? 'Lihat Dokumentasi & Bukti' : 'View Documentation' }}</span>
                             </button>
                         </div>
                     </div>
@@ -446,7 +523,7 @@ const contactMember = (member) => {
                         href="/awards" 
                         class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-primary text-white font-bold text-xs shadow-md hover:bg-primary-container transition-all hover:scale-105"
                     >
-                        <span>Buka Halaman Lengkap Sertifikasi &amp; Penghargaan</span>
+                        <span>{{ locale === 'ID' ? 'Buka Halaman Lengkap Sertifikasi & Penghargaan' : 'Open Full Certifications & Awards Page' }}</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </Link>
                 </div>
@@ -495,7 +572,7 @@ const contactMember = (member) => {
                             {{ selectedAward.title }}
                         </h3>
                         <p class="text-xs text-gray-500 font-medium mt-1">
-                            Lembaga Penerbit: <strong class="text-gray-800">{{ selectedAward.institution }}</strong> (Tahun {{ selectedAward.year }})
+                            {{ locale === 'ID' ? 'Lembaga Penerbit:' : 'Issuing Body:' }} <strong class="text-gray-800">{{ selectedAward.institution }}</strong> ({{ locale === 'ID' ? 'Tahun' : 'Year' }} {{ selectedAward.year }})
                         </p>
                     </div>
 
@@ -505,7 +582,7 @@ const contactMember = (member) => {
 
                     <!-- Details Points -->
                     <div v-if="selectedAward.details && selectedAward.details.length > 0" class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 space-y-2">
-                        <span class="block text-xs font-bold text-[#005138] uppercase tracking-wider">Poin Legalitas &amp; Pengakuan:</span>
+                        <span class="block text-xs font-bold text-[#005138] uppercase tracking-wider">{{ locale === 'ID' ? 'Poin Legalitas & Pengakuan:' : 'Key Accreditations & Honors:' }}</span>
                         <div v-for="(d, i) in selectedAward.details" :key="i" class="flex items-start gap-2 text-xs text-gray-700 leading-relaxed">
                             <span class="material-symbols-outlined text-[#005138] text-[16px] shrink-0 mt-0.5">check_circle</span>
                             <span>{{ d }}</span>
@@ -517,14 +594,14 @@ const contactMember = (member) => {
                 <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between shrink-0">
                     <span class="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        Terverifikasi Aktif
+                        {{ locale === 'ID' ? 'Terverifikasi Aktif' : 'Active & Verified' }}
                     </span>
                     <button 
                         @click="closeAwardModal" 
                         type="button" 
                         class="px-6 py-2.5 rounded-xl bg-[#005138] hover:bg-[#003d2b] text-white text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow"
                     >
-                        Tutup
+                        {{ locale === 'ID' ? 'Tutup' : 'Close' }}
                     </button>
                 </div>
             </div>

@@ -1,27 +1,33 @@
 {
-  "_CtaBanner-BUUkz7i-.js": {
-    "file": "assets/CtaBanner-BUUkz7i-.js",
-    "name": "CtaBanner",
+  "_AppLayout-DpcEuafT.js": {
+    "file": "assets/AppLayout-DpcEuafT.js",
+    "name": "AppLayout",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_FeaturedPackages-DuOjclBN.js": {
-    "file": "assets/FeaturedPackages-DuOjclBN.js",
+  "_CtaBanner-BA7MK1W5.js": {
+    "file": "assets/CtaBanner-BA7MK1W5.js",
+    "name": "CtaBanner"
+  },
+  "_FeaturedPackages-BBh1NLjP.js": {
+    "file": "assets/FeaturedPackages-BBh1NLjP.js",
     "name": "FeaturedPackages",
     "imports": [
+      "_AppLayout-DpcEuafT.js",
       "resources/js/app.js"
     ]
   },
-  "_FivePillars-DofimDd5.js": {
-    "file": "assets/FivePillars-DofimDd5.js",
+  "_FivePillars-DOK63XHL.js": {
+    "file": "assets/FivePillars-DOK63XHL.js",
     "name": "FivePillars",
     "imports": [
+      "_AppLayout-DpcEuafT.js",
       "resources/js/app.js"
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-DL3cKY5O.css",
+    "file": "assets/app-BMP9BLLL.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -29,122 +35,134 @@
     ]
   },
   "resources/js/Pages/About.vue": {
-    "file": "assets/About-C3W0Z0Cv.js",
+    "file": "assets/About-CnlIZS8e.js",
     "name": "About",
     "src": "resources/js/Pages/About.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js",
-      "_FivePillars-DofimDd5.js"
+      "_AppLayout-DpcEuafT.js",
+      "_FivePillars-DOK63XHL.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/Awards.vue": {
-    "file": "assets/Awards-DbBftAvM.js",
+    "file": "assets/Awards-Bez6qCbv.js",
     "name": "Awards",
     "src": "resources/js/Pages/Awards.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/Business.vue": {
-    "file": "assets/Business-Ddgq2WAX.js",
+    "file": "assets/Business-BDevY0IN.js",
     "name": "Business",
     "src": "resources/js/Pages/Business.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js",
-      "_FeaturedPackages-DuOjclBN.js"
+      "_AppLayout-DpcEuafT.js",
+      "_FeaturedPackages-BBh1NLjP.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/Contact.vue": {
-    "file": "assets/Contact-CMVIeb--.js",
+    "file": "assets/Contact-NrsHwkgI.js",
     "name": "Contact",
     "src": "resources/js/Pages/Contact.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/News.vue": {
-    "file": "assets/News-8XBsX6VZ.js",
+    "file": "assets/News-BT8H0nT7.js",
     "name": "News",
     "src": "resources/js/Pages/News.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/NewsDetail.vue": {
-    "file": "assets/NewsDetail-D8vDTDhH.js",
+    "file": "assets/NewsDetail-CDC_DQea.js",
     "name": "NewsDetail",
     "src": "resources/js/Pages/NewsDetail.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/Privacy.vue": {
-    "file": "assets/Privacy-CwfjEg_5.js",
+    "file": "assets/Privacy-DACmAzKZ.js",
     "name": "Privacy",
     "src": "resources/js/Pages/Privacy.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js"
     ]
   },
   "resources/js/Pages/Team.vue": {
-    "file": "assets/Team-Bruu6SG8.js",
+    "file": "assets/Team-AoLpK9Vt.js",
     "name": "Team",
     "src": "resources/js/Pages/Team.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/Terms.vue": {
-    "file": "assets/Terms-Ds3i44_4.js",
+    "file": "assets/Terms-DrB5wcCT.js",
     "name": "Terms",
     "src": "resources/js/Pages/Terms.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js"
+      "_AppLayout-DpcEuafT.js"
     ]
   },
   "resources/js/Pages/VisionMission.vue": {
-    "file": "assets/VisionMission-1pi7HSs6.js",
+    "file": "assets/VisionMission-BSwLlQ5k.js",
     "name": "VisionMission",
     "src": "resources/js/Pages/VisionMission.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js",
-      "_FivePillars-DofimDd5.js"
+      "_AppLayout-DpcEuafT.js",
+      "_FivePillars-DOK63XHL.js",
+      "_CtaBanner-BA7MK1W5.js"
     ]
   },
   "resources/js/Pages/Welcome.vue": {
-    "file": "assets/Welcome-yAoA5CUs.js",
+    "file": "assets/Welcome-BJ_fzLfo.js",
     "name": "Welcome",
     "src": "resources/js/Pages/Welcome.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_CtaBanner-BUUkz7i-.js",
-      "_FeaturedPackages-DuOjclBN.js",
-      "_FivePillars-DofimDd5.js"
+      "_AppLayout-DpcEuafT.js",
+      "_FeaturedPackages-BBh1NLjP.js",
+      "_FivePillars-DOK63XHL.js",
+      "_CtaBanner-BA7MK1W5.js"
+    ],
+    "css": [
+      "assets/Welcome-r1W4JkCn.css"
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Bp-aIkXx.js",
+    "file": "assets/app-C-PD8eqN.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

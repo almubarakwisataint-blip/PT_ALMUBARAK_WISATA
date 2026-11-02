@@ -1,43 +1,76 @@
 <script setup>
-const testimonials = [
+import { computed } from 'vue';
+import { useI18n } from '@/Composables/useI18n';
+
+const { locale, t } = useI18n();
+
+const rawTestimonials = [
     {
         name: 'Dr. Hendra Gunawan & Ibunda',
-        role: 'Jamaah Umrah Reguler Bintang 5 (Bandung)',
+        roleId: 'Jamaah Umrah Reguler Bintang 5 (Bandung)',
+        roleEn: '5-Star Regular Umrah Pilgrim (Bandung)',
         avatar: '/images/landing/testi-hendra.jpg',
-        quote: '“Alhamdulillah, memberangkatkan kedua orang tua yang sudah sepuh terasa sangat tenang bersama Almubarak. Tim Muthawif dan tour leader sangat sigap menyediakan kursi roda saat tawaf dan sa\'i. Hotel benar-benar selangkah dari halaman masjid.”',
+        quoteId: '“Alhamdulillah, memberangkatkan kedua orang tua yang sudah sepuh terasa sangat tenang bersama Almubarak. Tim Muthawif dan tour leader sangat sigap menyediakan kursi roda saat tawaf dan sa\'i. Hotel benar-benar selangkah dari halaman masjid.”',
+        quoteEn: '“Alhamdulillah, bringing my elderly parents was so peaceful with Almubarak. The Muthawif and tour leaders were always ready with wheelchairs during Tawaf and Sa\'i. The hotel was literally steps from the mosque courtyard.”',
     },
     {
         name: 'Ir. H. Muhammad Fachri & Keluarga',
-        role: 'Jamaah Haji Khusus Furoda 1445 H (Jakarta)',
+        roleId: 'Jamaah Haji Khusus Furoda 1445 H (Jakarta)',
+        roleEn: 'Special Furoda Hajj Pilgrim 1445 H (Jakarta)',
         avatar: '/images/landing/testi-fachri.jpg',
-        quote: '“Bimbingan manasik sebelum berangkat sangat tuntas dan ilmiah sesuai sunnah Rasulullah ﷺ. Saat di Mekkah, kami dibimbing doa satu per satu. Pengurusan visa dan fasilitas VIP Maktab di Mina benar-benar sesuai apa yang dijanjikan, tidak ada tipu-tipu.”',
+        quoteId: '“Bimbingan manasik sebelum berangkat sangat tuntas dan ilmiah sesuai sunnah Rasulullah ﷺ. Saat di Mekkah, kami dibimbing doa satu per satu. Pengurusan visa dan fasilitas VIP Maktab di Mina benar-benar sesuai apa yang dijanjikan, tidak ada tipu-tipu.”',
+        quoteEn: '“The pre-departure rituals guidance was thorough and authentic to the Sunnah of Prophet ﷺ. In Makkah, we received personal prayer guidance. The visa issuance and VIP Mina Maktab facilities were 100% genuine as promised.”',
     },
     {
         name: 'Hj. Siti Nurhaliza S.E.',
-        role: 'Jamaah Wisata Halal Turki Plus Umrah (Surabaya)',
+        roleId: 'Jamaah Wisata Halal Turki Plus Umrah (Surabaya)',
+        roleEn: 'Halal Turkey Plus Umrah Pilgrim (Surabaya)',
         avatar: '/images/landing/testi-siti.jpg',
-        quote: '“Paket Umrah Plus Turki-nya luar biasa! Pemandu sejarah di Istanbul sangat berpengetahuan luas, makanan halal terjamin mewah, dan transisi ke Madinah serta Makkah sangat mulus menggunakan kereta cepat Haramain High Speed Rail.”',
+        quoteId: '“Paket Umrah Plus Turki-nya luar biasa! Pemandu sejarah di Istanbul sangat berpengetahuan luas, makanan halal terjamin mewah, dan transisi ke Madinah serta Makkah sangat mulus menggunakan kereta cepat Haramain High Speed Rail.”',
+        quoteEn: '“The Umrah Plus Turkey package was extraordinary! The historian guide in Istanbul was deeply knowledgeable, halal food was luxurious, and the journey to Madinah and Makkah was seamless via Haramain High Speed Rail.”',
     },
 ];
 
-const gallery = [
+const testimonials = computed(() => {
+    const isEn = locale.value === 'EN';
+    return rawTestimonials.map(t => ({
+        name: t.name,
+        role: isEn ? t.roleEn : t.roleId,
+        avatar: t.avatar,
+        quote: isEn ? t.quoteEn : t.quoteId,
+    }));
+});
+
+const rawGallery = [
     {
-        title: 'Jamaah Group Keberangkatan September 2024',
+        titleId: 'Jamaah Group Keberangkatan September 2024',
+        titleEn: 'September 2024 Departure Group Pilgrims',
         image: '/images/landing/gallery-jamaah.jpg',
     },
     {
-        title: 'Ziarah Bersejarah Jabal Uhud',
+        titleId: 'Ziarah Bersejarah Jabal Uhud',
+        titleEn: 'Historic Ziyarah at Mount Uhud',
         image: '/images/landing/gallery-uhud.jpg',
     },
     {
-        title: 'Pelayanan Buffet Bintang 5',
+        titleId: 'Pelayanan Buffet Bintang 5',
+        titleEn: '5-Star Fullboard Buffet Service',
         image: '/images/landing/gallery-buffet.jpg',
     },
     {
-        title: 'Fasilitas Kereta Cepat Haramain',
+        titleId: 'Fasilitas Kereta Cepat Haramain',
+        titleEn: 'Haramain High Speed Rail Facilities',
         image: '/images/landing/gallery-kereta.jpg',
     },
 ];
+
+const gallery = computed(() => {
+    const isEn = locale.value === 'EN';
+    return rawGallery.map(g => ({
+        title: isEn ? g.titleEn : g.titleId,
+        image: g.image,
+    }));
+});
 </script>
 
 <template>
@@ -47,13 +80,13 @@ const gallery = [
             <!-- Section Header -->
             <div class="text-center max-w-3xl mx-auto mb-space-xl">
                 <span class="font-label-md text-label-md text-secondary uppercase tracking-widest font-bold">
-                    Kisah Perjalanan &amp; Kepuasan
+                    {{ locale === 'ID' ? 'Kisah Perjalanan & Kepuasan' : 'Pilgrim Journeys & Satisfaction' }}
                 </span>
                 <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mt-1">
-                    Ketenangan Hati &amp; Pengalaman Nyata Jamaah
+                    {{ locale === 'ID' ? 'Ketenangan Hati & Pengalaman Nyata Jamaah' : 'Peace of Mind & Real Pilgrim Experiences' }}
                 </h2>
                 <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">
-                    Ratusan keluarga, orang tua lanjut usia, hingga profesional telah mempercayakan perjalanan ibadah mereka kepada bimbingan Almubarak Wisata.
+                    {{ locale === 'ID' ? 'Ratusan keluarga, orang tua lanjut usia, hingga profesional telah mempercayakan perjalanan ibadah mereka kepada bimbingan Almubarak Wisata.' : 'Hundreds of families, elderly parents, and professionals have trusted their spiritual journey to Almubarak Wisata guidance.' }}
                 </p>
             </div>
 
