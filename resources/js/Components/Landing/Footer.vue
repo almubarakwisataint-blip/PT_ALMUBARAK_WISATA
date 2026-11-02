@@ -1,4 +1,6 @@
 <script setup>
+import { Link } from '@inertiajs/vue3';
+
 const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -14,8 +16,8 @@ const scrollToTop = () => {
                     <div class="flex items-center gap-space-sm">
                         <img 
                             alt="Almubarak Wisata Logo" 
-                            class="h-10 w-auto object-contain bg-white rounded-lg p-1" 
-                            src="/images/logo-almubarak.jpg"
+                            class="h-11 w-auto object-contain bg-white rounded-lg p-1.5 shadow-sm" 
+                            src="/images/logo.png"
                         />
                         <div class="flex flex-col">
                             <span class="font-headline-sm text-[21px] text-white leading-tight font-extrabold tracking-tight">
@@ -27,7 +29,7 @@ const scrollToTop = () => {
                         </div>
                     </div>
                     <p class="font-body-sm text-[13px] text-white/85 leading-relaxed">
-                        Penyelenggara Perjalanan Ibadah Umrah (PPIU) dan Haji Khusus (PIHK) resmi terpercaya di bawah naungan Kementerian Agama Republik Indonesia. Menghadirkan ketenangan, kenyamanan ibadah, dan bimbingan sunnah secara paripurna.
+                        Penyelenggara Perjalanan Ibadah Umrah (PPIU) No. U.412 dan Haji Khusus (PIHK) resmi terpercaya di bawah naungan Kementerian Agama Republik Indonesia. Menghadirkan ketenangan, kenyamanan ibadah, dan bimbingan sunnah secara paripurna.
                     </p>
                 </div>
 
@@ -37,12 +39,12 @@ const scrollToTop = () => {
                         Navigasi
                     </h4>
                     <ul class="flex flex-col gap-2 font-body-sm text-white/85 text-[14px]">
-                        <li><a class="hover:text-secondary-fixed transition-colors" href="/">Home</a></li>
-                        <li><a class="hover:text-secondary-fixed transition-colors" href="/about">Tentang Kami</a></li>
-                        <li><a class="hover:text-secondary-fixed transition-colors" href="/about#visi-misi">Visi &amp; Misi</a></li>
-                        <li><a class="hover:text-secondary-fixed transition-colors" href="/business">Bisnis Kami</a></li>
-                        <li><a class="hover:text-secondary-fixed transition-colors" href="/news">Berita</a></li>
-                        <li><a class="hover:text-secondary-fixed transition-colors" href="/contact">Hubungi Kami</a></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/">Beranda</Link></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/about">Tentang Kami</Link></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/about#visi-misi">Visi &amp; Misi</Link></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/business">Bisnis Kami</Link></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/news">Berita</Link></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/contact">Hubungi Kami</Link></li>
                     </ul>
                 </div>
 
@@ -58,11 +60,11 @@ const scrollToTop = () => {
                         </div>
                         <div class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-secondary-fixed text-[20px] shrink-0">call</span>
-                            <span class="font-medium">Cs1 +62 812-6000-3484</span>
+                            <a href="https://wa.me/6281260003484" target="_blank" class="font-medium hover:underline">Cs1 +62 812-6000-3484</a>
                         </div>
                         <div class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-secondary-fixed text-[20px] shrink-0">call</span>
-                            <span class="font-medium">Cs2 +62 811-8000-2807</span>
+                            <a href="https://wa.me/6281180002807" target="_blank" class="font-medium hover:underline">Cs2 +62 811-8000-2807</a>
                         </div>
                         <div class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-secondary-fixed text-[20px] shrink-0">mail</span>
@@ -183,10 +185,10 @@ const scrollToTop = () => {
                     © 2026 Almubarak Wisata — All rights reserved.
                 </div>
                 <div class="flex items-center gap-6 sm:gap-8 font-semibold text-[14px] sm:text-[15px] text-white/90">
-                    <a class="hover:text-primary-fixed transition-colors" href="/about">Privasi</a>
-                    <a class="hover:text-primary-fixed transition-colors" href="/about">Syarat &amp; Ketentuan</a>
-                    <a class="hover:text-primary-fixed transition-colors" href="/business">Sitemap</a>
-                    <a class="hover:text-primary-fixed transition-colors" href="/contact">Hubungi Kami</a>
+                    <Link class="hover:text-primary-fixed transition-colors" href="/privacy">Privasi</Link>
+                    <Link class="hover:text-primary-fixed transition-colors" href="/terms">Syarat &amp; Ketentuan</Link>
+                    <Link class="hover:text-primary-fixed transition-colors" href="/business">Sitemap</Link>
+                    <Link class="hover:text-primary-fixed transition-colors" href="/contact">Hubungi Kami</Link>
                     <button 
                         @click="scrollToTop"
                         aria-label="Kembali ke atas" 
@@ -200,4 +202,3 @@ const scrollToTop = () => {
         </div>
     </footer>
 </template>
-

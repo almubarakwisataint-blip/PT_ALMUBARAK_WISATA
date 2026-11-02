@@ -1,27 +1,142 @@
 {
+  "_AppLayout-CihSXvrE.js": {
+    "file": "assets/AppLayout-CihSXvrE.js",
+    "name": "AppLayout",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_CtaBanner-xiUV0IJf.js": {
+    "file": "assets/CtaBanner-xiUV0IJf.js",
+    "name": "CtaBanner",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_FeaturedPackages-lo5cc4pU.js": {
+    "file": "assets/FeaturedPackages-lo5cc4pU.js",
+    "name": "FeaturedPackages",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_FivePillars-BOVX3W17.js": {
+    "file": "assets/FivePillars-BOVX3W17.js",
+    "name": "FivePillars",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
   "resources/css/app.css": {
-    "file": "assets/app-DVuKJ8oY.css",
+    "file": "assets/app-Af_X38wq.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
       "app.css"
     ]
   },
+  "resources/js/Pages/About.vue": {
+    "file": "assets/About-BNXCH6nQ.js",
+    "name": "About",
+    "src": "resources/js/Pages/About.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js",
+      "_FivePillars-BOVX3W17.js",
+      "_CtaBanner-xiUV0IJf.js"
+    ]
+  },
+  "resources/js/Pages/Business.vue": {
+    "file": "assets/Business-TDd99yZb.js",
+    "name": "Business",
+    "src": "resources/js/Pages/Business.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js",
+      "_FeaturedPackages-lo5cc4pU.js",
+      "_CtaBanner-xiUV0IJf.js"
+    ]
+  },
+  "resources/js/Pages/Contact.vue": {
+    "file": "assets/Contact-D2llPb9G.js",
+    "name": "Contact",
+    "src": "resources/js/Pages/Contact.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js"
+    ]
+  },
+  "resources/js/Pages/News.vue": {
+    "file": "assets/News-DtXQ7XE1.js",
+    "name": "News",
+    "src": "resources/js/Pages/News.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js",
+      "_CtaBanner-xiUV0IJf.js"
+    ]
+  },
+  "resources/js/Pages/NewsDetail.vue": {
+    "file": "assets/NewsDetail-weXGIBzl.js",
+    "name": "NewsDetail",
+    "src": "resources/js/Pages/NewsDetail.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js",
+      "_CtaBanner-xiUV0IJf.js"
+    ]
+  },
+  "resources/js/Pages/Privacy.vue": {
+    "file": "assets/Privacy-Duh6xYIu.js",
+    "name": "Privacy",
+    "src": "resources/js/Pages/Privacy.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js"
+    ]
+  },
+  "resources/js/Pages/Terms.vue": {
+    "file": "assets/Terms-roO0cZ2I.js",
+    "name": "Terms",
+    "src": "resources/js/Pages/Terms.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js"
+    ]
+  },
   "resources/js/Pages/Welcome.vue": {
-    "file": "assets/Welcome-BXupGNuZ.js",
+    "file": "assets/Welcome-2VwcyqKW.js",
     "name": "Welcome",
     "src": "resources/js/Pages/Welcome.vue",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.js"
+      "resources/js/app.js",
+      "_AppLayout-CihSXvrE.js",
+      "_FeaturedPackages-lo5cc4pU.js",
+      "_FivePillars-BOVX3W17.js",
+      "_CtaBanner-xiUV0IJf.js"
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BAPKwCb1.js",
+    "file": "assets/app-BkoXmulI.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
+      "resources/js/Pages/About.vue",
+      "resources/js/Pages/Business.vue",
+      "resources/js/Pages/Contact.vue",
+      "resources/js/Pages/News.vue",
+      "resources/js/Pages/NewsDetail.vue",
+      "resources/js/Pages/Privacy.vue",
+      "resources/js/Pages/Terms.vue",
       "resources/js/Pages/Welcome.vue"
     ]
   }

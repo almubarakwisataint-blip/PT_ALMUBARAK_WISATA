@@ -1,12 +1,22 @@
 <script setup>
-import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 
+const page = usePage();
 const isMobileMenuOpen = ref(false);
 const activeLang = ref('ID');
 
 const toggleLang = (lang) => {
     activeLang.value = lang;
+};
+
+const currentUrl = computed(() => page.url);
+
+const isLinkActive = (path) => {
+    if (path === '/') {
+        return currentUrl.value === '/' || currentUrl.value === '';
+    }
+    return currentUrl.value.startsWith(path);
 };
 </script>
 
@@ -15,11 +25,11 @@ const toggleLang = (lang) => {
     <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-surface-container shadow-[0_1px_12px_rgba(0,0,0,0.05)]">
         <div class="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between">
             <!-- Brand Logo & Name -->
-            <a class="flex items-center gap-space-sm group" href="/">
+            <Link class="flex items-center gap-space-sm group" href="/">
                 <img 
-                    alt="Almubarak Wisata Logo" 
-                    class="h-10 w-auto object-contain rounded-md transition-transform duration-300 group-hover:scale-105" 
-                    src="/images/logo-almubarak.jpg"
+                    alt="Almubarak Wisata Internasional" 
+                    class="h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+                    src="/images/logo.png"
                 />
                 <div class="flex flex-col">
                     <span class="font-headline-sm text-[21px] text-primary leading-tight font-extrabold tracking-tight">
@@ -29,25 +39,45 @@ const toggleLang = (lang) => {
                         Haji &amp; Umrah Premium
                     </span>
                 </div>
-            </a>
+            </Link>
 
             <!-- Navigation Links -->
             <nav class="hidden lg:flex items-center gap-space-lg font-label-lg text-label-lg">
-                <a aria-current="page" class="transition-colors py-1 px-1 text-primary font-bold border-b-2 border-primary" href="/">
+                <Link 
+                    href="/" 
+                    :class="isLinkActive('/') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
+                    class="transition-colors py-1 px-1"
+                >
                     Beranda
-                </a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors py-1 px-1 font-medium" href="/about">
+                </Link>
+                <Link 
+                    href="/about" 
+                    :class="isLinkActive('/about') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
+                    class="transition-colors py-1 px-1"
+                >
                     Tentang Kami
-                </a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors py-1 px-1 font-medium" href="/business">
+                </Link>
+                <Link 
+                    href="/business" 
+                    :class="isLinkActive('/business') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
+                    class="transition-colors py-1 px-1"
+                >
                     Bisnis Kami
-                </a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors py-1 px-1 font-medium" href="/news">
+                </Link>
+                <Link 
+                    href="/news" 
+                    :class="isLinkActive('/news') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
+                    class="transition-colors py-1 px-1"
+                >
                     Berita
-                </a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors py-1 px-1 font-medium" href="/contact">
+                </Link>
+                <Link 
+                    href="/contact" 
+                    :class="isLinkActive('/contact') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
+                    class="transition-colors py-1 px-1"
+                >
                     Hubungi Kami
-                </a>
+                </Link>
             </nav>
 
             <!-- Right Controls: Language pill switch & Masuk Button -->
@@ -98,21 +128,46 @@ const toggleLang = (lang) => {
         <!-- Mobile Drawer Menu -->
         <div v-show="isMobileMenuOpen" class="lg:hidden border-t border-surface-container bg-white/98 px-gutter py-4 shadow-xl">
             <div class="flex flex-col gap-3 font-label-lg text-label-lg">
-                <a class="py-2 px-3 text-primary font-bold bg-surface-container rounded-lg" href="/">
+                <Link 
+                    @click="isMobileMenuOpen = false" 
+                    class="py-2 px-3 rounded-lg font-bold"
+                    :class="isLinkActive('/') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
+                    href="/"
+                >
                     Beranda
-                </a>
-                <a class="py-2 px-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors" href="/about">
+                </Link>
+                <Link 
+                    @click="isMobileMenuOpen = false" 
+                    class="py-2 px-3 rounded-lg font-bold"
+                    :class="isLinkActive('/about') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
+                    href="/about"
+                >
                     Tentang Kami
-                </a>
-                <a class="py-2 px-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors" href="/business">
+                </Link>
+                <Link 
+                    @click="isMobileMenuOpen = false" 
+                    class="py-2 px-3 rounded-lg font-bold"
+                    :class="isLinkActive('/business') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
+                    href="/business"
+                >
                     Bisnis Kami
-                </a>
-                <a class="py-2 px-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors" href="/news">
+                </Link>
+                <Link 
+                    @click="isMobileMenuOpen = false" 
+                    class="py-2 px-3 rounded-lg font-bold"
+                    :class="isLinkActive('/news') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
+                    href="/news"
+                >
                     Berita
-                </a>
-                <a class="py-2 px-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors" href="/contact">
+                </Link>
+                <Link 
+                    @click="isMobileMenuOpen = false" 
+                    class="py-2 px-3 rounded-lg font-bold"
+                    :class="isLinkActive('/contact') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
+                    href="/contact"
+                >
                     Hubungi Kami
-                </a>
+                </Link>
                 <a 
                     href="/admin/login" 
                     class="mt-2 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-white font-bold shadow-sm"
@@ -124,4 +179,3 @@ const toggleLang = (lang) => {
         </div>
     </header>
 </template>
-

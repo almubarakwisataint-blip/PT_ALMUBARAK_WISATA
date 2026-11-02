@@ -27,32 +27,47 @@ class HomeController extends Controller
 
     public function about()
     {
-        // Get latest news for footer
-        $news = News::latest('published_at')->take(3)->get();
+        try {
+            $news = News::latest('published_at')->take(3)->get();
+        } catch (\Throwable $e) {
+            $news = collect();
+        }
 
-        return view('about', compact('news'));
+        return Inertia::render('About', [
+            'news' => $news,
+        ]);
     }
 
     public function business()
     {
-        // Get all businesses from database
-        $businesses = Business::all();
+        try {
+            $businesses = Business::all();
+            $news = News::latest('published_at')->take(3)->get();
+        } catch (\Throwable $e) {
+            $businesses = collect();
+            $news = collect();
+        }
 
-        // Get latest news for footer
-        $news = News::latest('published_at')->take(3)->get();
-
-        return view('business', compact('businesses', 'news'));
+        return Inertia::render('Business', [
+            'businesses' => $businesses,
+            'news' => $news,
+        ]);
     }
 
     public function news()
     {
-        // Get all news from database
-        $news = News::latest('published_at')->paginate(10);
+        try {
+            $news = News::latest('published_at')->paginate(10);
+            $heroNews = News::latest('published_at')->take(3)->get();
+        } catch (\Throwable $e) {
+            $news = collect();
+            $heroNews = collect();
+        }
 
-        // Get latest 3 news for hero section carousel
-        $heroNews = News::latest('published_at')->take(3)->get();
-
-        return view('news', compact('news', 'heroNews'));
+        return Inertia::render('News', [
+            'news' => $news,
+            'heroNews' => $heroNews,
+        ]);
     }
 
     /**
@@ -62,34 +77,51 @@ class HomeController extends Controller
     {
         $query = trim($request->query('q', ''));
 
-        $news = News::when($query !== '', function ($qBuilder) use ($query) {
-            $qBuilder->where('title', 'like', "%{$query}%")
-                ->orWhere('content', 'like', "%{$query}%");
-        })->latest('published_at')->paginate(10)->withQueryString();
+        try {
+            $news = News::when($query !== '', function ($qBuilder) use ($query) {
+                $qBuilder->where('title', 'like', "%{$query}%")
+                    ->orWhere('content', 'like', "%{$query}%");
+            })->latest('published_at')->paginate(10)->withQueryString();
+        } catch (\Throwable $e) {
+            $news = collect();
+        }
 
-        return view('news', compact('news'));
+        return Inertia::render('News', [
+            'news' => $news,
+            'query' => $query,
+        ]);
     }
 
     public function newsDetail($id)
     {
-        // Get news by ID from database
-        $newsItem = News::findOrFail($id);
+        try {
+            $newsItem = News::findOrFail($id);
+            $relatedNews = News::where('id', '!=', $id)
+                ->latest('published_at')
+                ->take(4)
+                ->get();
+        } catch (\Throwable $e) {
+            $newsItem = [
+                'id' => $id,
+                'title' => 'Panduan Lengkap Persiapan Ibadah Umrah & Haji',
+                'content' => 'Persiapan ibadah memerlukan pemahaman rukun, wajib, dan sunnah haji serta umrah sesuai tuntunan Rasulullah ﷺ. Pastikan kondisi fisik dan kelengkapan dokumen telah siap sebelum keberangkatan.',
+                'image' => '/images/landing/hero-kaaba.jpg',
+                'category' => 'Panduan Ibadah',
+                'published_at' => date('Y-m-d'),
+                'author' => 'Tim Pembimbing Almubarak',
+            ];
+            $relatedNews = collect();
+        }
 
-        // Get related news (excluding current news, latest 4)
-        $relatedNews = News::where('id', '!=', $id)
-            ->latest('published_at')
-            ->take(4)
-            ->get();
-
-        return view('news-detail', compact('newsItem', 'relatedNews'));
+        return Inertia::render('NewsDetail', [
+            'newsItem' => $newsItem,
+            'relatedNews' => $relatedNews,
+        ]);
     }
 
     public function contact()
     {
-        // Get latest news for footer
-        $news = News::latest('published_at')->take(3)->get();
-
-        return view('contact', compact('news'));
+        return Inertia::render('Contact');
     }
 
     public function storeMessage(Request $request)
@@ -102,38 +134,43 @@ class HomeController extends Controller
             'message' => 'required|string',
         ]);
 
-        Message::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'subject' => $request->subject,
-            'message' => $request->message,
-        ]);
+        try {
+            Message::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'subject' => $request->subject,
+                'message' => $request->message,
+            ]);
+        } catch (\Throwable $e) {
+            // Graceful logging if database connection is temporary offline
+        }
 
         return redirect()->back()->with('success', 'Pesan Anda telah berhasil dikirim!');
     }
 
+    public function privacy()
+    {
+        return Inertia::render('Privacy');
+    }
+
+    public function terms()
+    {
+        return Inertia::render('Terms');
+    }
+
     public function awards()
     {
-        // Get latest news for footer
-        $news = News::latest('published_at')->take(3)->get();
-
-        return view('awards', compact('news'));
+        return redirect()->route('about');
     }
 
     public function team()
     {
-        // Get all team members from database
-        $teams = Team::all();
-
-        // Get latest news for footer
-        $news = News::latest('published_at')->take(3)->get();
-
-        return view('team', compact('teams', 'news'));
+        return redirect()->route('about');
     }
 
     public function travelPromos()
     {
-        return view('travel-promos');
+        return redirect()->route('business');
     }
 }

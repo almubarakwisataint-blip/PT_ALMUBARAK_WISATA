@@ -15,6 +15,8 @@ Route::post('/contact', [HomeController::class, 'storeMessage'])->name('contact.
 Route::get('/awards', [HomeController::class, 'awards'])->name('awards');
 Route::get('/team', [HomeController::class, 'team'])->name('team');
 Route::get('/travel-promos', [HomeController::class, 'travelPromos'])->name('travel-promos');
+Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');
+Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 
 // Admin Routes
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
