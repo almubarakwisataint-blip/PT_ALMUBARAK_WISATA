@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import CtaBanner from '@/Components/Landing/CtaBanner.vue';
 </script>
 
 <template>
@@ -40,6 +41,9 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                 </div>
             </div>
         </section>
+
+        <!-- CTA Banner -->
+        <CtaBanner />
     </AppLayout>
 </template>
 

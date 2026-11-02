@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import CtaBanner from '@/Components/Landing/CtaBanner.vue';
 
 const form = useForm({
     name: '',
@@ -320,6 +321,9 @@ const toggleFaq = (idx) => {
                 </div>
             </div>
         </section>
+
+        <!-- CTA Banner -->
+        <CtaBanner />
     </AppLayout>
 </template>
 
