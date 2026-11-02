@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use App\Models\News;
 use App\Models\Business;
 use App\Models\Message;
@@ -15,7 +16,9 @@ class HomeController extends Controller
         // Get latest news from database
         $news = News::latest('published_at')->take(10)->get();
 
-        return view('welcome', compact('news'));
+        return Inertia::render('Welcome', [
+            'news' => $news,
+        ]);
     }
 
     public function about()

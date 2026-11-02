@@ -4,141 +4,154 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../**/*.vue';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+    /* Material Design / Brand Color Palette */
+    --color-surface: #faf8ff;
+    --color-surface-dim: #d2d9f4;
+    --color-surface-bright: #faf8ff;
+    --color-surface-variant: #dae2fd;
+    --color-surface-tint: #006c4e;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f2f3ff;
+    --color-surface-container: #eaedff;
+    --color-surface-container-high: #e2e7ff;
+    --color-surface-container-highest: #dae2fd;
+    --color-inverse-surface: #283044;
+    --color-inverse-on-surface: #eef0ff;
+
+    --color-primary: #005d42;
+    --color-primary-container: #047857;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #9ffdd3;
+    --color-primary-fixed: #97f5cc;
+    --color-primary-fixed-dim: #7bd8b1;
+    --color-on-primary-fixed: #002115;
+    --color-on-primary-fixed-variant: #00513a;
+    --color-inverse-primary: #7bd8b1;
+
+    --color-secondary: #904d00;
+    --color-secondary-container: #fe932c;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #663500;
+    --color-secondary-fixed: #ffdcc3;
+    --color-secondary-fixed-dim: #ffb77d;
+    --color-on-secondary-fixed: #2f1500;
+    --color-on-secondary-fixed-variant: #6e3900;
+
+    --color-tertiary: #1b5b47;
+    --color-tertiary-container: #37745f;
+    --color-on-tertiary: #ffffff;
+    --color-on-tertiary-container: #b7f7dd;
+    --color-tertiary-fixed: #b0f0d6;
+    --color-tertiary-fixed-dim: #95d3ba;
+    --color-on-tertiary-fixed: #002117;
+    --color-on-tertiary-fixed-variant: #0b513d;
+
+    --color-on-surface: #131b2e;
+    --color-on-surface-variant: #3e4943;
+    --color-background: #faf8ff;
+    --color-on-background: #131b2e;
+
+    --color-outline: #6e7a73;
+    --color-outline-variant: #bdc9c1;
+
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error: #ffffff;
+    --color-on-error-container: #93000a;
+
+    /* Custom Spacings */
+    --spacing-space-xs: 0.25rem;
+    --spacing-space-sm: 0.5rem;
+    --spacing-space-md: 1rem;
+    --spacing-space-lg: 1.5rem;
+    --spacing-space-xl: 2.5rem;
+    --spacing-gutter: 1.5rem;
+    --spacing-gutter-mobile: 1rem;
+    --spacing-margin: 2rem;
+    --spacing-margin-mobile: 1rem;
 }
 
-/* Logo zoom animation */
-@keyframes zoomIn {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+@utility font-headline-xl {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 52px;
+    line-height: 62px;
+    letter-spacing: -0.025em;
+    font-weight: 800;
+}
+@utility font-headline-lg {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 38px;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+@utility font-headline-md {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    line-height: 34px;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+}
+@utility font-headline-sm {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+@utility font-body-lg {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+}
+@utility font-body-md {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+}
+@utility font-body-sm {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+}
+@utility font-label-lg {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+}
+@utility font-label-md {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+@utility font-label-sm {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: 0.06em;
+    font-weight: 700;
 }
 
-/* Mobile menu slide-in animation */
-@keyframes slideInLeft {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Mobile menu slide-out animation */
-@keyframes slideOutLeft {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-}
-
-/* Fade-in animation for mobile elements */
-@keyframes fadeInUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-#image-modal img {
-    animation: zoomIn 0.3s ease-out;
-}
-
-/* Mobile menu styles */
-#mobile-menu {
-    transition: all 0.3s ease-in-out;
-}
-
-#mobile-menu.show {
-    animation: slideInLeft 0.3s ease-out;
-}
-
-#mobile-menu.hide {
-    animation: slideOutLeft 0.3s ease-in;
-}
-
-/* Mobile-specific animations */
-@media (max-width: 768px) {
-    .mobile-fade-in {
-        animation: fadeInUp 0.5s ease-out;
-    }
-
-    .mobile-slide-in {
-        animation: slideInLeft 0.4s ease-out;
-    }
-}
-
-/* Hero carousel styles */
-.hero-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-.hero-slide.active {
-    opacity: 1;
-}
-
-.hero-content-item {
-    display: none;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.hero-content-item.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Background Slider Styles */
-#background-slider {
-    z-index: -1;
-}
-
-.slider-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-.slider-image.active {
-    opacity: 1;
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
 }
