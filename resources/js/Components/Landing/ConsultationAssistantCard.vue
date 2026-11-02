@@ -78,6 +78,26 @@ const slides = computed(() => {
     }));
 });
 
+// Touch and drag swipe for banner
+let touchStartX = 0;
+let touchEndX = 0;
+
+const handleBannerTouchStart = (e) => {
+    stopBannerAutoRotate();
+    touchStartX = e.touches ? e.touches[0].clientX : e.clientX;
+};
+
+const handleBannerTouchEnd = (e) => {
+    touchEndX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    const diff = touchStartX - touchEndX;
+    if (diff > 40) {
+        nextSlide();
+    } else if (diff < -40) {
+        prevSlide();
+    }
+    startBannerAutoRotate();
+};
+
 const nextSlide = () => {
     currentSlide.value = (currentSlide.value + 1) % slides.value.length;
 };
@@ -185,27 +205,45 @@ const promoCards = computed(() => {
     }));
 });
 
-const scrollLeft = () => {
+// Auto-scroll & Drag untuk kartu promo (gerak otomatis & bisa digeser sendiri)
+const isDragging = ref(false);
+let startX = 0;
+let startScrollLeft = 0;
+
+const startDrag = (e) => {
+    isDragging.value = true;
     stopPromoAutoScroll();
-    if (scrollContainer.value) {
-        scrollContainer.value.scrollBy({ left: -390, behavior: 'smooth' });
+    startX = e.pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
+    startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
+};
+
+const onDrag = (e) => {
+    if (!isDragging.value || !scrollContainer.value) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainer.value.offsetLeft;
+    const walk = (x - startX) * 1.4;
+    scrollContainer.value.scrollLeft = startScrollLeft - walk;
+};
+
+const stopDrag = () => {
+    if (isDragging.value) {
+        isDragging.value = false;
+        startPromoAutoScroll();
     }
+};
+
+const onTouchStart = () => {
+    stopPromoAutoScroll();
+};
+
+const onTouchEnd = () => {
     startPromoAutoScroll();
 };
 
-const scrollRight = () => {
-    stopPromoAutoScroll();
-    if (scrollContainer.value) {
-        scrollContainer.value.scrollBy({ left: 390, behavior: 'smooth' });
-    }
-    startPromoAutoScroll();
-};
-
-// Auto-scroll untuk kartu promo (gerak otomatis)
 const startPromoAutoScroll = () => {
     stopPromoAutoScroll();
     promoTimer = setInterval(() => {
-        if (!scrollContainer.value) return;
+        if (!scrollContainer.value || isDragging.value) return;
         const maxScroll = scrollContainer.value.scrollWidth - scrollContainer.value.clientWidth;
         if (scrollContainer.value.scrollLeft >= maxScroll - 30) {
             scrollContainer.value.scrollTo({ left: 0, behavior: 'smooth' });
@@ -241,12 +279,16 @@ onBeforeUnmount(() => {
     <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 overflow-hidden">
         
         <!-- ================================================================ -->
-        <!-- 1. BANNER UTAMA KONSULTASI (GAMBAR 4 DENGAN OTOMATIS GERAK SENDIRI)-->
+        <!-- 1. BANNER UTAMA KONSULTASI (OTOMATIS GERAK SENDIRI & BISA DIGESER) -->
         <!-- ================================================================ -->
         <div 
             @mouseenter="stopBannerAutoRotate"
             @mouseleave="startBannerAutoRotate"
-            class="relative w-full rounded-[28px] sm:rounded-[36px] overflow-hidden bg-gradient-to-r from-[#1c1108] via-[#2c170b] to-[#180e06] border border-amber-600/35 shadow-2xl text-white p-5 sm:p-8 lg:px-10 lg:py-7 min-h-[340px] lg:h-[370px] flex items-center mb-10 transition-all duration-500"
+            @touchstart="handleBannerTouchStart"
+            @touchend="handleBannerTouchEnd"
+            @mousedown="handleBannerTouchStart"
+            @mouseup="handleBannerTouchEnd"
+            class="relative w-full rounded-[28px] sm:rounded-[36px] overflow-hidden bg-gradient-to-r from-[#1c1108] via-[#2c170b] to-[#180e06] border border-amber-600/35 shadow-2xl text-white p-5 sm:p-8 lg:px-10 lg:py-7 min-h-[340px] lg:h-[370px] flex items-center mb-10 transition-all duration-500 cursor-grab active:cursor-grabbing select-none"
         >
             <!-- DEKORASI BULAT-BULAT & GELOMBANG EMAS (PERSIS TANDA MERAH GAMBAR 5) -->
             <!-- 1) 6x4 Dot Grid Matrix Pattern di kanan atas -->
@@ -396,23 +438,7 @@ onBeforeUnmount(() => {
                 </div>
             </div>
 
-            <!-- Navigasi Panah Kiri (<) & Kanan (>) di Tepi Banner -->
-            <button 
-                @click="prevSlide"
-                type="button"
-                aria-label="Slide sebelumnya"
-                class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-lg hover:scale-110 z-20"
-            >
-                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
-            </button>
-            <button 
-                @click="nextSlide"
-                type="button"
-                aria-label="Slide berikutnya"
-                class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-lg hover:scale-110 z-20"
-            >
-                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
-            </button>
+
 
             <!-- Titik Pagination di Bawah Tengah Banner -->
             <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
@@ -447,30 +473,18 @@ onBeforeUnmount(() => {
                         {{ locale === 'ID' ? 'Katalog Promo & Diskon Spesial Keberangkatan' : 'Special Pilgrimage Offers & Deals' }}
                     </h3>
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
-                    <button 
-                        @click="scrollLeft"
-                        type="button"
-                        aria-label="Geser ke kiri"
-                        class="w-10 h-10 rounded-full bg-white text-neutral-800 border border-gray-200 shadow-sm flex items-center justify-center hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
-                    >
-                        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
-                    </button>
-                    <button 
-                        @click="scrollRight"
-                        type="button"
-                        aria-label="Geser ke kanan"
-                        class="w-10 h-10 rounded-full bg-white text-neutral-800 border border-gray-200 shadow-sm flex items-center justify-center hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
-                    >
-                        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
-                    </button>
-                </div>
             </div>
 
-            <!-- Horizontal Scrollable Cards (Persis Gambar 3: Widescreen Ticket Voucher Card) -->
+            <!-- Horizontal Scrollable Cards (Widescreen Ticket Voucher Card Tanpa Bar & Bisa Digeser Sendiri) -->
             <div 
                 ref="scrollContainer"
-                class="flex gap-5 overflow-x-auto scrollbar-none pb-4 pt-1 px-1 scroll-smooth"
+                @mousedown="startDrag"
+                @mousemove="onDrag"
+                @mouseup="stopDrag"
+                @mouseleave="stopDrag"
+                @touchstart="onTouchStart"
+                @touchend="onTouchEnd"
+                class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 scroll-smooth select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                 <div 
                     v-for="(card, idx) in promoCards" 

@@ -11,30 +11,6 @@ const selectedAward = ref(null);
 
 const rawAwards = [
     {
-        id: 'via-com',
-        titleId: 'Top Performing Travel Partner & Umrah Ticketing Provider',
-        titleEn: 'Top Performing Travel Partner & Umrah Ticketing Provider',
-        institutionId: 'Via.com Indonesia (PT Advaltis Asia Network)',
-        institutionEn: 'Via.com Indonesia (PT Advaltis Asia Network)',
-        badgeId: 'Top Agent Award',
-        badgeEn: 'Top Agent Award',
-        year: '2024',
-        certNumber: 'VIA/ID/AGT/2024-088',
-        image: '/images/penghargaan.jpeg',
-        descId: 'Apresiasi resmi manajemen Via.com Indonesia atas dedikasi luar biasa, pertumbuhan volume penjualan tiket penerbangan grup umrah, dan keandalan sistem reservasi tiket internasional terpercaya.',
-        descEn: 'Official commendation from Via.com Indonesia management for exemplary dedication, group flight booking volume, and proven international ticketing reliability.',
-        detailsId: [
-            'Diterima langsung oleh jajaran Direksi PT Almubarak Wisata',
-            'Penghargaan kategori B2B Travel Partner & Group Ticketing',
-            'Sinergi rute penerbangan Saudia Airlines, Emirates, dan Garuda Indonesia',
-        ],
-        detailsEn: [
-            'Received directly by the Board of Directors of PT Almubarak Wisata',
-            'Award Category: B2B Travel Partner & Group Ticketing',
-            'Route synergies with Saudia Airlines, Emirates, and Garuda Indonesia',
-        ],
-    },
-    {
         id: 'kemenag-ppiu',
         titleId: 'Sertifikasi Akreditasi A Resmi PPIU Kemenag RI',
         titleEn: 'Official Grade A Accreditation PPIU Ministry of Religious Affairs',
@@ -45,6 +21,7 @@ const rawAwards = [
         year: '2024',
         certNumber: 'SK Kemenag No. U.412 Tahun 2020',
         image: '/images/penghargaan.jpeg',
+        verifyUrl: 'https://siskopatuh.kemenag.go.id',
         descId: 'Predikat Akreditasi A (Sangat Baik) atas kepatuhan menyeluruh terhadap tata kelola manasik, proteksi dana jamaah melalui virtual account, standar akomodasi hotel pelataran ring 1, dan jaminan 5 Pasti Umrah.',
         descEn: 'Grade A Accreditation (Excellent) for comprehensive governance compliance, secure virtual account escrow, ring 1 courtyard hotels, and the 5 Certainty Guarantees.',
         detailsId: [
@@ -59,6 +36,31 @@ const rawAwards = [
         ],
     },
     {
+        id: 'via-com',
+        titleId: 'Top Performing Travel Partner & Umrah Ticketing Provider',
+        titleEn: 'Top Performing Travel Partner & Umrah Ticketing Provider',
+        institutionId: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        institutionEn: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        badgeId: 'Top Agent Award',
+        badgeEn: 'Top Agent Award',
+        year: '2024',
+        certNumber: 'VIA/ID/AGT/2024-088',
+        image: '/images/penghargaan.jpeg',
+        verifyUrl: 'https://via.id',
+        descId: 'Apresiasi resmi manajemen Via.com Indonesia atas dedikasi luar biasa, pertumbuhan volume penjualan tiket penerbangan grup umrah, dan keandalan sistem reservasi tiket internasional terpercaya.',
+        descEn: 'Official commendation from Via.com Indonesia management for exemplary dedication, group flight booking volume, and proven international ticketing reliability.',
+        detailsId: [
+            'Diterima langsung oleh jajaran Direksi PT Almubarak Wisata',
+            'Penghargaan kategori B2B Travel Partner & Group Ticketing',
+            'Sinergi rute penerbangan Saudia Airlines, Emirates, dan Garuda Indonesia',
+        ],
+        detailsEn: [
+            'Received directly by the Board of Directors of PT Almubarak Wisata',
+            'Award Category: B2B Travel Partner & Group Ticketing',
+            'Route synergies with Saudia Airlines, Emirates, and Garuda Indonesia',
+        ],
+    },
+    {
         id: 'airlines-partner',
         titleId: 'Official Umrah Group Partner Saudia & Garuda Indonesia',
         titleEn: 'Official Umrah Group Partner Saudia & Garuda Indonesia',
@@ -69,6 +71,7 @@ const rawAwards = [
         year: '2024',
         certNumber: 'SV-GA/GRP/UMR-1445/2024',
         image: '/images/landing/hero-kaaba.jpg',
+        verifyUrl: 'https://www.saudia.com',
         descId: 'Penghargaan loyalitas dan kemitraan strategis atas komitmen konsisten penyediaan seat penerbangan direct rute Jakarta (CGK) - Jeddah (JED) / Madinah (MED) tanpa transit bagi jamaah umrah dan haji khusus.',
         descEn: 'Strategic partner honor for consistent direct flight block-seats (CGK to JED/MED) with no transit delays for Umrah and VIP Hajj pilgrims.',
         detailsId: [
@@ -93,6 +96,7 @@ const rawAwards = [
         year: '2023 - 2025',
         certNumber: 'ASITA-REG/0912/DPP/2023',
         image: '/images/landing/gallery-jamaah.jpg',
+        verifyUrl: 'https://asita.or.id',
         descId: 'Standardisasi profesionalisme biro perjalanan wisata berizin resmi nasional yang beroperasi sesuai kode etik pariwisata Indonesia, perlindungan hukum konsumen, dan standar pelayanan pelanggan paripurna.',
         descEn: 'National professional accreditation guaranteeing ethical tourism compliance, legal consumer protections, and service excellence.',
         detailsId: [
@@ -117,6 +121,7 @@ const rawAwards = [
         year: '2024',
         certNumber: 'HMP/PPIU/JKT-1502',
         image: '/images/landing/package-haji-furoda.jpg',
+        verifyUrl: 'https://himpuh.or.id',
         descId: 'Sertifikasi keanggotaan asosiasi penyelenggara haji khusus dan umrah terpercaya dalam mewujudkan ibadah yang aman, transparan, dan sesuai sunnah Rasulullah ﷺ.',
         descEn: 'Certification in the esteemed association of special hajj and umrah operators dedicated to transparent, Sunnah-compliant spiritual journeys.',
         detailsId: [
@@ -141,6 +146,7 @@ const rawAwards = [
         year: '2023',
         certNumber: 'HTTF/2023/EXC-042',
         image: '/images/landing/package-turki-plus.jpg',
+        verifyUrl: 'https://kemenparekraf.go.id',
         descId: 'Pengakuan keunggulan dalam merancang paket wisata halal ke Turki, Jordan, Mesir, dan Uzbekistan dengan jaminan 100% makanan bersertifikat halal, waktu shalat terjaga, dan edukasi sejarah peradaban Islam.',
         descEn: 'Honored for exceptional halal travel itineraries in Turkey, Jordan, Egypt, and Uzbekistan with 100% halal gastronomy and preserved prayer schedules.',
         detailsId: [
@@ -165,6 +171,7 @@ const awards = computed(() => {
         badge: isEn ? a.badgeEn : a.badgeId,
         year: a.year,
         certNumber: a.certNumber,
+        verifyUrl: a.verifyUrl,
         desc: isEn ? a.descEn : a.descId,
         image: a.image,
         details: isEn ? a.detailsEn : a.detailsId,
@@ -419,6 +426,22 @@ onUnmounted(() => {
                         {{ selectedAward.desc }}
                     </p>
 
+                    <!-- Link Sumber Asli / Bukti Verifikasi Resmi (Sesuai Permintaan) -->
+                    <div v-if="selectedAward.verifyUrl" class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1.5">
+                        <span class="block text-[11px] font-bold text-[#005138] uppercase tracking-wider">
+                            {{ locale === 'ID' ? 'Tautan Bukti Verifikasi Resmi:' : 'Official Proof & Verification Link:' }}
+                        </span>
+                        <a 
+                            :href="selectedAward.verifyUrl" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1.5 text-xs font-bold text-[#005138] hover:text-[#003827] underline break-all"
+                        >
+                            <span class="material-symbols-outlined text-[15px] text-emerald-600">open_in_new</span>
+                            <span>{{ selectedAward.verifyUrl }}</span>
+                        </a>
+                    </div>
+
                     <!-- Details Points -->
                     <div v-if="selectedAward.details && selectedAward.details.length > 0" class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 space-y-2">
                         <span class="block text-xs font-bold text-[#005138] uppercase tracking-wider">{{ locale === 'ID' ? 'Poin Legalitas & Pengakuan:' : 'Key Legalities & Accreditations:' }}</span>
@@ -430,18 +453,27 @@ onUnmounted(() => {
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between shrink-0">
-                    <span class="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        {{ locale === 'ID' ? 'Terverifikasi Aktif' : 'Active & Verified' }}
-                    </span>
-                    <button 
-                        @click="closeAwardModal" 
-                        type="button" 
-                        class="px-6 py-2.5 rounded-xl bg-[#005138] hover:bg-[#003d2b] text-white text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow"
+                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between gap-3 shrink-0">
+                    <Link 
+                        :href="`/awards/${selectedAward.id}`"
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-[#005138] hover:underline"
                     >
-                        {{ locale === 'ID' ? 'Tutup' : 'Close' }}
-                    </button>
+                        <span>{{ locale === 'ID' ? 'Buka Halaman Lengkap' : 'Open Full Page' }}</span>
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                    </Link>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            {{ locale === 'ID' ? 'Terverifikasi Aktif' : 'Active & Verified' }}
+                        </span>
+                        <button 
+                            @click="closeAwardModal" 
+                            type="button" 
+                            class="px-6 py-2.5 rounded-xl bg-[#005138] hover:bg-[#003d2b] text-white text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow"
+                        >
+                            {{ locale === 'ID' ? 'Tutup' : 'Close' }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

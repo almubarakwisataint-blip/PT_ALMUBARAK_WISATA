@@ -1,10 +1,13 @@
 <script setup>
 import Navbar from '@/Components/Landing/Navbar.vue';
 import Footer from '@/Components/Landing/Footer.vue';
+import LoadingScreen from '@/Components/Landing/LoadingScreen.vue';
 </script>
 
 <template>
     <div class="min-h-screen bg-surface font-sans text-on-surface relative selection:bg-primary-container selection:text-white overflow-x-hidden">
+        <!-- Preloader / Loading Screen (Sesuai Gambar 1, 2, 3) -->
+        <LoadingScreen />
         <!-- Background Pattern & Subtle Gradient Scrim -->
         <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
             <div 

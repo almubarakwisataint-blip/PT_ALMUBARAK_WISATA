@@ -172,6 +172,13 @@ class HomeController extends Controller
         return Inertia::render('Awards');
     }
 
+    public function awardDetail($id)
+    {
+        return Inertia::render('AwardDetail', [
+            'awardId' => $id,
+        ]);
+    }
+
     public function team()
     {
         try {

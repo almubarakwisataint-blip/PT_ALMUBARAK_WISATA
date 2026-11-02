@@ -15,6 +15,7 @@ Route::get('/news/{id}', [HomeController::class, 'newsDetail'])->name('news-deta
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'storeMessage'])->name('contact.store');
 Route::get('/awards', [HomeController::class, 'awards'])->name('awards');
+Route::get('/awards/{id}', [HomeController::class, 'awardDetail'])->name('awards.detail');
 Route::get('/team', [HomeController::class, 'team'])->name('team');
 Route::get('/travel-promos', [HomeController::class, 'travelPromos'])->name('travel-promos');
 Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');

@@ -73,42 +73,23 @@ const scrollToTop = () => {
         </div>
 
         <!-- ==================================================================== -->
-        <!-- SECTION 2: FOOTER BODY DENGAN GELEMBUNG MENGAPUNG (BUBBLES & WAVES)  -->
+        <!-- SECTION 2: FOOTER BODY LENGKAP & BERSIH (4 KOLOM PROPORSIONAL)       -->
         <!-- ==================================================================== -->
         <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-10 pb-12">
             
-            <!-- GELEMBUNG (BUBBLES) DEKORATIF MENGAPUNG DI LATAR BELAKANG FOOTER -->
-            <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                <!-- Gelembung 1: Kiri Atas -->
-                <div class="absolute -top-6 left-10 w-36 h-36 rounded-full bg-gradient-to-tr from-emerald-500/20 to-teal-300/25 border border-emerald-400/35 blur-xs animate-bubble-1"></div>
-                <!-- Gelembung 2: Kiri Tengah -->
-                <div class="absolute top-1/3 left-1/4 w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-400/15 to-emerald-200/20 border border-emerald-300/30 blur-xs animate-bubble-2"></div>
-                <!-- Gelembung 3: Kiri Bawah -->
-                <div class="absolute bottom-8 left-1/3 w-28 h-28 rounded-full bg-gradient-to-tr from-emerald-600/20 to-emerald-400/20 border border-emerald-400/25 blur-xs animate-bubble-3"></div>
-                <!-- Gelembung 4: Kanan Atas -->
-                <div class="absolute top-12 right-12 w-44 h-44 rounded-full bg-gradient-to-br from-teal-400/20 to-emerald-300/20 border border-emerald-300/35 blur-xs animate-bubble-1"></div>
-                <!-- Gelembung 5: Kanan Tengah -->
-                <div class="absolute top-1/2 right-1/4 w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-400/20 to-amber-300/15 border border-emerald-300/30 blur-xs animate-bubble-2"></div>
-                <!-- Gelembung 6: Kanan Bawah -->
-                <div class="absolute -bottom-6 right-8 w-32 h-32 rounded-full bg-gradient-to-tl from-emerald-500/25 to-teal-400/15 border border-emerald-400/30 blur-xs animate-bubble-3"></div>
-                <!-- Gelembung Partikel Kecil -->
-                <div class="absolute top-20 left-1/2 w-8 h-8 rounded-full bg-white/15 border border-white/25 animate-bubble-1"></div>
-                <div class="absolute bottom-16 right-1/2 w-10 h-10 rounded-full bg-emerald-300/25 border border-emerald-200/35 animate-bubble-2"></div>
-            </div>
-
             <!-- Ambient Dot Matrix Decorative Accent -->
             <div class="absolute right-4 top-16 hidden lg:grid grid-cols-6 gap-2.5 opacity-10 pointer-events-none z-0">
                 <span v-for="i in 36" :key="i" class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
             </div>
 
             <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- 5 Kolom Grid Proporsional -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pb-14 border-b border-white/10 items-start">
+                <!-- 4 Kolom Grid Bersih & Seimbang -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8 pb-14 border-b border-white/10 items-start">
                     
                     <!-- ============================================================ -->
-                    <!-- KOLOM 1 (3 cols): Brand, Lisensi, Partner & Bank             -->
+                    <!-- KOLOM 1 (4 cols): Brand, Lisensi, Partner & Bank             -->
                     <!-- ============================================================ -->
-                    <div class="sm:col-span-2 lg:col-span-3 flex flex-col gap-5">
+                    <div class="sm:col-span-2 lg:col-span-4 flex flex-col gap-5">
                         <!-- Logo & Brand Header -->
                         <div class="flex items-center gap-3">
                             <img 
@@ -209,9 +190,9 @@ const scrollToTop = () => {
                     </div>
 
                     <!-- ============================================================ -->
-                    <!-- KOLOM 2 (2 cols): Navigasi Cepat                             -->
+                    <!-- KOLOM 2 (3 cols): Navigasi Cepat                             -->
                     <!-- ============================================================ -->
-                    <div class="lg:col-span-2 flex flex-col gap-3">
+                    <div class="lg:col-span-3 flex flex-col gap-3">
                         <h4 class="text-sm font-bold text-white uppercase tracking-wider">
                             {{ t('footer_nav_title') }}
                         </h4>
@@ -228,26 +209,7 @@ const scrollToTop = () => {
                     </div>
 
                     <!-- ============================================================ -->
-                    <!-- KOLOM 3 (2 cols): Produk                                     -->
-                    <!-- ============================================================ -->
-                    <div class="lg:col-span-2 flex flex-col gap-3">
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wider">
-                            {{ t('footer_services_title') }}
-                        </h4>
-                        <ul class="flex flex-col gap-2 text-xs text-white/85">
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Umrah Reguler 9 Hari' : 'Regular Umrah 9 Days' }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? "Umrah Ramadhan & I'tikaf" : "Ramadan & I'tikaf Umrah" }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Haji Khusus & Furoda VIP' : 'Special Hajj & VIP Furoda' }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Wisata Halal Turki & Aqsa' : 'Turkey & Aqsa Halal Tour' }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Tiket Saudia & Garuda' : 'Saudia & Garuda Flights' }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Hotel Pelataran Ring 1' : 'Ring 1 Courtyard Hotels' }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Kereta Cepat Haramain' : 'Haramain High-Speed Train' }}</Link></li>
-                            <li><Link href="/business" class="hover:text-emerald-300 transition-colors">{{ locale === 'ID' ? 'Tabungan Umrah Syariah' : 'Sharia Umrah Savings' }}</Link></li>
-                        </ul>
-                    </div>
-
-                    <!-- ============================================================ -->
-                    <!-- KOLOM 4 (3 cols): Kantor & Info Kontak                       -->
+                    <!-- KOLOM 3 (3 cols): Kantor & Info Kontak                       -->
                     <!-- ============================================================ -->
                     <div class="sm:col-span-2 lg:col-span-3 flex flex-col gap-3">
                         <h4 class="text-sm font-bold text-white uppercase tracking-wider">
@@ -462,27 +424,3 @@ const scrollToTop = () => {
         </div>
     </footer>
 </template>
-
-<style scoped>
-@keyframes bubbleFloat1 {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-18px) scale(1.06); }
-}
-@keyframes bubbleFloat2 {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(16px) scale(0.95); }
-}
-@keyframes bubbleFloat3 {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-12px) scale(1.04); }
-}
-.animate-bubble-1 {
-    animation: bubbleFloat1 7s ease-in-out infinite;
-}
-.animate-bubble-2 {
-    animation: bubbleFloat2 9s ease-in-out infinite 1.5s;
-}
-.animate-bubble-3 {
-    animation: bubbleFloat3 8s ease-in-out infinite 3s;
-}
-</style>
