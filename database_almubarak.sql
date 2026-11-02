@@ -16,6 +16,14 @@ CREATE TABLE `businesses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `businesses` (`id`, `title`, `description`, `image`, `type`, `price`, `available_from`, `created_at`, `updated_at`, `button_text`) VALUES
+(1, 'Paket Umrah Reguler Berkah 9 Hari', 'Paket umrah 9 hari dengan akomodasi hotel bintang 5 Pullman Zamzam Makkah (50m ke pelataran) dan Al Aqeeq Madinah. Penerbangan Saudia Airlines direct tanpa transit.', '/images/landing/package-reguler-9hari.jpg', 'Umroh', 28500000.00, '2025-11-14', NOW(), NOW(), 'Booking Seat'),
+(2, 'Paket Umrah Ramadhan Itikaf 16 Hari', 'Menikmati 10 malam terakhir Ramadhan dan keagungan Lailatul Qadar di Masjidil Haram. Hotel Swissotel Al Maqam Makkah tepat di depan pelataran Kakbah.', '/images/landing/package-ramadhan-16hari.jpg', 'Umroh', 42900000.00, '2025-03-22', NOW(), NOW(), 'Booking Seat'),
+(3, 'Haji Khusus Furoda Direct Visa Resmi', 'Ibadah haji tanpa antre dengan Visa Mujamalah Resmi terdaftar e-Hajj Kementerian Haji Kerajaan Arab Saudi. Fasilitas Maktab VIP Mina AC Eksekutif dan Hotel Bintang 5.', '/images/landing/package-haji-furoda.jpg', 'Haji', 275000000.00, '2025-05-25', NOW(), NOW(), 'Konsultasi Haji'),
+(4, 'Wisata Halal Turki & Umrah Plus 12 Hari', 'Kombinasi spiritual dan sejarah peradaban Islam. Menjelajahi keindahan Blue Mosque, Hagia Sophia, dan Bosphorus Cruise di Istanbul lalu beribadah di Makkah & Madinah.', '/images/landing/package-turki-plus.jpg', 'Wisata Halal', 36800000.00, '2025-12-28', NOW(), NOW(), 'Booking Seat'),
+(5, 'Paket Umrah Plus Aqsa & Jordan 12 Hari', 'Ziarah ke Masjidil Aqsa Yerusalem dan keajaiban kota kuno Petra Jordan, dilanjutkan dengan ibadah umrah di Tanah Suci Makkah dan Madinah bersama asatidzah berpengalaman.', '/images/landing/hero-kaaba.jpg', 'Wisata Halal', 44500000.00, '2025-04-10', NOW(), NOW(), 'Booking Seat'),
+(6, 'Tiket Penerbangan & Visa Umrah Mandiri', 'Layanan penerbitan visa umrah resmi dan booking tiket penerbangan grup/individu untuk kemudahan perjalanan ibadah mandiri Anda.', '/images/landing/gallery-kereta.jpg', 'Layanan Tiket & Visa', 4500000.00, '2025-01-01', NOW(), NOW(), 'Hubungi CS');
+
 DROP TABLE IF EXISTS `cache`;
 CREATE TABLE `cache` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -119,6 +127,12 @@ CREATE TABLE `news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `news` (`id`, `title`, `content`, `image`, `category`, `published_at`, `created_at`, `updated_at`) VALUES
+(1, 'Syarat dan Regulasi Terbaru Visa Umrah & Haji Khusus Musim 1446 H', 'Kementerian Haji dan Umrah Kerajaan Arab Saudi telah menerbitkan aturan dan pedoman terbaru terkait masa berlaku visa umrah serta persyaratan biometrik digital bagi calon jamaah dari Indonesia. PT Almubarak Wisata Barakah siap mendampingi proses administrasi jamaah hingga tuntas.', '/images/landing/hero-kaaba.jpg', 'Umrah & Regulasi', '2025-01-15', NOW(), NOW()),
+(2, 'Tips Menjaga Kebugaran Fisik dan Stamina Selama Ibadah di Tanah Suci', 'Perjalanan ibadah di Makkah dan Madinah membutuhkan ketahanan fisik yang optimal. Para dokter pembimbing Almubarak membagikan tips menjaga asupan cairan, pola istirahat, dan olahraga ringan sebelum keberangkatan.', '/images/landing/gallery-jamaah.jpg', 'Tips & Kesehatan', '2025-01-10', NOW(), NOW()),
+(3, 'Keutamaan Menjalankan Iktikaf 10 Hari Terakhir Ramadhan di Masjidil Haram', 'Malam Lailatul Qadar adalah anugerah terbesar bagi umat muslim. Beriktikaf langsung di depan Baitullah Makkah menghadirkan kekhusyukan dan ketenangan hati yang tak terlupakan.', '/images/landing/package-ramadhan-16hari.jpg', 'Ibadah & Doa', '2025-01-05', NOW(), NOW()),
+(4, 'Kunjungan Ziarah Sejarah Islam: Meneladani Perjuangan di Jabal Uhud & Badar', 'Program ziarah edukatif Almubarak menghadirkan penjelasan sejarah mendalam tentang perjuangan Nabi Muhammad ﷺ dan para sahabat mulia, menambah kecintaan kita pada sunnah beliau.', '/images/landing/gallery-uhud.jpg', 'Wisata Religi', '2024-12-25', NOW(), NOW());
+
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -157,6 +171,12 @@ CREATE TABLE `teams` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `teams` (`id`, `name`, `position`, `description`, `phone`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Ahmad Mubarak', 'CEO & Direktur Utama', 'Berpengalaman lebih dari 15 tahun dalam industri travel haji dan umrah internasional. Berkomitmen menghadirkan layanan ibadah yang jujur, amanah, dan terpercaya.', '6281260003484', '/images/ceo.jpg', NOW(), NOW()),
+(2, 'Ustadz Abdullah Haris, Lc.', 'Pembimbing Ibadah & Muthawif Senior', 'Alumni Universitas Islam Madinah dengan pengalaman membimbing jamaah selama lebih dari 12 tahun sesuai Al-Qur\'an dan As-Sunnah.', '6281260003484', '/images/landing/testi-fachri.jpg', NOW(), NOW()),
+(3, 'Sarah Amelia, S.Par', 'Direktur Operasional & Layanan', 'Pakar manajemen logistik perhotelan di Makkah dan Madinah yang memastikan seluruh kenyamanan akomodasi jamaah terlayani sempurna.', '6281180002807', '/images/landing/testi-siti.jpg', NOW(), NOW()),
+(4, 'M. Rizky Fauzi, S.Kom', 'Manajer Ticketing & Visa Internasional', 'Ahli sistem reservasi penerbangan internasional dan e-Hajj Kemenag RI dengan akurasi proses administrasi dokumen 100%.', '6281180002807', '/images/landing/testi-hendra.jpg', NOW(), NOW());
+
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -170,5 +190,8 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin Almubarak', 'admin@almubaraktravel.com', NOW(), '$2y$10$OZoIP.0dy7zgVw/2dugwCu56NaC8RRzWfeJTgZ3JGFIDqZJvYGlka', NULL, NOW(), NOW());
 
 SET FOREIGN_KEY_CHECKS=1;
