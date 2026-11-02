@@ -172,10 +172,10 @@ CREATE TABLE `teams` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `teams` (`id`, `name`, `position`, `description`, `phone`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Ahmad Mubarak', 'CEO & Direktur Utama', 'Berpengalaman lebih dari 15 tahun dalam industri travel haji dan umrah internasional. Berkomitmen menghadirkan layanan ibadah yang jujur, amanah, dan terpercaya.', '6281260003484', '/images/ceo.jpg', NOW(), NOW()),
-(2, 'Ustadz Abdullah Haris, Lc.', 'Pembimbing Ibadah & Muthawif Senior', 'Alumni Universitas Islam Madinah dengan pengalaman membimbing jamaah selama lebih dari 12 tahun sesuai Al-Qur\'an dan As-Sunnah.', '6281260003484', '/images/landing/testi-fachri.jpg', NOW(), NOW()),
-(3, 'Sarah Amelia, S.Par', 'Direktur Operasional & Layanan', 'Pakar manajemen logistik perhotelan di Makkah dan Madinah yang memastikan seluruh kenyamanan akomodasi jamaah terlayani sempurna.', '6281180002807', '/images/landing/testi-siti.jpg', NOW(), NOW()),
-(4, 'M. Rizky Fauzi, S.Kom', 'Manajer Ticketing & Visa Internasional', 'Ahli sistem reservasi penerbangan internasional dan e-Hajj Kemenag RI dengan akurasi proses administrasi dokumen 100%.', '6281180002807', '/images/landing/testi-hendra.jpg', NOW(), NOW());
+(1, 'Ahmad Mubarak', 'CEO & Direktur Utama', 'Berpengalaman lebih dari 15 tahun dalam industri travel haji dan umrah internasional. Berkomitmen menghadirkan layanan ibadah yang jujur, amanah, dan terpercaya.', '6281260003484', '/images/ceo-face.jpg', NOW(), NOW()),
+(2, 'Ustadz Abdullah Haris, Lc.', 'Pembimbing Ibadah & Muthawif Senior', 'Alumni Universitas Islam Madinah dengan pengalaman membimbing jamaah selama lebih dari 12 tahun sesuai Al-Qur\'an dan As-Sunnah.', '6281260003484', '/images/landing/member-ustadz.jpg', NOW(), NOW()),
+(3, 'Sarah Amelia, S.Par', 'Direktur Operasional & Layanan', 'Pakar manajemen logistik perhotelan di Makkah dan Madinah yang memastikan seluruh kenyamanan akomodasi jamaah terlayani sempurna.', '6281180002807', '/images/landing/member-siti.jpg', NOW(), NOW()),
+(4, 'M. Rizky Fauzi, S.Kom', 'Manajer Ticketing & Visa Internasional', 'Ahli sistem reservasi penerbangan internasional dan e-Hajj Kemenag RI dengan akurasi proses administrasi dokumen 100%.', '6281180002807', '/images/landing/member-firman.jpg', NOW(), NOW());
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (

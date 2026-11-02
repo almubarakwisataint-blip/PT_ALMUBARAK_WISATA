@@ -41,6 +41,11 @@ class HomeController extends Controller
         ]);
     }
 
+    public function visionMission()
+    {
+        return Inertia::render('VisionMission');
+    }
+
     public function business()
     {
         try {

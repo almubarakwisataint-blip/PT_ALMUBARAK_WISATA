@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/visi-misi', [HomeController::class, 'visionMission'])->name('vision-mission');
+Route::get('/vision-mission', [HomeController::class, 'visionMission']);
 Route::get('/business', [HomeController::class, 'business'])->name('business');
 Route::get('/news', [HomeController::class, 'news'])->name('news');
 Route::get('/search', [HomeController::class, 'search'])->name('search');

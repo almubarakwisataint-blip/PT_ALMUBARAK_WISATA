@@ -41,7 +41,7 @@ const scrollToTop = () => {
                     <ul class="flex flex-col gap-2 font-body-sm text-white/85 text-[14px]">
                         <li><Link class="hover:text-secondary-fixed transition-colors" href="/">Beranda</Link></li>
                         <li><Link class="hover:text-secondary-fixed transition-colors" href="/about">Tentang Kami</Link></li>
-                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/about#visi-misi">Visi &amp; Misi</Link></li>
+                        <li><Link class="hover:text-secondary-fixed transition-colors" href="/visi-misi">Visi &amp; Misi</Link></li>
                         <li><Link class="hover:text-secondary-fixed transition-colors" href="/business">Bisnis Kami</Link></li>
                         <li><Link class="hover:text-secondary-fixed transition-colors" href="/news">Berita</Link></li>
                         <li><Link class="hover:text-secondary-fixed transition-colors" href="/contact">Hubungi Kami</Link></li>

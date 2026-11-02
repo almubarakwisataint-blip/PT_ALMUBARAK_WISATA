@@ -1,153 +1,265 @@
 <script setup>
+import { ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import CtaBanner from '@/Components/Landing/CtaBanner.vue';
 
+const selectedAward = ref(null);
+
 const awards = [
     {
-        title: 'Travel Terpercaya 2024',
-        icon: 'trophy',
-        emoji: '🏆',
-        color: 'from-amber-400 to-amber-600',
-        textColor: 'text-amber-800',
-        giver: 'Kementerian Pariwisata & Ekonomi Kreatif RI',
+        id: 'via-com',
+        title: 'Top Performing Travel Partner & Umrah Ticketing Provider',
+        institution: 'Via.com Indonesia (PT Advaltis Asia Network)',
+        badge: 'Top Agent Award',
         year: '2024',
-        desc: 'Penghargaan atas komitmen pelayanan terpercaya dan perlindungan hak jamaah dalam kategori Penyelenggara Perjalanan Ibadah Umroh & Haji Khusus.',
+        certNumber: 'VIA/ID/AGT/2024-088',
+        image: '/images/penghargaan.jpeg',
+        desc: 'Apresiasi resmi manajemen Via.com Indonesia atas dedikasi luar biasa, pertumbuhan volume penjualan tiket penerbangan grup umrah, dan keandalan sistem reservasi tiket internasional terpercaya.',
+        details: [
+            'Diterima langsung oleh jajaran Direksi PT Almubarak Wisata',
+            'Penghargaan kategori B2B Travel Partner & Group Ticketing',
+            'Sinergi rute penerbangan Saudia Airlines, Emirates, dan Garuda Indonesia',
+        ],
     },
     {
-        title: 'Best Customer Service 2023',
-        icon: 'star',
-        emoji: '⭐',
-        color: 'from-emerald-400 to-teal-600',
-        textColor: 'text-emerald-800',
-        giver: 'Asosiasi Travel Umrah & Haji Indonesia',
+        id: 'kemenag-ppiu',
+        title: 'Sertifikasi Akreditasi A Resmi PPIU Kemenag RI',
+        institution: 'Ditjen Penyelenggaraan Haji dan Umrah Kemenag RI',
+        badge: 'Akreditasi A Resmi',
+        year: '2024',
+        certNumber: 'SK Kemenag No. U.412 Tahun 2020',
+        image: '/images/penghargaan.jpeg',
+        desc: 'Predikat Akreditasi A (Sangat Baik) atas kepatuhan menyeluruh terhadap tata kelola manasik, proteksi dana jamaah melalui virtual account, standar akomodasi hotel pelataran ring 1, dan jaminan 5 Pasti Umrah.',
+        details: [
+            'Terdaftar dan Terverifikasi Aktif di SISKOPATUH Kemenag RI',
+            'Audit kepatuhan syariat dan kelayakan operasional secara periodik',
+            'Perlindungan asuransi jiwa dan perjalanan internasional',
+        ],
+    },
+    {
+        id: 'airlines-partner',
+        title: 'Official Umrah Group Partner Saudia & Garuda Indonesia',
+        institution: 'Saudi Arabian Airlines & Garuda Indonesia Group',
+        badge: 'Strategic Airlines Partner',
+        year: '2024',
+        certNumber: 'SV-GA/GRP/UMR-1445/2024',
+        image: '/images/landing/hero-kaaba.jpg',
+        desc: 'Penghargaan loyalitas dan kemitraan strategis atas komitmen konsisten penyediaan seat penerbangan direct rute Jakarta (CGK) - Jeddah (JED) / Madinah (MED) tanpa transit bagi jamaah umrah dan haji khusus.',
+        details: [
+            'Alokasi seat grup terkonfirmasi nomor PNR resmi',
+            'Kemudahan fasilitas bagasi zam-zam dan bagasi ekstra jamaah',
+            'Penerbangan direct tanpa resiko delay transit di negara ketiga',
+        ],
+    },
+    {
+        id: 'asita-member',
+        title: 'Sertifikasi Keanggotaan Penuh ASITA Indonesia',
+        institution: 'Dewan Pengurus Pusat ASITA (Asosiasi Perusahaan Perjalanan Wisata)',
+        badge: 'Verified Travel Agency',
+        year: '2023 - 2025',
+        certNumber: 'ASITA-REG/0912/DPP/2023',
+        image: '/images/landing/gallery-jamaah.jpg',
+        desc: 'Standardisasi profesionalisme biro perjalanan wisata berizin resmi nasional yang beroperasi sesuai kode etik pariwisata Indonesia, perlindungan hukum konsumen, dan standar pelayanan pelanggan paripurna.',
+        details: [
+            'Anggota resmi terdaftar di ASITA DPP Jakarta & Jawa Barat',
+            'Kepatuhan regulasi BPW (Biro Perjalanan Wisata)',
+            'Jaringan kemitraan ground handling terintegrasi di luar negeri',
+        ],
+    },
+    {
+        id: 'himpuh-member',
+        title: 'Sertifikasi Keanggotaan HIMPUH (Haji & Umrah Khusus)',
+        institution: 'Dewan Pimpinan Pusat HIMPUH Indonesia',
+        badge: 'Official Member HIMPUH',
+        year: '2024',
+        certNumber: 'HMP/PPIU/JKT-1502',
+        image: '/images/landing/package-haji-furoda.jpg',
+        desc: 'Sertifikasi keanggotaan asosiasi penyelenggara haji khusus dan umrah terpercaya dalam mewujudkan ibadah yang aman, transparan, dan sesuai sunnah Rasulullah ﷺ.',
+        details: [
+            'Mitra strategis e-Hajj Kementerian Haji Kerajaan Arab Saudi',
+            'Standardisasi tenda AC Maktab VIP Mina dan Arafah',
+            'Pendampingan intensif dokter dan asatidzah berkompeten',
+        ],
+    },
+    {
+        id: 'halal-tourism',
+        title: 'Keunggulan Wisata Religi & Halal Mancanegara',
+        institution: 'Indonesia Halal Tourism & Travel Forum',
+        badge: 'Halal Tourism Award',
         year: '2023',
-        desc: 'Penghargaan atas dedikasi pelayanan pelanggan 24/7 dan pendampingan intensif bagi jamaah lanjut usia serta keluarga.',
-    },
-    {
-        title: 'Excellence in Religious Tourism 2022',
-        icon: 'verified',
-        emoji: '🌟',
-        color: 'from-blue-400 to-indigo-600',
-        textColor: 'text-blue-800',
-        giver: 'World Halal Tourism Forum',
-        year: '2022',
-        desc: 'Penghargaan keunggulan dalam standardisasi wisata religi halal mancanegara di Turki, Mesir, dan Uzbekistan.',
-    },
-    {
-        title: 'Digital Innovation Travel Award 2021',
-        icon: 'devices',
-        emoji: '🎯',
-        color: 'from-purple-400 to-indigo-700',
-        textColor: 'text-purple-800',
-        giver: 'Indonesia Digital Business Award',
-        year: '2021',
-        desc: 'Pengakuan atas inovasi sistem reservasi digital transparan dan integrasi pelacakan dokumen jamaah secara real-time.',
-    },
-    {
-        title: 'Best Hajj & Umrah Organizer 2020',
-        icon: 'military_tech',
-        emoji: '🥇',
-        color: 'from-rose-400 to-red-600',
-        textColor: 'text-rose-800',
-        giver: 'Forum Komunikasi Penyelenggara Ibadah',
-        year: '2020',
-        desc: 'Penyelenggara terbaik dalam manajemen mitigasi dan perlindungan kesehatan jamaah selama masa adaptasi baru.',
-    },
-    {
-        title: 'Top Performing Travel Agent 2019',
-        icon: 'flight',
-        emoji: '✈️',
-        color: 'from-teal-400 to-cyan-600',
-        textColor: 'text-teal-800',
-        giver: 'Saudia & Garuda Indonesia Direct',
-        year: '2019',
-        desc: 'Apresiasi atas kontribusi pemesanan tiket penerbangan langsung rute Jakarta-Jeddah dan Jakarta-Madinah secara berkelanjutan.',
+        certNumber: 'HTTF/2023/EXC-042',
+        image: '/images/landing/package-turki-plus.jpg',
+        desc: 'Pengakuan keunggulan dalam merancang paket wisata halal ke Turki, Jordan, Mesir, dan Uzbekistan dengan jaminan 100% makanan bersertifikat halal, waktu shalat terjaga, dan edukasi sejarah peradaban Islam.',
+        details: [
+            'Pemandu wisata Muslim bersertifikasi sejarah peradaban Islam',
+            'Restoran halal berstandar kebersihan dan mutu internasional',
+            'Kombinasi spiritual umrah dengan tadabbur alam dan sejarah',
+        ],
     },
 ];
+
+const openAwardModal = (award) => {
+    selectedAward.value = award;
+};
+
+const closeAwardModal = () => {
+    selectedAward.value = null;
+};
 </script>
 
 <template>
-    <Head title="Penghargaan Kami - Almubarak Wisata Internasional" />
+    <Head title="Penghargaan & Sertifikasi Resmi - PT ALMUBARAK WISATA INTERNATIONAL" />
 
     <AppLayout>
-        <!-- Hero Header with Authentic Penghargaan.jpeg background -->
+        <!-- Hero Header with Authentic Penghargaan ceremony photo background -->
         <section class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
             <div class="relative w-full rounded-[32px] md:rounded-[40px] overflow-hidden min-h-[380px] lg:min-h-[420px] flex flex-col justify-center items-center text-center p-6 sm:p-12 shadow-2xl border border-surface-container">
                 <div class="absolute inset-0 z-0">
                     <div 
                         class="w-full h-full bg-cover bg-center"
-                        style="background-image: url('/images/penghargaan.jpeg'); filter: brightness(0.60) contrast(1.05);"
+                        style="background-image: url('/images/penghargaan.jpeg'); filter: brightness(0.40) contrast(1.05);"
                     ></div>
-                    <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/85"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-[#005138]/85 via-black/60 to-black/90"></div>
                 </div>
 
                 <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+                    <nav class="flex items-center gap-2 text-white/80 text-xs sm:text-sm font-medium mb-4">
+                        <Link href="/" class="hover:text-white transition-colors">Beranda</Link>
+                        <span>/</span>
+                        <Link href="/about" class="hover:text-white transition-colors">Tentang Kami</Link>
+                        <span>/</span>
+                        <span class="text-secondary-fixed font-bold">Penghargaan</span>
+                    </nav>
+
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[#ffdcc3] font-label-sm text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
-                        <span class="material-symbols-outlined text-[16px]">military_tech</span>
-                        Prestasi &amp; Rekam Jejak
+                        <span class="material-symbols-outlined text-[16px]">verified</span>
+                        Prestasi &amp; Rekam Jejak Resmi
                     </span>
                     <h1 class="font-headline-xl text-[34px] sm:text-[46px] lg:text-[54px] text-white font-extrabold tracking-tight leading-tight">
-                        Penghargaan &amp; Pengakuan Resmi
+                        Penghargaan &amp; Akreditasi
                     </h1>
                     <p class="font-body-lg text-white/90 text-[16px] sm:text-[18px] mt-4 leading-relaxed max-w-2xl">
-                        Bukti nyata dedikasi, integritas, dan komitmen PT Almubarak Wisata Internasional dalam menghadirkan pelayanan terbaik bagi jamaah.
+                        Bukti nyata komitmen, integritas layanan, dan kepatuhan regulasi PT ALMUBARAK WISATA INTERNATIONAL dalam industri perjalanan religi dan pariwisata halal.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Awards Grid Section -->
-        <section class="w-full py-space-xl">
-            <div class="max-w-7xl mx-auto px-gutter">
-                <div class="text-center max-w-3xl mx-auto mb-14">
+        <!-- Official Award Ceremony Showcase (Via.com Ceremony Photo) -->
+        <section class="w-full py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-surface-container-lowest rounded-3xl p-6 sm:p-10 border border-surface-container/70 shadow-sm">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <!-- Ceremony Photo Container -->
+                        <div class="lg:col-span-6 rounded-2xl overflow-hidden shadow-lg border-2 border-surface-container bg-black group relative cursor-pointer" @click="openAwardModal(awards[0])">
+                            <img 
+                                src="/images/penghargaan.jpeg" 
+                                alt="Dokumentasi Penyerahan Penghargaan Via.com Indonesia" 
+                                class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="px-4 py-2 rounded-xl bg-white/95 text-primary text-xs font-bold flex items-center gap-2 shadow-lg">
+                                    <span class="material-symbols-outlined text-[18px]">zoom_in</span>
+                                    <span>Klik untuk Memperbesar</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Ceremony Description -->
+                        <div class="lg:col-span-6 flex flex-col gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 rounded-full bg-amber-400 text-amber-950 font-black text-xs uppercase tracking-wider">
+                                    Dokumentasi Resmi
+                                </span>
+                                <span class="text-xs font-mono text-outline">Via.com Indonesia Awards</span>
+                            </div>
+                            <h2 class="font-headline-lg text-2xl sm:text-3xl text-primary font-extrabold tracking-tight">
+                                Top B2B Travel Partner &amp; Umrah Ticketing Provider
+                            </h2>
+                            <p class="font-body-md text-sm sm:text-base text-on-surface-variant leading-relaxed">
+                                Foto penyerahan piagam penghargaan resmi dari manajemen <strong class="text-on-surface">Via.com Indonesia (PT Advaltis Asia Network)</strong> kepada jajaran direksi PT Almubarak Wisata. Penghargaan ini menjadi wujud apresiasi atas dedikasi dan keandalan sistem pemesanan tiket pesawat grup umrah internasional yang transparan dan amanah.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 pt-2">
+                                <div class="p-3.5 rounded-xl bg-surface-container/60">
+                                    <span class="block text-xs font-bold text-primary">Penerbit Resmi:</span>
+                                    <span class="text-xs text-on-surface-variant font-medium">PT Advaltis Asia Network</span>
+                                </div>
+                                <div class="p-3.5 rounded-xl bg-surface-container/60">
+                                    <span class="block text-xs font-bold text-primary">Kategori Prestasi:</span>
+                                    <span class="text-xs text-on-surface-variant font-medium">B2B Umrah Group Ticketing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards Grid (Authentic Certificates, No Emojis) -->
+        <section class="w-full py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
                     <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                        Dedikasi Kami
+                        Sertifikasi &amp; Standarisasi Mutu
                     </span>
                     <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight mt-1">
-                        Piala &amp; Apresiasi yang Telah Diterima
+                        Daftar Piagam &amp; Lisensi Resmi
                     </h2>
                     <p class="font-body-md text-on-surface-variant mt-2 text-sm sm:text-base">
-                        Setiap penghargaan adalah amanah dan motivasi bagi kami untuk terus berinovasi dan meningkatkan kualitas bimbingan ibadah.
+                        Setiap sertifikasi merupakan wujud kepatuhan legalitas yang dapat diverifikasi langsung melalui regulator resmi dan lembaga akreditasi.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div 
-                        v-for="(award, idx) in awards" 
-                        :key="idx"
-                        class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5"
+                        v-for="award in awards" 
+                        :key="award.id"
+                        class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5 cursor-pointer"
+                        @click="openAwardModal(award)"
                     >
                         <div>
-                            <!-- Header Gradient Banner -->
-                            <div :class="`bg-gradient-to-r ${award.color} p-8 flex items-center justify-center relative overflow-hidden`">
-                                <span class="text-6xl group-hover:scale-110 transition-transform duration-300">{{ award.emoji }}</span>
-                                <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-black/20 text-white font-bold text-xs">
+                            <!-- Formal Certificate Header -->
+                            <div class="p-4 bg-gradient-to-r from-[#005138] to-[#004832] text-white flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] uppercase tracking-wider">
+                                    {{ award.badge }}
+                                </span>
+                                <span class="text-xs text-emerald-200 font-bold font-mono">
                                     {{ award.year }}
                                 </span>
                             </div>
 
                             <div class="p-6">
-                                <h3 class="font-headline-sm text-xl text-primary font-bold group-hover:text-primary-container transition-colors">
+                                <span class="text-[11px] font-mono text-outline block mb-1">
+                                    {{ award.certNumber }}
+                                </span>
+                                <h3 class="font-headline-sm text-lg text-primary font-bold leading-snug group-hover:text-primary-container transition-colors">
                                     {{ award.title }}
                                 </h3>
-                                <p class="font-body-sm text-sm text-on-surface-variant mt-3 leading-relaxed">
+                                <p class="font-body-sm text-xs text-on-surface-variant mt-3 leading-relaxed">
                                     {{ award.desc }}
                                 </p>
                             </div>
                         </div>
 
                         <div class="p-6 pt-0">
-                            <div class="p-4 rounded-xl bg-surface-container-low border border-surface-container/50 text-xs text-outline space-y-1">
-                                <p><strong class="text-on-surface">Pemberi:</strong> {{ award.giver }}</p>
-                                <p><strong class="text-on-surface">Status:</strong> Terverifikasi Resmi</p>
+                            <div class="p-3 rounded-xl bg-surface-container text-xs text-outline mb-4">
+                                <span class="block text-on-surface font-semibold text-[10px] uppercase tracking-wider">Lembaga Pemberi:</span>
+                                <span class="text-on-surface font-medium">{{ award.institution }}</span>
                             </div>
+                            <button 
+                                type="button" 
+                                class="w-full py-2.5 px-4 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                            >
+                                <span class="material-symbols-outlined text-[16px]">verified</span>
+                                <span>Lihat Keterangan &amp; Verifikasi</span>
+                            </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Back to About Link -->
-                <div class="mt-12 text-center">
+                <div class="mt-14 text-center">
                     <Link 
                         href="/about" 
                         class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface-container text-primary hover:bg-surface-container-high transition-colors font-bold text-sm"
@@ -158,6 +270,72 @@ const awards = [
                 </div>
             </div>
         </section>
+
+        <!-- Award Detail Modal -->
+        <div 
+            v-if="selectedAward" 
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm transition-all"
+            @click.self="closeAwardModal"
+        >
+            <div class="bg-surface-container-lowest max-w-xl w-full rounded-3xl overflow-hidden shadow-2xl border border-surface-container p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200">
+                <div class="flex items-center justify-between pb-4 border-b border-surface-container">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] uppercase tracking-wider">
+                            {{ selectedAward.badge }}
+                        </span>
+                        <span class="text-xs text-outline font-mono">{{ selectedAward.certNumber }}</span>
+                    </div>
+                    <button 
+                        @click="closeAwardModal" 
+                        class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface transition-colors cursor-pointer"
+                        type="button"
+                    >
+                        <span class="material-symbols-outlined text-[20px]">close</span>
+                    </button>
+                </div>
+
+                <!-- Preview Image -->
+                <div class="my-5 rounded-2xl overflow-hidden shadow-md max-h-72 bg-black">
+                    <img 
+                        :src="selectedAward.image" 
+                        :alt="selectedAward.title" 
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+
+                <h3 class="font-headline-sm text-xl text-primary font-bold leading-snug">
+                    {{ selectedAward.title }}
+                </h3>
+                <p class="text-xs text-outline font-semibold mt-1">
+                    Lembaga Penerbit: <span class="text-on-surface">{{ selectedAward.institution }}</span> (Tahun {{ selectedAward.year }})
+                </p>
+                <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
+                    {{ selectedAward.desc }}
+                </p>
+
+                <!-- Details Points -->
+                <div v-if="selectedAward.details && selectedAward.details.length > 0" class="mt-4 p-4 rounded-2xl bg-surface-container/60">
+                    <span class="block text-xs font-bold text-primary mb-2">Poin Legalitas &amp; Pengakuan:</span>
+                    <ul class="space-y-1.5 text-xs text-on-surface-variant">
+                        <li v-for="(d, i) in selectedAward.details" :key="i" class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-[14px]">check_circle</span>
+                            <span>{{ d }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-surface-container flex items-center justify-between">
+                    <span class="text-[11px] text-outline font-mono">Status: Terverifikasi Aktif</span>
+                    <button 
+                        @click="closeAwardModal" 
+                        type="button" 
+                        class="px-5 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container transition-all"
+                    >
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- CTA Consultation -->
         <CtaBanner />

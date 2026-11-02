@@ -58,6 +58,13 @@ const isLinkActive = (path) => {
                     Tentang Kami
                 </Link>
                 <Link 
+                    href="/visi-misi" 
+                    :class="isLinkActive('/visi-misi') || isLinkActive('/vision-mission') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
+                    class="transition-colors py-1 px-1"
+                >
+                    Visi &amp; Misi
+                </Link>
+                <Link 
                     href="/business" 
                     :class="isLinkActive('/business') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
                     class="transition-colors py-1 px-1"
@@ -143,6 +150,14 @@ const isLinkActive = (path) => {
                     href="/about"
                 >
                     Tentang Kami
+                </Link>
+                <Link 
+                    @click="isMobileMenuOpen = false" 
+                    class="py-2 px-3 rounded-lg font-bold"
+                    :class="isLinkActive('/visi-misi') || isLinkActive('/vision-mission') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
+                    href="/visi-misi"
+                >
+                    Visi &amp; Misi
                 </Link>
                 <Link 
                     @click="isMobileMenuOpen = false" 
