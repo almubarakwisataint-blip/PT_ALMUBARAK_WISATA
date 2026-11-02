@@ -56,7 +56,7 @@ const translations = {
         // CTA Banner
         cta_badge: 'BANTUAN & INFORMASI HAJI & UMRAH RESMI',
         cta_title: 'Masih Bingung Menentukan Jadwal & Pilihan Paket?',
-        cta_desc: 'Tim layanan kami siap membantu menghitung estimasi biaya, pemilihan tipe kamar (Double/Triple/Quad), dan pengurusan paspor & vaksinasi secara komprehensif.',
+        cta_desc: 'Tim kami siap membantu menghitung estimasi biaya, pemilihan tipe kamar (Double/Triple/Quad), dan pengurusan paspor & vaksinasi secara komprehensif.',
         cta_btn_wa: 'Chat WhatsApp',
 
         // Promo & Consultation
@@ -69,7 +69,7 @@ const translations = {
         // Footer
         footer_brand_desc: 'Penyelenggara Perjalanan Ibadah Umrah (PPIU) No. U.412 dan Haji Khusus (PIHK) resmi terpercaya di bawah naungan Kementerian Agama Republik Indonesia.',
         footer_nav_title: 'Navigasi',
-        footer_services_title: 'Produk & Layanan',
+        footer_services_title: 'Produk',
         footer_contact_title: 'Kantor & Info Kontak',
         footer_follow_title: 'Follow kami di',
         footer_payment_title: 'Partner Pembayaran Resmi',
@@ -176,7 +176,7 @@ const translations = {
         // Footer
         footer_brand_desc: 'Licensed Umrah (PPIU No. U.412) and Special Hajj Operator under the Ministry of Religious Affairs of the Republic of Indonesia.',
         footer_nav_title: 'Navigation',
-        footer_services_title: 'Products & Services',
+        footer_services_title: 'Products',
         footer_contact_title: 'Office & Contact Info',
         footer_follow_title: 'Follow us on',
         footer_payment_title: 'Official Payment Partners',

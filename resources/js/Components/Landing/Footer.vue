@@ -61,15 +61,47 @@ const scrollToTop = () => {
         </section>
 
         <!-- ==================================================================== -->
-        <!-- SECTION 2: FOOTER BODY LENGKAP & PADAT (TIDAK KOSONG - SESUAI GBR 5) -->
+        <!-- WAVE (GELOMBANG) ORGANIK PEMBATAS DI ATAS FOOTER                     -->
         <!-- ==================================================================== -->
-        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-16 pb-12 border-t border-emerald-500/20">
+        <div class="w-full overflow-hidden leading-none -mb-1 bg-white pointer-events-none">
+            <svg class="relative block w-full h-10 sm:h-14 lg:h-16 text-[#002b1c]" viewBox="0 0 1440 100" fill="none" preserveAspectRatio="none">
+                <!-- Layer 1 Wave (Transparan) -->
+                <path d="M0,30 C240,80 480,10 720,50 C960,90 1200,20 1440,40 L1440,100 L0,100 Z" fill="currentColor" opacity="0.35"></path>
+                <!-- Layer 2 Wave (Solid) -->
+                <path d="M0,50 C280,10 560,85 840,45 C1120,5 1300,70 1440,55 L1440,100 L0,100 Z" fill="currentColor"></path>
+            </svg>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 2: FOOTER BODY DENGAN GELEMBUNG MENGAPUNG (BUBBLES & WAVES)  -->
+        <!-- ==================================================================== -->
+        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-10 pb-12">
+            
+            <!-- GELEMBUNG (BUBBLES) DEKORATIF MENGAPUNG DI LATAR BELAKANG FOOTER -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                <!-- Gelembung 1: Kiri Atas -->
+                <div class="absolute -top-6 left-10 w-36 h-36 rounded-full bg-gradient-to-tr from-emerald-500/20 to-teal-300/25 border border-emerald-400/35 blur-xs animate-bubble-1"></div>
+                <!-- Gelembung 2: Kiri Tengah -->
+                <div class="absolute top-1/3 left-1/4 w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-400/15 to-emerald-200/20 border border-emerald-300/30 blur-xs animate-bubble-2"></div>
+                <!-- Gelembung 3: Kiri Bawah -->
+                <div class="absolute bottom-8 left-1/3 w-28 h-28 rounded-full bg-gradient-to-tr from-emerald-600/20 to-emerald-400/20 border border-emerald-400/25 blur-xs animate-bubble-3"></div>
+                <!-- Gelembung 4: Kanan Atas -->
+                <div class="absolute top-12 right-12 w-44 h-44 rounded-full bg-gradient-to-br from-teal-400/20 to-emerald-300/20 border border-emerald-300/35 blur-xs animate-bubble-1"></div>
+                <!-- Gelembung 5: Kanan Tengah -->
+                <div class="absolute top-1/2 right-1/4 w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-400/20 to-amber-300/15 border border-emerald-300/30 blur-xs animate-bubble-2"></div>
+                <!-- Gelembung 6: Kanan Bawah -->
+                <div class="absolute -bottom-6 right-8 w-32 h-32 rounded-full bg-gradient-to-tl from-emerald-500/25 to-teal-400/15 border border-emerald-400/30 blur-xs animate-bubble-3"></div>
+                <!-- Gelembung Partikel Kecil -->
+                <div class="absolute top-20 left-1/2 w-8 h-8 rounded-full bg-white/15 border border-white/25 animate-bubble-1"></div>
+                <div class="absolute bottom-16 right-1/2 w-10 h-10 rounded-full bg-emerald-300/25 border border-emerald-200/35 animate-bubble-2"></div>
+            </div>
+
             <!-- Ambient Dot Matrix Decorative Accent -->
-            <div class="absolute right-4 top-16 hidden lg:grid grid-cols-6 gap-2.5 opacity-10 pointer-events-none">
+            <div class="absolute right-4 top-16 hidden lg:grid grid-cols-6 gap-2.5 opacity-10 pointer-events-none z-0">
                 <span v-for="i in 36" :key="i" class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
             </div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- 5 Kolom Grid Proporsional -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pb-14 border-b border-white/10 items-start">
                     
@@ -196,7 +228,7 @@ const scrollToTop = () => {
                     </div>
 
                     <!-- ============================================================ -->
-                    <!-- KOLOM 3 (2 cols): Produk & Layanan (MENGISI AGAR TIDAK KOSONG)-->
+                    <!-- KOLOM 3 (2 cols): Produk                                     -->
                     <!-- ============================================================ -->
                     <div class="lg:col-span-2 flex flex-col gap-3">
                         <h4 class="text-sm font-bold text-white uppercase tracking-wider">
@@ -375,7 +407,7 @@ const scrollToTop = () => {
                             </span>
                             <span class="text-gray-600">
                                 {{ locale === 'ID' 
-                                    ? 'Buka layanan pendaftaran umrah di kota Anda dengan komisi menarik & bimbingan legalitas.' 
+                                    ? 'Buka kantor pendaftaran umrah di kota Anda dengan komisi menarik & bimbingan legalitas.' 
                                     : 'Establish an Umrah registration desk in your city with attractive commissions and regulatory support.' }}
                             </span>
                         </div>
@@ -430,3 +462,27 @@ const scrollToTop = () => {
         </div>
     </footer>
 </template>
+
+<style scoped>
+@keyframes bubbleFloat1 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-18px) scale(1.06); }
+}
+@keyframes bubbleFloat2 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(16px) scale(0.95); }
+}
+@keyframes bubbleFloat3 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.04); }
+}
+.animate-bubble-1 {
+    animation: bubbleFloat1 7s ease-in-out infinite;
+}
+.animate-bubble-2 {
+    animation: bubbleFloat2 9s ease-in-out infinite 1.5s;
+}
+.animate-bubble-3 {
+    animation: bubbleFloat3 8s ease-in-out infinite 3s;
+}
+</style>

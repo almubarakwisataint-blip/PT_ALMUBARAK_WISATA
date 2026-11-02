@@ -1,11 +1,14 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from '@/Composables/useI18n';
 
 const { locale, t } = useI18n();
 
+// ==========================================
+// 1. KARTU KONSULTASI INTERAKTIF (GAMBAR 4)
+// ==========================================
 const currentSlide = ref(0);
-const scrollContainer = ref(null);
+let bannerTimer = null;
 
 const rawSlides = [
     {
@@ -15,8 +18,8 @@ const rawSlides = [
         titleLine1En: 'Need Help Choosing',
         titleLine2Id: 'Pilihan Paket?',
         titleLine2En: 'The Right Package?',
-        subtitleId: 'Rencanakan ibadah umrah & haji Anda dengan tenang bersama asisten layanan resmi Almubarak.',
-        subtitleEn: 'Plan your holy Umrah and Hajj pilgrimage with peace of mind guided by Almubarak official care assistant.',
+        subtitleId: 'Rencanakan ibadah umrah & haji Anda dengan tenang bersama asisten resmi Almubarak.',
+        subtitleEn: 'Plan your holy Umrah and Hajj pilgrimage with peace of mind guided by Almubarak official assistant.',
         buttonTextId: 'TANYA ALMA DULU',
         buttonTextEn: 'ASK ALMA NOW',
         userQuestionId: 'Bingung mencari paket umrah yang pas?',
@@ -83,101 +86,168 @@ const prevSlide = () => {
     currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;
 };
 
-// ==========================================
-// PROMO CARDS (DISATUKAN DARI SPECIAL OFFERS)
-// ==========================================
+// Auto-advance banner (gerak otomatis)
+const startBannerAutoRotate = () => {
+    stopBannerAutoRotate();
+    bannerTimer = setInterval(() => {
+        nextSlide();
+    }, 4500);
+};
+
+const stopBannerAutoRotate = () => {
+    if (bannerTimer) {
+        clearInterval(bannerTimer);
+        bannerTimer = null;
+    }
+};
+
+// ====================================================================
+// 2. KATALOG PROMO TIKET KUPON (PERSIS GAMBAR 3 TRAVELOKA VOUCHER)
+// ====================================================================
+const scrollContainer = ref(null);
+let promoTimer = null;
+
 const rawPromoCards = [
     {
+        theme: 'orange',
+        bgGradient: 'bg-gradient-to-r from-[#ea580c] via-[#f97316] to-[#fb923c]',
+        borderColor: 'border-[#f97316]',
         tagId: 'KUPON TERBATAS',
         tagEn: 'LIMITED COUPON',
         discountId: 'Diskon Rp 3 Jt',
         discountEn: 'Discount Rp 3M',
-        titleId: 'Umrah Plus Turki 12 Hari',
-        titleEn: 'Umrah Plus Turkey 12 Days',
-        routeId: 'Jakarta - Istanbul - Madinah - Makkah',
-        routeEn: 'Jakarta - Istanbul - Madinah - Makkah',
+        destTitleId: 'Travel to TURKI',
+        destTitleEn: 'Travel to TURKEY',
+        packageNameId: 'Umrah Plus Wisata Halal 12 Hari',
+        packageNameEn: 'Umrah Plus Halal Tour 12 Days',
         image: '/images/landing/package-turki-plus.jpg',
-        badgeColor: 'bg-amber-500',
-        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Promo%20Diskon%203%20Juta%20Umrah%20Plus%20Turki'
+        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Kupon%20Diskon%203%20Juta%20Umrah%20Plus%20Turki'
     },
     {
-        tagId: 'CASHBACK INSTAN',
-        tagEn: 'INSTANT CASHBACK',
+        theme: 'red',
+        bgGradient: 'bg-gradient-to-r from-[#b91c1c] via-[#dc2626] to-[#ef4444]',
+        borderColor: 'border-[#dc2626]',
+        tagId: 'KUPON TERBATAS',
+        tagEn: 'LIMITED COUPON',
         discountId: 'Cashback Rp 2 Jt',
         discountEn: 'Cashback Rp 2M',
-        titleId: 'Umrah Reguler 9 Hari Saudia Direct',
-        titleEn: 'Regular Umrah 9 Days Saudia Direct',
-        routeId: 'Direct Landing Jeddah Tanpa Transit',
-        routeEn: 'Direct Jeddah Landing Non-Stop',
+        destTitleId: 'Travel to MADINAH',
+        destTitleEn: 'Travel to MADINAH',
+        packageNameId: 'Umrah Reguler 9 Hari Saudia Direct',
+        packageNameEn: 'Regular Umrah 9 Days Saudia Direct',
         image: '/images/landing/package-reguler-9hari.jpg',
-        badgeColor: 'bg-emerald-600',
-        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Promo%20Cashback%202%20Juta%20Umrah%20Reguler'
+        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Kupon%20Cashback%202%20Juta%20Umrah%20Reguler'
     },
     {
+        theme: 'blue',
+        bgGradient: 'bg-gradient-to-r from-[#1d4ed8] via-[#2563eb] to-[#3b82f6]',
+        borderColor: 'border-[#2563eb]',
         tagId: 'PROMO RAMADHAN',
-        tagEn: 'RAMADAN SPECIAL',
-        discountId: 'Free Upgrade Kamar',
-        discountEn: 'Free Room Upgrade',
-        titleId: 'Umrah Ramadhan & Lailatul Qadar',
-        titleEn: 'Ramadan & Laylatul Qadr Umrah',
-        routeId: '10 Malam Terakhir di Depan Ka\'bah',
-        routeEn: 'Last 10 Nights Facing Kaaba',
+        tagEn: 'RAMADAN PROMO',
+        discountId: 'Free Upgrade',
+        discountEn: 'Free Upgrade',
+        destTitleId: 'RAMADHAN SPECIAL',
+        destTitleEn: 'RAMADAN SPECIAL',
+        packageNameId: 'Umrah Ramadhan & Lailatul Qadar',
+        packageNameEn: 'Ramadan & Laylatul Qadr Umrah',
         image: '/images/landing/package-ramadhan-16hari.jpg',
-        badgeColor: 'bg-rose-600',
-        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Promo%20Umrah%20Ramadhan%20Free%20Upgrade'
+        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Kupon%20Free%20Upgrade%20Umrah%20Ramadhan'
     },
     {
-        tagId: 'GRUP KELUARGA',
-        tagEn: 'FAMILY GROUP',
-        discountId: 'Diskon s.d. 5 Jt',
-        discountEn: 'Discount up to 5M',
-        titleId: 'Paket Haji Khusus & Furoda VIP',
-        titleEn: 'VIP Special & Furoda Hajj Package',
-        routeId: 'Direct Madinah & Maktab VIP Mina',
-        routeEn: 'Direct Madinah & VIP Mina Maktab',
+        theme: 'emerald',
+        bgGradient: 'bg-gradient-to-r from-[#047857] via-[#059669] to-[#10b981]',
+        borderColor: 'border-[#059669]',
+        tagId: 'KUOTA RESMI',
+        tagEn: 'OFFICIAL QUOTA',
+        discountId: 'Diskon Rp 5 Jt',
+        discountEn: 'Discount Rp 5M',
+        destTitleId: 'HAJI FURODA VIP',
+        destTitleEn: 'VIP FURODA HAJJ',
+        packageNameId: 'Haji Khusus Tanpa Antre Maktab VIP',
+        packageNameEn: 'VIP Direct Hajj No Waiting List',
         image: '/images/landing/package-haji-furoda.jpg',
-        badgeColor: 'bg-indigo-600',
-        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20informasi%20Promo%20Haji%20Furoda%20Keluarga'
+        waMessage: 'Assalamu%27alaikum%20Almubarak,%20saya%20ingin%20klaim%20Promo%20Haji%20Furoda%20VIP'
     }
 ];
 
 const promoCards = computed(() => {
     const isEn = locale.value === 'EN';
     return rawPromoCards.map(c => ({
+        theme: c.theme,
+        bgGradient: c.bgGradient,
+        borderColor: c.borderColor,
         tag: isEn ? c.tagEn : c.tagId,
         discount: isEn ? c.discountEn : c.discountId,
-        title: isEn ? c.titleEn : c.titleId,
-        route: isEn ? c.routeEn : c.routeId,
+        destTitle: isEn ? c.destTitleEn : c.destTitleId,
+        packageName: isEn ? c.packageNameEn : c.packageNameId,
         image: c.image,
-        badgeColor: c.badgeColor,
         waMessage: c.waMessage,
     }));
 });
 
 const scrollLeft = () => {
+    stopPromoAutoScroll();
     if (scrollContainer.value) {
-        scrollContainer.value.scrollBy({ left: -320, behavior: 'smooth' });
+        scrollContainer.value.scrollBy({ left: -390, behavior: 'smooth' });
     }
+    startPromoAutoScroll();
 };
 
 const scrollRight = () => {
+    stopPromoAutoScroll();
     if (scrollContainer.value) {
-        scrollContainer.value.scrollBy({ left: 320, behavior: 'smooth' });
+        scrollContainer.value.scrollBy({ left: 390, behavior: 'smooth' });
+    }
+    startPromoAutoScroll();
+};
+
+// Auto-scroll untuk kartu promo (gerak otomatis)
+const startPromoAutoScroll = () => {
+    stopPromoAutoScroll();
+    promoTimer = setInterval(() => {
+        if (!scrollContainer.value) return;
+        const maxScroll = scrollContainer.value.scrollWidth - scrollContainer.value.clientWidth;
+        if (scrollContainer.value.scrollLeft >= maxScroll - 30) {
+            scrollContainer.value.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            scrollContainer.value.scrollBy({ left: 390, behavior: 'smooth' });
+        }
+    }, 3500);
+};
+
+const stopPromoAutoScroll = () => {
+    if (promoTimer) {
+        clearInterval(promoTimer);
+        promoTimer = null;
     }
 };
+
+// Lifecycle
+onMounted(() => {
+    startBannerAutoRotate();
+    startPromoAutoScroll();
+});
+
+onBeforeUnmount(() => {
+    stopBannerAutoRotate();
+    stopPromoAutoScroll();
+});
 </script>
 
 <template>
     <!-- ==================================================================== -->
-    <!-- SECTION UNIFIKASI: KONSULTASI INTERAKTIF & KATALOG PROMO KEBERANGKATAN -->
+    <!-- SECTION UNIFIKASI: KONSULTASI INTERAKTIF & KATALOG PROMO OTOMATIS    -->
     <!-- ==================================================================== -->
     <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 overflow-hidden">
         
         <!-- ================================================================ -->
-        <!-- 1. BANNER UTAMA (SESUAI UKURAN & BENTUK GAMBAR 3 & GAMBAR 5)     -->
+        <!-- 1. BANNER UTAMA KONSULTASI (GAMBAR 4 DENGAN OTOMATIS GERAK SENDIRI)-->
         <!-- ================================================================ -->
-        <div class="relative w-full rounded-[28px] sm:rounded-[36px] overflow-hidden bg-gradient-to-r from-[#1c1108] via-[#2c170b] to-[#180e06] border border-amber-600/35 shadow-2xl text-white p-5 sm:p-8 lg:px-10 lg:py-7 min-h-[340px] lg:h-[370px] flex items-center mb-10">
-            
+        <div 
+            @mouseenter="stopBannerAutoRotate"
+            @mouseleave="startBannerAutoRotate"
+            class="relative w-full rounded-[28px] sm:rounded-[36px] overflow-hidden bg-gradient-to-r from-[#1c1108] via-[#2c170b] to-[#180e06] border border-amber-600/35 shadow-2xl text-white p-5 sm:p-8 lg:px-10 lg:py-7 min-h-[340px] lg:h-[370px] flex items-center mb-10 transition-all duration-500"
+        >
             <!-- DEKORASI BULAT-BULAT & GELOMBANG EMAS (PERSIS TANDA MERAH GAMBAR 5) -->
             <!-- 1) 6x4 Dot Grid Matrix Pattern di kanan atas -->
             <div class="absolute right-[280px] lg:right-[320px] top-6 hidden md:grid grid-cols-6 gap-2.5 opacity-55 z-0 pointer-events-none">
@@ -219,9 +289,9 @@ const scrollRight = () => {
             <div class="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                 
                 <!-- KOLOM KIRI: BRAND, HEADLINE & TOMBOL GLOWING CAPSULE -->
-                <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-3.5 sm:gap-4 pl-0 lg:pl-4">
+                <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-3.5 sm:gap-4 pl-0 lg:pl-4 transition-all duration-500">
                     
-                    <!-- Brand Pill & Subtitle (Persis Gambar 3) -->
+                    <!-- Brand Pill & Subtitle -->
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-white p-1.5 shadow-md flex items-center justify-center shrink-0 border border-amber-300">
                             <img 
@@ -284,14 +354,14 @@ const scrollRight = () => {
                             </div>
                         </div>
 
-                        <!-- Chat Header (ALMA - Asisten Layanan Almubarak) -->
+                        <!-- Chat Header (ALMA - Asisten Almubarak) -->
                         <div class="px-3.5 py-1.5 border-b border-neutral-100 flex items-center justify-between shrink-0">
                             <span class="material-symbols-outlined text-[18px] text-neutral-400">close</span>
                             <div class="flex flex-col items-center">
                                 <span class="font-extrabold text-xs text-neutral-900 leading-tight">ALMA</span>
                                 <span class="text-[9px] text-emerald-600 font-semibold flex items-center gap-1">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    <span>{{ locale === 'ID' ? 'Asisten Layanan Almubarak' : 'Almubarak Service Assistant' }}</span>
+                                    <span>{{ locale === 'ID' ? 'Asisten Almubarak' : 'Almubarak Assistant' }}</span>
                                 </span>
                             </div>
                             <span class="w-4"></span>
@@ -359,9 +429,14 @@ const scrollRight = () => {
         </div>
 
         <!-- ================================================================ -->
-        <!-- 2. KATALOG PROMO KEBERANGKATAN (DISATUKAN LANGSUNG DI BAWAH KARTU)-->
+        <!-- 2. KATALOG PROMO TIKET KUPON (PERSIS GAMBAR 3 TRAVELOKA VOUCHER)  -->
+        <!--    DILENGKAPI FITUR OTOMATIS BERJALAN SENDIRI (AUTO-SCROLL)       -->
         <!-- ================================================================ -->
-        <div class="relative w-full">
+        <div 
+            @mouseenter="stopPromoAutoScroll"
+            @mouseleave="startPromoAutoScroll"
+            class="relative w-full"
+        >
             <!-- Header Penawaran -->
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
                 <div>
@@ -392,7 +467,7 @@ const scrollRight = () => {
                 </div>
             </div>
 
-            <!-- Horizontal Scrollable Cards -->
+            <!-- Horizontal Scrollable Cards (Persis Gambar 3: Widescreen Ticket Voucher Card) -->
             <div 
                 ref="scrollContainer"
                 class="flex gap-5 overflow-x-auto scrollbar-none pb-4 pt-1 px-1 scroll-smooth"
@@ -400,49 +475,68 @@ const scrollRight = () => {
                 <div 
                     v-for="(card, idx) in promoCards" 
                     :key="idx"
-                    class="w-[280px] sm:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group"
+                    class="w-[340px] sm:w-[380px] lg:w-[400px] h-[195px] sm:h-[210px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-md hover:shadow-2xl transition-all duration-300 group flex border border-gray-200/90 bg-white"
                 >
-                    <!-- Card Image with Coupon Badge -->
-                    <div class="relative h-44 sm:h-48 overflow-hidden bg-slate-100">
-                        <img 
-                            :src="card.image" 
-                            :alt="card.title" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                        />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end justify-between p-3">
-                            <span :class="card.badgeColor" class="px-2.5 py-1 rounded-lg text-white font-black text-xs shadow-sm">
-                                {{ card.discount }}
-                            </span>
-                            <span class="px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider">
-                                {{ card.tag }}
-                            </span>
+                    <!-- BAGIAN KIRI (42%): FOTO DENGAN BORDER BERWARNA (PERSIS GAMBAR 3) -->
+                    <div class="w-[42%] h-full p-2.5 sm:p-3 shrink-0 bg-white flex items-center justify-center">
+                        <div :class="card.borderColor" class="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden border-[3px] shadow-xs relative">
+                            <img 
+                                :src="card.image" 
+                                :alt="card.destTitle" 
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                            />
                         </div>
                     </div>
 
-                    <!-- Card Body -->
-                    <div class="p-4 sm:p-5 flex flex-col justify-between flex-1 gap-3">
+                    <!-- BAGIAN KANAN (58%): KARTU WARNA TEBAL DENGAN TIKET VOUCHER PUTIH (PERSIS GAMBAR 3) -->
+                    <div :class="card.bgGradient" class="w-[58%] h-full p-3.5 sm:p-4 flex flex-col justify-between text-white relative">
+                        
+                        <!-- Top Header: Logo Brand & Judul Tujuan -->
                         <div>
-                            <h4 class="font-headline-sm text-base sm:text-lg font-bold text-neutral-900 group-hover:text-emerald-700 transition-colors leading-snug">
-                                {{ card.title }}
+                            <div class="flex items-center gap-1.5 opacity-90 mb-0.5">
+                                <span class="text-[10px] font-bold tracking-tight">almubarak</span>
+                                <span class="text-[8px] px-1 py-0.2 rounded-sm bg-white/20 font-bold uppercase">WISATA</span>
+                            </div>
+                            <h4 class="font-headline-sm text-sm sm:text-base font-black tracking-tight leading-tight uppercase drop-shadow-xs">
+                                {{ card.destTitle }}
                             </h4>
-                            <p class="text-xs text-neutral-500 flex items-center gap-1.5 mt-1.5">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">flight_takeoff</span>
-                                <span>{{ card.route }}</span>
-                            </p>
                         </div>
 
-                        <div class="pt-2 border-t border-gray-100 flex items-center justify-between">
-                            <span class="text-xs font-semibold text-emerald-700">
-                                {{ locale === 'ID' ? 'Kupon Aktif' : 'Coupon Active' }}
-                            </span>
+                        <!-- TIKET KUPON VOUCHER PUTIH (CUTOUT NOTCHED TICKET PERSIS GAMBAR 3) -->
+                        <div class="relative bg-white text-gray-900 rounded-lg sm:rounded-xl p-2 sm:p-2.5 shadow-lg flex items-center gap-2 border border-black/5">
+                            <!-- Left Notched Ticket Stub -->
+                            <div class="pr-2 border-r border-dashed border-gray-300 flex flex-col justify-center items-center shrink-0">
+                                <span class="text-[8px] sm:text-[9px] font-black text-gray-700 tracking-tighter leading-none block uppercase">
+                                    {{ card.tag }}
+                                </span>
+                            </div>
+
+                            <!-- Right Ticket Discount Value -->
+                            <div class="flex-1 text-left min-w-0">
+                                <span class="text-xs sm:text-sm font-black text-[#0264d6] block truncate leading-none">
+                                    {{ card.discount }}
+                                </span>
+                                <span class="text-[9px] text-gray-500 block truncate mt-0.5 leading-tight">
+                                    {{ card.packageName }}
+                                </span>
+                            </div>
+
+                            <!-- Ticket Semicircular Cutouts (Top & Bottom) -->
+                            <div class="absolute -top-1.5 left-7 w-3 h-3 rounded-full bg-black/10 sm:bg-transparent"></div>
+                            <div class="absolute -bottom-1.5 left-7 w-3 h-3 rounded-full bg-black/10 sm:bg-transparent"></div>
+                        </div>
+
+                        <!-- Bottom: S&K Berlaku & Tombol WhatsApp -->
+                        <div class="flex items-center justify-between pt-1 text-[9px] sm:text-[10px] opacity-90">
+                            <span class="italic">S&amp;K berlaku</span>
                             <a 
                                 :href="`https://wa.me/6281260003484?text=${card.waMessage}`"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm hover:scale-105 transition-all cursor-pointer"
+                                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white text-gray-900 font-extrabold shadow-sm hover:scale-105 transition-transform cursor-pointer"
                             >
-                                <span>{{ locale === 'ID' ? 'Klaim Promo' : 'Claim Offer' }}</span>
-                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                <span>{{ locale === 'ID' ? 'Klaim' : 'Claim' }}</span>
+                                <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
                             </a>
                         </div>
                     </div>
