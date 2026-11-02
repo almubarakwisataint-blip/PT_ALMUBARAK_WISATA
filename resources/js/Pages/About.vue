@@ -472,11 +472,11 @@ const contactMember = (member) => {
 
                 <!-- Awards Grid (Authentic Certificate Cards with Real Data, No Emojis) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div 
+                    <Link 
                         v-for="award in awards" 
                         :key="award.id"
-                        class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5 cursor-pointer"
-                        @click="openAwardModal(award)"
+                        :href="'/awards/' + award.id"
+                        class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-surface-container/70 flex flex-col justify-between group hover:-translate-y-1.5 cursor-pointer block"
                     >
                         <div>
                             <!-- Header with Gold Ribbon Badge -->
@@ -507,15 +507,15 @@ const contactMember = (member) => {
                                 <span class="block text-on-surface font-semibold text-[10px] uppercase tracking-wider">{{ locale === 'ID' ? 'Lembaga Penerbit:' : 'Issuing Body:' }}</span>
                                 <span class="text-on-surface font-medium">{{ award.institution }}</span>
                             </div>
-                            <button 
-                                type="button" 
-                                class="w-full py-2 px-3 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                            <div 
+                                class="w-full py-2 px-3 rounded-xl bg-primary/10 group-hover:bg-primary text-primary group-hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs"
                             >
-                                <span class="material-symbols-outlined text-[16px]">visibility</span>
-                                <span>{{ locale === 'ID' ? 'Lihat Dokumentasi & Bukti' : 'View Documentation' }}</span>
-                            </button>
+                                <span class="material-symbols-outlined text-[16px]">verified</span>
+                                <span>{{ locale === 'ID' ? 'Buka Halaman Lengkap' : 'Open Full Page' }}</span>
+                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
                 <div class="mt-10 text-center">
@@ -591,18 +591,27 @@ const contactMember = (member) => {
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between shrink-0">
-                    <span class="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        {{ locale === 'ID' ? 'Terverifikasi Aktif' : 'Active & Verified' }}
-                    </span>
-                    <button 
-                        @click="closeAwardModal" 
-                        type="button" 
-                        class="px-6 py-2.5 rounded-xl bg-[#005138] hover:bg-[#003d2b] text-white text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow"
+                <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between gap-3 shrink-0">
+                    <Link 
+                        :href="'/awards/' + selectedAward.id"
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-[#005138] hover:underline"
                     >
-                        {{ locale === 'ID' ? 'Tutup' : 'Close' }}
-                    </button>
+                        <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+                        <span>{{ locale === 'ID' ? 'Buka Halaman Lengkap & Bukti' : 'Open Full Page & Proof' }}</span>
+                    </Link>
+                    <div class="flex items-center gap-2.5">
+                        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            {{ locale === 'ID' ? 'Terverifikasi' : 'Verified' }}
+                        </span>
+                        <button 
+                            @click="closeAwardModal" 
+                            type="button" 
+                            class="px-5 py-2 rounded-xl bg-[#005138] hover:bg-[#003d2b] text-white text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow"
+                        >
+                            {{ locale === 'ID' ? 'Tutup' : 'Close' }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

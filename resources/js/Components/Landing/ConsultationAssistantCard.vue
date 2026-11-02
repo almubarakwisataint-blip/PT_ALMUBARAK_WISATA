@@ -205,14 +205,16 @@ const promoCards = computed(() => {
     }));
 });
 
-// Auto-scroll & Drag untuk kartu promo (gerak otomatis & bisa digeser sendiri)
+// Auto-scroll & Drag interaktif untuk kartu promo (otomatis jalan & bisa digerakkan sendiri)
 const isDragging = ref(false);
 let startX = 0;
 let startScrollLeft = 0;
+let autoScrollTimer = null;
+let isUserInteracting = false;
 
 const startDrag = (e) => {
     isDragging.value = true;
-    stopPromoAutoScroll();
+    isUserInteracting = true;
     startX = e.pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
 };
@@ -221,54 +223,82 @@ const onDrag = (e) => {
     if (!isDragging.value || !scrollContainer.value) return;
     e.preventDefault();
     const x = e.pageX - scrollContainer.value.offsetLeft;
-    const walk = (x - startX) * 1.4;
+    const walk = (x - startX) * 1.5;
     scrollContainer.value.scrollLeft = startScrollLeft - walk;
 };
 
 const stopDrag = () => {
     if (isDragging.value) {
         isDragging.value = false;
-        startPromoAutoScroll();
+        setTimeout(() => {
+            isUserInteracting = false;
+        }, 1200);
     }
 };
 
-const onTouchStart = () => {
-    stopPromoAutoScroll();
+const onTouchStart = (e) => {
+    isUserInteracting = true;
+    startX = e.touches[0].pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
+    startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
+};
+
+const onTouchMove = (e) => {
+    if (!scrollContainer.value) return;
+    const x = e.touches[0].pageX - scrollContainer.value.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollContainer.value.scrollLeft = startScrollLeft - walk;
 };
 
 const onTouchEnd = () => {
-    startPromoAutoScroll();
+    setTimeout(() => {
+        isUserInteracting = false;
+    }, 1200);
 };
 
-const startPromoAutoScroll = () => {
-    stopPromoAutoScroll();
-    promoTimer = setInterval(() => {
-        if (!scrollContainer.value || isDragging.value) return;
+const pauseAutoScroll = () => {
+    isUserInteracting = true;
+};
+
+const resumeAutoScroll = () => {
+    if (!isDragging.value) {
+        isUserInteracting = false;
+    }
+};
+
+const handleMouseLeave = () => {
+    stopDrag();
+    resumeAutoScroll();
+};
+
+const startPromoContinuousScroll = () => {
+    stopPromoContinuousScroll();
+    autoScrollTimer = setInterval(() => {
+        if (!scrollContainer.value || isUserInteracting || isDragging.value) return;
         const maxScroll = scrollContainer.value.scrollWidth - scrollContainer.value.clientWidth;
-        if (scrollContainer.value.scrollLeft >= maxScroll - 30) {
-            scrollContainer.value.scrollTo({ left: 0, behavior: 'smooth' });
+        if (scrollContainer.value.scrollLeft >= maxScroll - 10) {
+            scrollContainer.value.scrollLeft = 0;
         } else {
-            scrollContainer.value.scrollBy({ left: 390, behavior: 'smooth' });
+            scrollContainer.value.scrollLeft += 1.5;
         }
-    }, 3500);
+    }, 25);
 };
 
-const stopPromoAutoScroll = () => {
-    if (promoTimer) {
-        clearInterval(promoTimer);
-        promoTimer = null;
+const stopPromoContinuousScroll = () => {
+    if (autoScrollTimer) {
+        clearInterval(autoScrollTimer);
+        autoScrollTimer = null;
     }
 };
 
 // Lifecycle
 onMounted(() => {
     startBannerAutoRotate();
-    startPromoAutoScroll();
+    startPromoContinuousScroll();
 });
 
 onBeforeUnmount(() => {
     stopBannerAutoRotate();
-    stopPromoAutoScroll();
+    stopPromoContinuousScroll();
 });
 </script>
 
@@ -440,6 +470,24 @@ onBeforeUnmount(() => {
 
 
 
+            <!-- Navigasi Panah Kiri (<) & Kanan (>) di Banner (Persis Gambar 1: <>) -->
+            <button 
+                @click="prevSlide"
+                type="button"
+                aria-label="Slide sebelumnya"
+                class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-lg hover:scale-110 z-20"
+            >
+                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+            </button>
+            <button 
+                @click="nextSlide"
+                type="button"
+                aria-label="Slide berikutnya"
+                class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-lg hover:scale-110 z-20"
+            >
+                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+            </button>
+
             <!-- Titik Pagination di Bawah Tengah Banner -->
             <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
                 <button 
@@ -455,15 +503,24 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- ================================================================ -->
-        <!-- 2. KATALOG PROMO TIKET KUPON (KONTINU TERUS BERJALAN SEPERTI SURADE) -->
+        <!-- 2. KATALOG PROMO TIKET KUPON (OTOMATIS JALAN & BISA DIGERAKIN SENDIRI) -->
         <!-- ================================================================ -->
         <div class="relative w-full overflow-hidden py-1">
-            <!-- Continuous Marquee Track (Terus Berjalan Otomatis Persis Surade, Pause saat Hover) -->
+            <!-- Scroll Container (Bisa digerakkan bebas & jalan otomatis terus-menerus) -->
             <div 
-                class="flex gap-5 animate-marquee-continuous select-none"
+                ref="scrollContainer"
+                @mousedown="startDrag"
+                @mousemove="onDrag"
+                @mouseup="stopDrag"
+                @touchstart="onTouchStart"
+                @touchmove="onTouchMove"
+                @touchend="onTouchEnd"
+                @mouseenter="pauseAutoScroll"
+                @mouseleave="handleMouseLeave"
+                class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 scroll-smooth select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                 <div 
-                    v-for="(card, idx) in [...promoCards, ...promoCards]" 
+                    v-for="(card, idx) in [...promoCards, ...promoCards, ...promoCards]" 
                     :key="idx"
                     class="w-[340px] sm:w-[380px] lg:w-[400px] h-[195px] sm:h-[210px] shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-md hover:shadow-2xl transition-all duration-300 group flex border border-gray-200/90 bg-white"
                 >
@@ -536,22 +593,3 @@ onBeforeUnmount(() => {
 
     </section>
 </template>
-
-<style scoped>
-@keyframes marqueeContinuous {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-.animate-marquee-continuous {
-    display: flex;
-    width: max-content;
-    animation: marqueeContinuous 32s linear infinite;
-}
-.animate-marquee-continuous:hover {
-    animation-play-state: paused;
-}
-</style>

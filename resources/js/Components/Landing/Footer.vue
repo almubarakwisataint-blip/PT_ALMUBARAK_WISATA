@@ -61,22 +61,26 @@ const scrollToTop = () => {
         </section>
 
         <!-- ==================================================================== -->
-        <!-- WAVE (GELOMBANG) ORGANIK PEMBATAS DI ATAS FOOTER                     -->
+        <!-- SECTION 2: FOOTER BODY LENGKAP & BERSIH (DENGAN GELEMBUNG MENGAMBANG)-->
         <!-- ==================================================================== -->
-        <div class="w-full overflow-hidden leading-none -mb-1.5 bg-white pointer-events-none select-none">
-            <svg class="relative block w-full h-12 sm:h-16 lg:h-24 align-bottom" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none">
-                <!-- Layer 1 Wave Crest (Emerald Elegan Bergradasi Lembut) -->
-                <path d="M0,50 C320,105 640,20 960,75 C1200,105 1360,35 1440,55 L1440,120 L0,120 Z" fill="#005138" opacity="0.45"></path>
-                <!-- Layer 2 Wave Body (Solid Deep Green Persis Warna Footer #002b1c) -->
-                <path d="M0,75 C360,30 720,100 1080,50 C1260,25 1380,75 1440,65 L1440,120 L0,120 Z" fill="#002b1c"></path>
-            </svg>
-        </div>
-
-        <!-- ==================================================================== -->
-        <!-- SECTION 2: FOOTER BODY LENGKAP & BERSIH (4 KOLOM PROPORSIONAL)       -->
-        <!-- ==================================================================== -->
-        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-10 pb-12">
+        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-14 pb-12 border-t border-emerald-900/40">
             
+            <!-- Gelembung-Gelembung Mengambang di Dalam Footer (Sesuai Permintaan User) -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                <!-- Bubble 1: Kiri Atas -->
+                <div class="absolute -top-10 left-[8%] w-36 h-36 rounded-full bg-gradient-to-tr from-emerald-500/20 to-emerald-300/10 blur-sm animate-bubble-1 border border-emerald-400/25"></div>
+                <!-- Bubble 2: Kiri Bawah -->
+                <div class="absolute bottom-12 left-[18%] w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-400/20 to-teal-300/10 blur-xs animate-bubble-2 border border-emerald-300/20"></div>
+                <!-- Bubble 3: Tengah Atas -->
+                <div class="absolute top-1/4 left-[45%] w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-300/20 to-emerald-500/10 blur-xs animate-bubble-3 border border-emerald-400/25"></div>
+                <!-- Bubble 4: Kanan Atas -->
+                <div class="absolute top-8 right-[15%] w-32 h-32 rounded-full bg-gradient-to-tr from-teal-400/20 to-emerald-400/10 blur-sm animate-bubble-1 border border-emerald-400/20"></div>
+                <!-- Bubble 5: Kanan Bawah -->
+                <div class="absolute -bottom-8 right-[28%] w-40 h-40 rounded-full bg-gradient-to-tr from-emerald-500/20 to-amber-400/10 blur-md animate-bubble-2 border border-emerald-300/20"></div>
+                <!-- Bubble 6: Kecil Halus Kanan -->
+                <div class="absolute top-1/2 right-[8%] w-14 h-14 rounded-full bg-emerald-400/20 blur-xs animate-bubble-3 border border-emerald-300/25"></div>
+            </div>
+
             <!-- Ambient Dot Matrix Decorative Accent -->
             <div class="absolute right-4 top-16 hidden lg:grid grid-cols-6 gap-2.5 opacity-10 pointer-events-none z-0">
                 <span v-for="i in 36" :key="i" class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
@@ -424,3 +428,27 @@ const scrollToTop = () => {
         </div>
     </footer>
 </template>
+
+<style scoped>
+@keyframes bubbleFloat1 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-18px) scale(1.06); }
+}
+@keyframes bubbleFloat2 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(16px) scale(0.95); }
+}
+@keyframes bubbleFloat3 {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.04); }
+}
+.animate-bubble-1 {
+    animation: bubbleFloat1 7s ease-in-out infinite;
+}
+.animate-bubble-2 {
+    animation: bubbleFloat2 9s ease-in-out infinite 1.5s;
+}
+.animate-bubble-3 {
+    animation: bubbleFloat3 8s ease-in-out infinite 3s;
+}
+</style>
