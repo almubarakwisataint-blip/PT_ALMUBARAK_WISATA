@@ -4,7 +4,7 @@ import Footer from '@/Components/Landing/Footer.vue';
 </script>
 
 <template>
-    <div class="min-h-screen bg-surface font-sans text-on-surface relative selection:bg-primary-container selection:text-white">
+    <div class="min-h-screen bg-surface font-sans text-on-surface relative selection:bg-primary-container selection:text-white overflow-x-hidden">
         <!-- Background Pattern & Subtle Gradient Scrim -->
         <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
             <div 

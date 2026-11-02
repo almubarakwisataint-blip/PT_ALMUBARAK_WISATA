@@ -63,15 +63,20 @@ const scrollToTop = () => {
         <!-- ==================================================================== -->
         <!-- SECTION 2: FOOTER BODY LENGKAP & PADAT (TIDAK KOSONG - SESUAI GBR 5) -->
         <!-- ==================================================================== -->
-        <div class="w-full bg-[#002b1c] text-white pt-16 pb-12 border-t border-emerald-500/20">
+        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-16 pb-12 border-t border-emerald-500/20">
+            <!-- Ambient Dot Matrix Decorative Accent -->
+            <div class="absolute right-4 top-16 hidden lg:grid grid-cols-6 gap-2.5 opacity-10 pointer-events-none">
+                <span v-for="i in 36" :key="i" class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
+            </div>
+
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- 5 Kolom Grid Proporsional -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8 pb-14 border-b border-white/10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pb-14 border-b border-white/10 items-start">
                     
                     <!-- ============================================================ -->
-                    <!-- KOLOM 1 (4 cols): Brand, Lisensi, Partner & Bank             -->
+                    <!-- KOLOM 1 (3 cols): Brand, Lisensi, Partner & Bank             -->
                     <!-- ============================================================ -->
-                    <div class="lg:col-span-4 flex flex-col gap-5">
+                    <div class="sm:col-span-2 lg:col-span-3 flex flex-col gap-5">
                         <!-- Logo & Brand Header -->
                         <div class="flex items-center gap-3">
                             <img 
@@ -210,9 +215,9 @@ const scrollToTop = () => {
                     </div>
 
                     <!-- ============================================================ -->
-                    <!-- KOLOM 4 (2 cols): Kantor & Info Kontak                       -->
+                    <!-- KOLOM 4 (3 cols): Kantor & Info Kontak                       -->
                     <!-- ============================================================ -->
-                    <div class="lg:col-span-2 flex flex-col gap-3">
+                    <div class="sm:col-span-2 lg:col-span-3 flex flex-col gap-3">
                         <h4 class="text-sm font-bold text-white uppercase tracking-wider">
                             {{ t('footer_contact_title') }}
                         </h4>
