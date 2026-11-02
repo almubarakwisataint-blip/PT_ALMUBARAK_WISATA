@@ -13,8 +13,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Get latest news from database
-        $news = News::latest('published_at')->take(10)->get();
+        try {
+            // Get latest news from database if available
+            $news = News::latest('published_at')->take(10)->get();
+        } catch (\Throwable $e) {
+            $news = collect();
+        }
 
         return Inertia::render('Welcome', [
             'news' => $news,
