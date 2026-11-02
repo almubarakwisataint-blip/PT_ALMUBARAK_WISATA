@@ -103,7 +103,7 @@ const packages = [
 ];
 
 const handleBooking = (pkg) => {
-    const message = encodeURIComponent(`Assalamu'alaikum Almubarak Wisata, saya ingin booking/konsultasi untuk ${pkg.title}`);
+    const message = encodeURIComponent(`Assalamu'alaikum Almubarak Wisata, saya ingin reservasi/informasi untuk ${pkg.title}`);
     window.open(`https://wa.me/6281260003484?text=${message}`, '_blank');
 };
 </script>

@@ -54,7 +54,7 @@ const services = [
 const selectedService = ref(null);
 
 const consultService = (title) => {
-    const text = encodeURIComponent(`Assalamu'alaikum Almubarak Wisata, saya ingin berkonsultasi mengenai: ${title}`);
+    const text = encodeURIComponent(`Assalamu'alaikum Almubarak Wisata, saya ingin informasi mengenai: ${title}`);
     window.open(`https://wa.me/6281260003484?text=${text}`, '_blank');
 };
 </script>
@@ -133,7 +133,7 @@ const consultService = (title) => {
                                 class="inline-flex items-center gap-1.5 text-primary hover:text-primary-container font-semibold text-sm transition-colors cursor-pointer group-hover:underline"
                                 type="button"
                             >
-                                <span>Konsultasi Paket</span>
+                                <span>Informasi Paket</span>
                                 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                             </button>
                             <span class="text-xs text-outline font-medium">Tersedia Kuota</span>

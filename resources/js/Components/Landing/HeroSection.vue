@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { useI18n } from '@/Composables/useI18n';
 
+const { t } = useI18n();
 const searchQuery = ref('');
 const activeCategory = ref('paket');
 
@@ -42,7 +44,7 @@ const handleSearch = () => {
 
                 <!-- Accent Highlight Text -->
                 <p class="text-[#fbbd23] font-label-lg text-[15px] sm:text-[17px] font-bold mt-2 tracking-wide drop-shadow">
-                    Konsultasikan keberangkatan &amp; kuota Anda di almubarak.com
+                    Wujudkan keberangkatan &amp; kuota Anda di almubarak.com
                 </p>
 
                 <!-- Dual Category Pills Toggle directly above search bar -->
@@ -83,12 +85,12 @@ const handleSearch = () => {
             <!-- Secondary Bottom Floating Pill / Banner -->
             <div class="relative z-10 w-full max-w-[560px] mx-auto mt-8 mb-2 px-3">
                 <a 
-                    href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20konsultasi%20paket%20ibadah%20umrah/haji" 
+                    href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20informasi%20paket%20ibadah%20umrah/haji" 
                     target="_blank"
                     class="w-full h-14 rounded-full bg-[#005d42]/90 hover:bg-[#007d5c] backdrop-blur-md border border-white/20 text-white font-label-md text-[14px] sm:text-[15px] font-bold tracking-wide whitespace-nowrap transition-all duration-300 inline-flex items-center justify-center gap-2.5 shadow-2xl group cursor-pointer"
                 >
                     <span class="material-symbols-outlined text-[20px] text-tertiary-fixed group-hover:scale-110 transition-transform">support_agent</span>
-                    <span class="tracking-wide">Konsultasi &amp; Hubungi Kami</span>
+                    <span class="tracking-wide">{{ t('hero_btn_contact') }}</span>
                     <span class="material-symbols-outlined text-[18px] text-tertiary-fixed group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
             </div>

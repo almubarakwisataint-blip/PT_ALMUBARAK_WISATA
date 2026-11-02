@@ -41,7 +41,7 @@ const faqs = [
     },
     {
         q: 'Bagaimana jika belum memiliki paspor atau vaksinasi meningitis?',
-        a: 'Tim konsultan kami siap memberikan surat rekomendasi resmi dan panduan lengkap pengurusan paspor di kantor imigrasi terdekat serta rekomendasi klinik vaksinasi meningitis resmi.',
+        a: 'Tim layanan kami siap memberikan surat rekomendasi resmi dan panduan lengkap pengurusan paspor di kantor imigrasi terdekat serta rekomendasi klinik vaksinasi meningitis resmi.',
     },
 ];
 
@@ -72,7 +72,7 @@ const toggleFaq = (idx) => {
                         Layanan 24/7
                     </span>
                     <h1 class="font-headline-xl text-[34px] sm:text-[46px] lg:text-[54px] text-white font-extrabold tracking-tight leading-tight">
-                        Hubungi Konsultan Kami
+                        Hubungi Tim Layanan Kami
                     </h1>
                     <p class="font-body-lg text-white/90 text-[16px] sm:text-[18px] mt-4 leading-relaxed max-w-2xl">
                         Kami siap mendengarkan dan membantu merencanakan perjalanan ibadah Anda dan keluarga dengan sepenuh hati.
@@ -110,7 +110,7 @@ const toggleFaq = (idx) => {
                             </div>
                             <div class="flex-1">
                                 <h3 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-primary transition-colors">
-                                    Customer Care 1 (Konsultasi Paket)
+                                    Customer Care 1 (Informasi Paket)
                                 </h3>
                                 <p class="text-sm text-primary font-semibold mt-0.5">+62 812-6000-3484</p>
                                 <p class="text-xs text-outline mt-1">Layanan WhatsApp &amp; Telepon • Respons Cepat</p>
@@ -176,17 +176,17 @@ const toggleFaq = (idx) => {
                                     Kirim Pesan
                                 </span>
                                 <h3 class="font-headline-sm text-2xl text-primary font-extrabold mt-1">
-                                    Konsultasi Online
+                                    Bantuan &amp; Pertanyaan Online
                                 </h3>
                                 <p class="text-sm text-on-surface-variant mt-1">
-                                    Isi formulir di bawah ini dan konsultan kami akan menghubungi Anda sesegera mungkin.
+                                    Isi formulir di bawah ini dan tim layanan kami akan menghubungi Anda sesegera mungkin.
                                 </p>
                             </div>
 
                             <!-- Success Banner -->
                             <div v-if="isSubmitted" class="mb-6 p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center gap-3">
                                 <span class="material-symbols-outlined text-[24px]">check_circle</span>
-                                <span class="text-sm font-semibold">Alhamdulillah, pesan Anda telah terkirim! Tim konsultan kami akan segera menghubungi Anda.</span>
+                                <span class="text-sm font-semibold">Alhamdulillah, pesan Anda telah terkirim! Tim layanan kami akan segera menghubungi Anda.</span>
                             </div>
 
                             <form @submit.prevent="submitForm" class="space-y-4">
@@ -276,7 +276,7 @@ const toggleFaq = (idx) => {
                                     class="w-full py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-container text-white font-bold text-base transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                                 >
                                     <span class="material-symbols-outlined text-[20px]">send</span>
-                                    <span>{{ form.processing ? 'Mengirim Pesan...' : 'Kirim Pesan Konsultasi' }}</span>
+                                    <span>{{ form.processing ? 'Mengirim Pesan...' : 'Kirim Pesan' }}</span>
                                 </button>
                             </form>
                         </div>

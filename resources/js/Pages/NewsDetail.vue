@@ -93,11 +93,11 @@ const shareOnWhatsApp = () => {
                 </p>
             </div>
 
-            <!-- Share & Contact Consultant Box -->
+            <!-- Share & Contact Customer Care Box -->
             <div class="mt-12 p-6 rounded-2xl bg-surface-container-low border border-surface-container flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     <h4 class="font-headline-sm text-base text-primary font-bold">Punya Pertanyaan Seputar Artikel Ini?</h4>
-                    <p class="text-xs text-on-surface-variant mt-1">Konsultan ibadah kami siap berdiskusi langsung melalui WhatsApp.</p>
+                    <p class="text-xs text-on-surface-variant mt-1">Tim layanan kami siap berdiskusi langsung melalui WhatsApp.</p>
                 </div>
                 <a 
                     href="https://wa.me/6281260003484" 
@@ -105,7 +105,7 @@ const shareOnWhatsApp = () => {
                     class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primary-container text-white font-bold text-xs shadow-sm transition-all whitespace-nowrap"
                 >
                     <span class="material-symbols-outlined text-[18px]">chat</span>
-                    <span>Tanya Konsultan</span>
+                    <span>Tanya Layanan</span>
                 </a>
             </div>
 

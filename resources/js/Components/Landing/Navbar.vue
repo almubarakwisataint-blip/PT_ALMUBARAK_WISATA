@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import { useI18n } from '@/Composables/useI18n';
 
 const page = usePage();
 const isMobileMenuOpen = ref(false);
-const activeLang = ref('ID');
+const { locale, setLocale, t } = useI18n();
 
 const toggleLang = (lang) => {
-    activeLang.value = lang;
+    setLocale(lang);
 };
 
 const currentUrl = computed(() => page.url);
@@ -36,7 +37,7 @@ const isLinkActive = (path) => {
                         Almubarak<span class="text-secondary font-bold">.com</span>
                     </span>
                     <span class="font-label-sm text-[10px] text-outline tracking-wider uppercase font-semibold">
-                        Haji &amp; Umrah Premium
+                        {{ t('nav_subtitle') }}
                     </span>
                 </div>
             </Link>
@@ -48,35 +49,35 @@ const isLinkActive = (path) => {
                     :class="isLinkActive('/') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
                     class="transition-colors py-1 px-1"
                 >
-                    Beranda
+                    {{ t('nav_home') }}
                 </Link>
                 <Link 
                     href="/about" 
                     :class="isLinkActive('/about') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
                     class="transition-colors py-1 px-1"
                 >
-                    Tentang Kami
+                    {{ t('nav_about') }}
                 </Link>
                 <Link 
                     href="/business" 
                     :class="isLinkActive('/business') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
                     class="transition-colors py-1 px-1"
                 >
-                    Bisnis Kami
+                    {{ t('nav_business') }}
                 </Link>
                 <Link 
                     href="/news" 
                     :class="isLinkActive('/news') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
                     class="transition-colors py-1 px-1"
                 >
-                    Berita
+                    {{ t('nav_news') }}
                 </Link>
                 <Link 
                     href="/contact" 
                     :class="isLinkActive('/contact') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary font-medium'"
                     class="transition-colors py-1 px-1"
                 >
-                    Hubungi Kami
+                    {{ t('nav_contact') }}
                 </Link>
             </nav>
 
@@ -86,7 +87,7 @@ const isLinkActive = (path) => {
                 <div class="inline-flex items-center p-0.5 rounded-full bg-surface-container border border-surface-container-high text-label-sm font-label-sm">
                     <button 
                         @click="toggleLang('ID')"
-                        :class="activeLang === 'ID' ? 'bg-primary text-white font-bold shadow-xs' : 'text-on-surface-variant hover:text-primary'"
+                        :class="locale === 'ID' ? 'bg-primary text-white font-bold shadow-xs' : 'text-on-surface-variant hover:text-primary'"
                         class="px-2.5 py-1 rounded-full transition-all cursor-pointer" 
                         type="button"
                     >
@@ -94,7 +95,7 @@ const isLinkActive = (path) => {
                     </button>
                     <button 
                         @click="toggleLang('EN')"
-                        :class="activeLang === 'EN' ? 'bg-primary text-white font-bold shadow-xs' : 'text-on-surface-variant hover:text-primary'"
+                        :class="locale === 'EN' ? 'bg-primary text-white font-bold shadow-xs' : 'text-on-surface-variant hover:text-primary'"
                         class="px-2.5 py-1 rounded-full transition-all cursor-pointer" 
                         type="button"
                     >
@@ -108,7 +109,7 @@ const isLinkActive = (path) => {
                     class="hidden sm:inline-flex items-center gap-space-xs px-space-lg py-2.5 rounded-full font-label-lg text-label-lg text-white bg-primary hover:bg-primary-container transition-all shadow-sm font-bold cursor-pointer"
                 >
                     <span class="material-symbols-outlined text-[18px]">login</span>
-                    <span>Masuk</span>
+                    <span>{{ t('nav_login') }}</span>
                 </a>
 
                 <!-- Mobile Hamburger Button -->
@@ -134,7 +135,7 @@ const isLinkActive = (path) => {
                     :class="isLinkActive('/') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
                     href="/"
                 >
-                    Beranda
+                    {{ t('nav_home') }}
                 </Link>
                 <Link 
                     @click="isMobileMenuOpen = false" 
@@ -142,7 +143,7 @@ const isLinkActive = (path) => {
                     :class="isLinkActive('/about') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
                     href="/about"
                 >
-                    Tentang Kami
+                    {{ t('nav_about') }}
                 </Link>
                 <Link 
                     @click="isMobileMenuOpen = false" 
@@ -150,7 +151,7 @@ const isLinkActive = (path) => {
                     :class="isLinkActive('/business') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
                     href="/business"
                 >
-                    Bisnis Kami
+                    {{ t('nav_business') }}
                 </Link>
                 <Link 
                     @click="isMobileMenuOpen = false" 
@@ -158,7 +159,7 @@ const isLinkActive = (path) => {
                     :class="isLinkActive('/news') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
                     href="/news"
                 >
-                    Berita
+                    {{ t('nav_news') }}
                 </Link>
                 <Link 
                     @click="isMobileMenuOpen = false" 
@@ -166,14 +167,14 @@ const isLinkActive = (path) => {
                     :class="isLinkActive('/contact') ? 'text-primary bg-surface-container' : 'text-on-surface-variant hover:text-primary'"
                     href="/contact"
                 >
-                    Hubungi Kami
+                    {{ t('nav_contact') }}
                 </Link>
                 <a 
                     href="/admin/login" 
                     class="mt-2 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-white font-bold shadow-sm"
                 >
                     <span class="material-symbols-outlined text-[20px]">login</span>
-                    <span>Masuk ke Akun</span>
+                    <span>{{ t('nav_login') }}</span>
                 </a>
             </div>
         </div>

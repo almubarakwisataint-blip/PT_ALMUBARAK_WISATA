@@ -16,32 +16,32 @@ const defaultTeams = [
         name: 'H. Ahmad Mubarak, Lc., M.A.',
         position: 'Direktur Utama / CEO',
         description: 'Alumni Universitas Islam Madinah dengan pengalaman lebih dari 15 tahun dalam bimbingan syar\'i dan manasik haji/umrah di Tanah Suci.',
-        image: '/images/ceo.jpg',
-        positionStyle: 'object-position: 50% 25%;',
+        image: '/images/ceo-face.jpg',
+        positionStyle: 'object-position: center;',
         phone: '6281260003484',
     },
     {
         name: 'Ust. H. Abdullah Syarif, Lc.',
         position: 'Ketua Dewan Pembimbing Syariah',
         description: 'Membimbing jamaah dalam manasik dan pelaksanaan thawaf, sa\'i, serta kajian fiqih ibadah sesuai sunnah Rasulullah ﷺ.',
-        image: '/images/landing/testi-fachri.jpg',
-        positionStyle: 'object-position: 50% 30%;',
+        image: '/images/landing/member-ustadz.jpg',
+        positionStyle: 'object-position: center;',
         phone: '6281260003484',
     },
     {
         name: 'Hj. Siti Fatimah, S.E.',
         position: 'Direktur Operasional & Pelayanan Jamaah',
         description: 'Mengawasi kenyamanan akomodasi hotel pelataran ring 1, handling bandara, serta pendampingan jamaah lansia dan keluarga.',
-        image: '/images/landing/testi-siti.jpg',
-        positionStyle: 'object-position: 70% 25%;',
+        image: '/images/landing/member-siti.jpg',
+        positionStyle: 'object-position: center;',
         phone: '6281180002807',
     },
     {
         name: 'H. Firman Hidayat, S.Kom.',
         position: 'Manajer Tiket, Hotel & Visa Provider',
         description: 'Spesialis reservasi maskapai direct (Saudia/Garuda), tasreh visa Saudi, dan tiket kereta cepat Haramain Express.',
-        image: '/images/landing/testi-hendra.jpg',
-        positionStyle: 'object-position: 50% 12%;',
+        image: '/images/landing/member-firman.jpg',
+        positionStyle: 'object-position: center;',
         phone: '6281180002807',
     },
     {
@@ -54,10 +54,10 @@ const defaultTeams = [
     },
     {
         name: 'Nurul Aisyah, S.Tr.Par.',
-        position: 'Koordinator Konsultasi & Perlengkapan',
+        position: 'Koordinator Pelayanan & Perlengkapan',
         description: 'Melayani persiapan dokumen paspor, vaksinasi internasional, pembagian koper, dan pendataan kesehatan jamaah.',
-        image: '/images/landing/testi-siti.jpg',
-        positionStyle: 'object-position: 70% 25%;',
+        image: '/images/landing/member-siti.jpg',
+        positionStyle: 'object-position: center;',
         phone: '6281180002807',
     },
 ];
@@ -68,7 +68,7 @@ const teamList = computed(() => {
             name: t.name,
             position: t.position,
             description: t.description || 'Profesional berpengalaman dalam penyelenggaraan ibadah umrah dan haji.',
-            image: t.image ? (t.image.startsWith('http') || t.image.startsWith('/') ? t.image : `/storage/${t.image}`) : (defaultTeams[idx]?.image || '/images/ceo.jpg'),
+            image: t.image ? (t.image.startsWith('http') || t.image.startsWith('/') ? t.image : `/storage/${t.image}`) : (defaultTeams[idx]?.image || '/images/ceo-face.jpg'),
             positionStyle: defaultTeams[idx]?.positionStyle || 'object-position: center;',
             phone: t.phone || '6281260003484',
         }));
@@ -77,7 +77,7 @@ const teamList = computed(() => {
 });
 
 const contactMember = (member) => {
-    const text = encodeURIComponent(`Assalamu'alaikum, saya ingin berkonsultasi dengan ${member.name} (${member.position}) terkait paket ibadah.`);
+    const text = encodeURIComponent(`Assalamu'alaikum, saya ingin menghubungi ${member.name} (${member.position}) terkait paket ibadah.`);
     window.open(`https://wa.me/${member.phone}?text=${text}`, '_blank');
 };
 </script>
