@@ -1,12 +1,15 @@
 <script>
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 // Singleton State: Bersifat global di seluruh aplikasi.
-// Preloader HANYA berjalan 1x saat pertama kali membuka/me-refresh website.
-// Tidak akan pernah muncul lagi saat berpindah-pindah ke halaman selanjutnya.
+// Layar loading aktif di setiap perpindahan halaman secara mulus (tepat 1x per navigasi).
 const isLoading = ref(true);
 let hasInitialLoaded = false;
 let dismissTimer = null;
+let listenersInitialized = false;
+let navStartTime = 0;
+const MIN_NAV_DISPLAY_TIME = 650; // ms agar animasi lambang Almubarak terlihat anggun tanpa berkedip
 
 function dismiss(delay = 300) {
     if (dismissTimer) clearTimeout(dismissTimer);
@@ -15,6 +18,28 @@ function dismiss(delay = 300) {
         hasInitialLoaded = true;
     }, delay);
 }
+
+// Inisialisasi router listeners HANYA 1x di level aplikasi
+if (!listenersInitialized && typeof window !== 'undefined') {
+    listenersInitialized = true;
+
+    router.on('start', () => {
+        if (dismissTimer) clearTimeout(dismissTimer);
+        navStartTime = performance.now();
+        isLoading.value = true;
+    });
+
+    router.on('finish', () => {
+        const elapsed = performance.now() - navStartTime;
+        const remaining = Math.max(0, MIN_NAV_DISPLAY_TIME - elapsed);
+        dismiss(remaining + 120);
+    });
+
+    router.on('error', () => {
+        if (dismissTimer) clearTimeout(dismissTimer);
+        isLoading.value = false;
+    });
+}
 </script>
 
 <script setup>
@@ -22,11 +47,8 @@ import { onMounted } from 'vue';
 
 onMounted(() => {
     // Sesi pembuka: Hanya aktif 1x saat pertama kali membuka website (fresh visit / reload).
-    // Saat berpindah ke halaman lain via link/menu navigasi, TIDAK ADA lagi loading screen yang dipicu.
     if (!hasInitialLoaded) {
-        dismiss(1650);
-    } else {
-        isLoading.value = false;
+        dismiss(1500);
     }
 });
 </script>

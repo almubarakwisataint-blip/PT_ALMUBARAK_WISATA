@@ -205,7 +205,7 @@ const promoCards = computed(() => {
     }));
 });
 
-// Auto-scroll & Drag interaktif 60fps untuk kartu promo (otomatis meluncur halus, bisa digerakkan & diam saat dipencet)
+// Auto-scroll & Drag interaktif 60fps untuk kartu promo (otomatis meluncur halus, bisa digerakkan & lanjutkan posisi)
 const isDragging = ref(false);
 const isPaused = ref(false);
 const isHovered = ref(false);
@@ -213,19 +213,28 @@ let startX = 0;
 let startScrollLeft = 0;
 let rafId = null;
 let lastTimestamp = 0;
-let currentScroll = 0;
 let isUserInteracting = false;
 let dragMoved = false;
 const speed = 0.07; // pixels per ms (~70px/sec)
 
+const normalizeScroll = () => {
+    if (!scrollContainer.value) return;
+    const segmentWidth = scrollContainer.value.scrollWidth / 3;
+    if (segmentWidth <= 0) return;
+
+    // Jika digeser melewati batas 2 segmen ke kanan, putar balik ke tengah secara seamless
+    if (scrollContainer.value.scrollLeft >= segmentWidth * 2) {
+        scrollContainer.value.scrollLeft -= segmentWidth;
+    } 
+    // Jika digeser ke kiri mendekati ujung 0, loncatkan ke segmen tengah secara seamless
+    else if (scrollContainer.value.scrollLeft <= 5) {
+        scrollContainer.value.scrollLeft += segmentWidth;
+    }
+};
+
 const togglePause = () => {
     isPaused.value = !isPaused.value;
-    if (!isPaused.value) {
-        lastTimestamp = 0;
-        if (scrollContainer.value) {
-            currentScroll = scrollContainer.value.scrollLeft;
-        }
-    }
+    lastTimestamp = 0;
 };
 
 const autoScrollLoop = (timestamp) => {
@@ -234,12 +243,9 @@ const autoScrollLoop = (timestamp) => {
     lastTimestamp = timestamp;
 
     if (scrollContainer.value && !isDragging.value && !isUserInteracting && !isPaused.value && !isHovered.value) {
-        currentScroll += speed * elapsed;
-        const segmentWidth = scrollContainer.value.scrollWidth / 3;
-        if (segmentWidth > 0 && currentScroll >= segmentWidth * 2) {
-            currentScroll -= segmentWidth;
-        }
-        scrollContainer.value.scrollLeft = currentScroll;
+        // SELALU lanjutkan pergerakan langsung dari posisi scroll terkini di layar (tidak pernah reset balik)
+        scrollContainer.value.scrollLeft += speed * elapsed;
+        normalizeScroll();
     }
     rafId = requestAnimationFrame(autoScrollLoop);
 };
@@ -247,9 +253,6 @@ const autoScrollLoop = (timestamp) => {
 const startPromoContinuousScroll = () => {
     stopPromoContinuousScroll();
     lastTimestamp = 0;
-    if (scrollContainer.value) {
-        currentScroll = scrollContainer.value.scrollLeft;
-    }
     rafId = requestAnimationFrame(autoScrollLoop);
 };
 
@@ -264,21 +267,19 @@ const startDrag = (e) => {
     isDragging.value = true;
     isUserInteracting = true;
     dragMoved = false;
-    startX = e.pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
+    startX = e.pageX;
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
-    currentScroll = startScrollLeft;
 };
 
 const onDrag = (e) => {
     if (!isDragging.value || !scrollContainer.value) return;
-    const x = e.pageX - scrollContainer.value.offsetLeft;
-    if (Math.abs(x - startX) > 4) {
+    const walk = e.pageX - startX;
+    if (Math.abs(walk) > 4) {
         dragMoved = true;
     }
     e.preventDefault();
-    const walk = (x - startX);
-    currentScroll = startScrollLeft - walk;
-    scrollContainer.value.scrollLeft = currentScroll;
+    scrollContainer.value.scrollLeft = startScrollLeft - walk;
+    normalizeScroll();
 };
 
 const stopDrag = () => {
@@ -286,14 +287,12 @@ const stopDrag = () => {
         isDragging.value = false;
         isUserInteracting = false;
         lastTimestamp = 0;
-        if (scrollContainer.value) {
-            currentScroll = scrollContainer.value.scrollLeft;
-        }
+        normalizeScroll();
     }
 };
 
 const handleContainerClick = () => {
-    // Jika diklik/dipencet tanpa drag, kartu berhenti diam ("diem")
+    // Jika hanya diklik tanpa digeser, jeda/lanjutkan
     if (!dragMoved) {
         togglePause();
     }
@@ -302,37 +301,42 @@ const handleContainerClick = () => {
 const onTouchStart = (e) => {
     isUserInteracting = true;
     dragMoved = false;
-    startX = e.touches[0].pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
+    startX = e.touches[0].pageX;
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
-    currentScroll = startScrollLeft;
 };
 
 const onTouchMove = (e) => {
     if (!scrollContainer.value) return;
-    const x = e.touches[0].pageX - scrollContainer.value.offsetLeft;
-    if (Math.abs(x - startX) > 4) {
+    const walk = e.touches[0].pageX - startX;
+    if (Math.abs(walk) > 4) {
         dragMoved = true;
     }
-    const walk = (x - startX);
-    currentScroll = startScrollLeft - walk;
-    scrollContainer.value.scrollLeft = currentScroll;
+    scrollContainer.value.scrollLeft = startScrollLeft - walk;
+    normalizeScroll();
 };
 
 const onTouchEnd = () => {
     isUserInteracting = false;
     lastTimestamp = 0;
-    if (scrollContainer.value) {
-        currentScroll = scrollContainer.value.scrollLeft;
-    }
-    if (!dragMoved) {
-        isPaused.value = true;
-    }
+    normalizeScroll();
+};
+
+const handleScroll = () => {
+    normalizeScroll();
 };
 
 // Lifecycle
 onMounted(() => {
     startBannerAutoRotate();
     startPromoContinuousScroll();
+    setTimeout(() => {
+        if (scrollContainer.value) {
+            const segmentWidth = scrollContainer.value.scrollWidth / 3;
+            if (segmentWidth > 0 && scrollContainer.value.scrollLeft < 10) {
+                scrollContainer.value.scrollLeft = segmentWidth;
+            }
+        }
+    }, 120);
 });
 
 onBeforeUnmount(() => {
@@ -556,6 +560,7 @@ onBeforeUnmount(() => {
                 @touchstart="onTouchStart"
                 @touchmove="onTouchMove"
                 @touchend="onTouchEnd"
+                @scroll="handleScroll"
                 @click="handleContainerClick"
                 class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
