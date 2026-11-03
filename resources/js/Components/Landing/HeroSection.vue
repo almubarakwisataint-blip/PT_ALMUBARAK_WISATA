@@ -102,32 +102,32 @@ const handleSearch = () => {
 </template>
 
 <style scoped>
-/* Animasi Cahaya Hijau Melewat Halus & Smooth di Dalam Teks (Hanya Warna Hijau Sesuai Permintaan) */
+/* Animasi Cahaya Hijau Kontinyu Tanpa Jeda Berhenti (Ultra Smooth & Non-Stop Glide) */
 .hero-shimmer-title {
     background: linear-gradient(
-        110deg,
+        95deg,
         #ffffff 0%,
-        #ffffff 28%,
-        #10b981 42%,
+        #ffffff 18%,
+        #10b981 35%,
         #00ff88 50%,
-        #10b981 58%,
-        #ffffff 72%,
+        #10b981 65%,
+        #ffffff 82%,
         #ffffff 100%
     );
-    background-size: 260% 100%;
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: heroGreenSweep 5s ease-in-out infinite;
+    animation: heroGreenSweep 3.2s linear infinite;
     display: inline-block;
 }
 
 @keyframes heroGreenSweep {
     0% {
-        background-position: 135% 0;
+        background-position: 200% 0;
     }
     100% {
-        background-position: -135% 0;
+        background-position: 0% 0;
     }
 }
 
