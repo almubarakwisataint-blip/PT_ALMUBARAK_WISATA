@@ -3,142 +3,208 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { router } from '@inertiajs/vue3';
 
 const isLoading = ref(true);
-const progress = ref(0);
-let animationTimer = null;
+let finishTimeout = null;
+let initialTimer = null;
 
-const runLoadingSequence = (duration = 1250) => {
-    progress.value = 0;
-    isLoading.value = true;
-    const startTime = performance.now();
-
-    if (animationTimer) cancelAnimationFrame(animationTimer);
-
-    const step = (now) => {
-        const elapsed = now - startTime;
-        const rawProgress = Math.min(elapsed / duration, 1);
-        
-        // Easing curve: smooth acceleration and crisp finish
-        const eased = rawProgress < 0.5 
-            ? 2 * rawProgress * rawProgress 
-            : 1 - Math.pow(-2 * rawProgress + 2, 2) / 2;
-
-        progress.value = Math.round(eased * 100);
-
-        if (rawProgress < 1) {
-            animationTimer = requestAnimationFrame(step);
-        } else {
-            progress.value = 100;
-            // Frame 6: Logo mencapai puncak kilau radiant, lalu fade out
-            setTimeout(() => {
-                isLoading.value = false;
-            }, 260);
-        }
-    };
-
-    animationTimer = requestAnimationFrame(step);
+const dismiss = (delay = 450) => {
+    if (finishTimeout) clearTimeout(finishTimeout);
+    finishTimeout = setTimeout(() => {
+        isLoading.value = false;
+    }, delay);
 };
 
 onMounted(() => {
-    // Initial page load sequence (Persis 6 Frame Storyboard Referensi User)
-    runLoadingSequence(1250);
+    // Sesi awal: Tampilkan animasi pembentukan logo secara smooth dan elegan
+    initialTimer = setTimeout(() => {
+        dismiss(300);
+    }, 1800);
 
+    // Inertia page navigation hooks
     router.on('start', () => {
-        runLoadingSequence(500);
+        if (finishTimeout) clearTimeout(finishTimeout);
+        isLoading.value = true;
     });
 
     router.on('finish', () => {
-        progress.value = 100;
-        setTimeout(() => {
-            isLoading.value = false;
-        }, 180);
+        dismiss(400);
     });
 });
 
 onBeforeUnmount(() => {
-    if (animationTimer) {
-        cancelAnimationFrame(animationTimer);
-    }
+    if (initialTimer) clearTimeout(initialTimer);
+    if (finishTimeout) clearTimeout(finishTimeout);
 });
 </script>
 
 <template>
-    <Transition name="fade">
+    <Transition name="loading-fade">
         <div 
             v-if="isLoading" 
-            class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#01140c] select-none pointer-events-auto overflow-hidden"
+            class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#02130b]/80 backdrop-blur-md select-none pointer-events-auto overflow-hidden transition-all duration-500"
+            role="status"
+            aria-label="Memuat Almubarak Wisata"
         >
-            <!-- 1. Ambient Background Radial Glow (Sesuai Frame 1-6) -->
-            <div 
-                class="absolute w-[380px] sm:w-[520px] h-[380px] sm:h-[520px] rounded-full bg-gradient-to-tr from-emerald-600/35 via-emerald-500/20 to-transparent blur-3xl pointer-events-none transition-all duration-700"
-                :style="{ 
-                    transform: `scale(${0.8 + (progress / 100) * 0.4})`, 
-                    opacity: progress > 5 ? 1 : 0.5 
-                }"
-            ></div>
-            
-            <div 
-                class="absolute w-[200px] h-[200px] rounded-full bg-emerald-400/25 blur-2xl pointer-events-none transition-all duration-500"
-                :style="{ opacity: progress >= 20 ? 1 : 0.3 }"
-            ></div>
+            <!-- 1. Ambient Center Radial Glow (Halus, hangat, translusen & tidak pekat kaku) -->
+            <div class="absolute w-[360px] sm:w-[500px] h-[360px] sm:h-[500px] rounded-full bg-[radial-gradient(circle,_rgba(0,255,136,0.18)_0%,_rgba(16,185,129,0.08)_40%,_transparent_70%)] blur-2xl pointer-events-none alm-ambient-pulse"></div>
 
-            <!-- 2. Horizontal Anamorphic Light Streak (Sesuai Frame 3, 4, 5, 6) -->
-            <div 
-                class="absolute w-[320px] sm:w-[500px] h-[1.5px] bg-gradient-to-r from-transparent via-[#00ff88]/80 to-transparent blur-[0.5px] pointer-events-none transition-all duration-500"
-                :style="{
-                    opacity: progress >= 25 ? (progress >= 95 ? 1 : 0.7) : 0,
-                    transform: `scaleX(${Math.min(0.2 + (progress / 75), 1.25)})`
-                }"
-            ></div>
-
-            <!-- 3. Center Circle Container with Animated Logo Reveal (Sesuai Frame 2, 3, 4, 5, 6) -->
-            <div class="relative flex flex-col items-center justify-center">
-                <!-- Circular Thin Ring -->
-                <div 
-                    class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full border flex items-center justify-center transition-all duration-500"
-                    :class="[
-                        progress >= 15 ? 'opacity-100' : 'opacity-0 scale-95',
-                        progress >= 85 
-                            ? 'border-emerald-300 shadow-[0_0_28px_rgba(0,255,136,0.55)] scale-105' 
-                            : 'border-emerald-500/40 shadow-[0_0_14px_rgba(16,185,129,0.25)]'
-                    ]"
+            <!-- 2. Logo Almubarak Container (Ukuran proporsional sesuai referensi TenagaAhli ~130px) -->
+            <div class="relative w-32 h-40 sm:w-36 sm:h-44 flex items-center justify-center">
+                
+                <!-- A. Outer Vector Strokes yang menggambar bentuk lambang Almubarak secara halus -->
+                <svg 
+                    viewBox="0 0 166 206" 
+                    class="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
+                    aria-hidden="true"
                 >
-                    <!-- Inner Logo Masked / Revealed from Top to Bottom based on Progress -->
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center relative overflow-hidden">
-                        <img 
-                            src="/images/logo-emblem.png" 
-                            alt="Logo Almubarak"
-                            class="w-full h-full object-contain transition-all duration-150"
-                            :style="{
-                                clipPath: `inset(0 0 ${Math.max(0, 100 - (progress * 1.15))}% 0)`,
-                                filter: `drop-shadow(0 0 ${progress >= 90 ? '24px' : '14px'} #00ff88) drop-shadow(0 0 ${progress >= 95 ? '40px' : '20px'} rgba(16,185,129,0.85)) brightness(${1 + (progress / 100) * 0.4})`
-                            }"
-                        />
-                    </div>
+                    <!-- Chevron Atas (Peak Arrow Almubarak) -->
+                    <path 
+                        class="alm-stroke alm-draw-top"
+                        pathLength="1"
+                        d="M 83 14 L 137 97 L 126 112 L 83 45 L 40 112 L 29 97 Z"
+                    />
+                    <!-- Chevron Bawah (Folded 'W' Base Almubarak) -->
+                    <path 
+                        class="alm-stroke alm-draw-bottom"
+                        pathLength="1"
+                        d="M 13 126 L 46 193 L 83 115 L 120 193 L 153 126 L 138 147 L 120 171 L 83 133 L 46 171 L 28 147 Z"
+                    />
+                </svg>
+
+                <!-- B. Logo Asli Almubarak (HD Emblem) yang muncul & bersinar lembut seiring goresan garis -->
+                <div class="relative w-full h-full flex items-center justify-center alm-emblem-reveal">
+                    <img 
+                        src="/images/logo-emblem.png" 
+                        alt="Logo Almubarak Wisata"
+                        class="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(0,255,136,0.65)]"
+                    />
                 </div>
 
-                <!-- 4. Sleek Minimalist Progress Bar (Sesuai Frame 2, 3, 4, 5) -->
-                <!-- Hilang/Fade Out di Frame 6 saat progress >= 100 -->
-                <div 
-                    class="mt-7 sm:mt-8 w-44 sm:w-48 h-[3.5px] rounded-full bg-emerald-950/90 border border-emerald-500/30 p-[0.5px] overflow-hidden transition-all duration-300"
-                    :class="progress >= 100 ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100'"
-                >
-                    <div 
-                        class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-[#00ff88] to-[#69f0ae] shadow-[0_0_12px_#00ff88] transition-all duration-100"
-                        :style="{ width: `${progress}%` }"
-                    ></div>
-                </div>
+                <!-- C. Aura Cahaya Kilau di Puncak Lambang -->
+                <div class="absolute top-2 w-8 h-8 rounded-full bg-[#00ff88]/30 blur-md pointer-events-none alm-sparkle"></div>
             </div>
         </div>
     </Transition>
 </template>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+/* Transisi Kemunculan & Penutupan Seluruh Layar Loading */
+.loading-fade-enter-active,
+.loading-fade-leave-active {
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.fade-enter-from,
-.fade-leave-to {
+
+.loading-fade-enter-from,
+.loading-fade-leave-to {
     opacity: 0;
+    transform: scale(0.98);
+}
+
+/* Garis Vektor: Stroke animasi halus seperti pada referensi tenagaahli */
+.alm-stroke {
+    fill: none;
+    stroke: #00ff88;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.85));
+}
+
+.alm-draw-top {
+    animation: almDraw 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.alm-draw-bottom {
+    stroke: #10b981;
+    animation: almDraw 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: 0.15s;
+}
+
+/* Kemunculan Logo Almubarak yang Asli dan Bersinar Lembut */
+.alm-emblem-reveal {
+    animation: almFill 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Denyut Aura Ambient */
+.alm-ambient-pulse {
+    animation: almPulse 3.5s ease-in-out infinite;
+}
+
+/* Kilau Titik Puncak */
+.alm-sparkle {
+    animation: almSparkle 2.6s ease-in-out infinite;
+}
+
+/* Keyframes Goresan Garis (Draw Stroke) */
+@keyframes almDraw {
+    0% {
+        stroke-dashoffset: 1;
+        opacity: 0.2;
+    }
+    35%, 82% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+    }
+}
+
+/* Keyframes Iluminasi Logo Asli Almubarak */
+@keyframes almFill {
+    0%, 25% {
+        opacity: 0;
+        transform: scale(0.95);
+        filter: brightness(0.6) drop-shadow(0 0 10px rgba(0, 255, 136, 0.2));
+    }
+    55%, 85% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1.1) drop-shadow(0 0 24px rgba(0, 255, 136, 0.8)) drop-shadow(0 0 40px rgba(16, 185, 129, 0.45));
+    }
+    100% {
+        opacity: 0.15;
+        transform: scale(1.02);
+        filter: brightness(0.8) drop-shadow(0 0 10px rgba(0, 255, 136, 0.1));
+    }
+}
+
+/* Keyframes Ambient Pulse */
+@keyframes almPulse {
+    0%, 100% {
+        transform: scale(0.92);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+/* Keyframes Sparkle */
+@keyframes almSparkle {
+    0%, 30% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    55%, 80% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .alm-stroke,
+    .alm-emblem-reveal,
+    .alm-ambient-pulse,
+    .alm-sparkle {
+        animation-duration: 6s;
+    }
 }
 </style>
