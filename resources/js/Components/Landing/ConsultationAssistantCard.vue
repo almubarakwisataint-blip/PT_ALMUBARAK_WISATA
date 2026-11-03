@@ -545,23 +545,6 @@ onBeforeUnmount(() => {
         <!-- 2. KATALOG PROMO TIKET KUPON (OTOMATIS JALAN & BERHENTI DIAM SAAT DIPENCET) -->
         <!-- ================================================================ -->
         <div class="relative w-full overflow-hidden py-1">
-            <!-- Header Kontrol Jeda / Jalankan (Sesuai Permintaan: Saat dipencet kartu berhenti diam) -->
-            <div class="flex items-center justify-between px-1 mb-2">
-                <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full" :class="isPaused ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500 animate-ping'"></span>
-                    <span>{{ isPaused ? (locale === 'ID' ? 'Katalog Dijeda (Klik lagi untuk melanjutkan)' : 'Promo Paused (Click to resume)') : (locale === 'ID' ? 'Katalog Promo Berjalan (Klik / Sentuh untuk jeda)' : 'Promo Carousel Gliding (Click to pause)') }}</span>
-                </span>
-                <button 
-                    @click.stop="togglePause" 
-                    type="button"
-                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border shadow-xs cursor-pointer"
-                    :class="isPaused ? 'bg-amber-500 text-white border-amber-600 hover:bg-amber-600' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'"
-                >
-                    <span class="material-symbols-outlined text-[15px]">{{ isPaused ? 'play_arrow' : 'pause' }}</span>
-                    <span>{{ isPaused ? (locale === 'ID' ? 'Jalankan' : 'Play') : (locale === 'ID' ? 'Jeda' : 'Pause') }}</span>
-                </button>
-            </div>
-
             <!-- Scroll Container (Bisa digerakkan bebas & diam saat dipencet) -->
             <div 
                 ref="scrollContainer"

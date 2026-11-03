@@ -35,8 +35,8 @@ const handleSearch = () => {
 
             <!-- Center Hero Content Area -->
             <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center mt-6 md:mt-10 w-full">
-                <!-- Main Title: Teks Bersih, Elegan & Kontras Tinggi Tanpa Bayangan Melewat -->
-                <h1 class="font-headline-xl text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.15] text-white font-extrabold tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
+                <!-- Main Title: Teks dengan Animasi Kilauan Melewat di Dalamnya (Sesuai Permintaan User: Warna Emas & Emerald) -->
+                <h1 class="hero-shimmer-title font-headline-xl text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.15] font-extrabold tracking-tight drop-shadow-[0_4px_25px_rgba(0,0,0,0.95)]">
                     {{ locale === 'ID' ? 'Temukan Perjalanan Ibadah & Umrah Terpercaya' : 'Discover Trusted Pilgrimage & Sacred Journeys' }}
                 </h1>
 
@@ -100,4 +100,43 @@ const handleSearch = () => {
         </div>
     </section>
 </template>
+
+<style scoped>
+/* Animasi Cahaya Melewat di Dalam Teks (Text Shimmer / Light Sweep) */
+.hero-shimmer-title {
+    background: linear-gradient(
+        110deg,
+        #ffffff 0%,
+        #ffffff 22%,
+        #34d399 40%,
+        #fde047 50%,
+        #34d399 60%,
+        #ffffff 78%,
+        #ffffff 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: heroTextSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    display: inline-block;
+}
+
+@keyframes heroTextSweep {
+    0% {
+        background-position: 130% 0;
+    }
+    100% {
+        background-position: -130% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-shimmer-title {
+        animation: none;
+        color: #ffffff;
+        -webkit-text-fill-color: #ffffff;
+    }
+}
+</style>
 

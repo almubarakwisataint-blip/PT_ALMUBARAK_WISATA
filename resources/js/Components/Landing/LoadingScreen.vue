@@ -1,12 +1,12 @@
 <script>
 import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
 
-// Singleton State: Bersifat global di seluruh aplikasi (tidak ter-reset saat ganti halaman)
+// Singleton State: Bersifat global di seluruh aplikasi.
+// Preloader HANYA berjalan 1x saat pertama kali membuka/me-refresh website.
+// Tidak akan pernah muncul lagi saat berpindah-pindah ke halaman selanjutnya.
 const isLoading = ref(true);
 let hasInitialLoaded = false;
 let dismissTimer = null;
-let listenersInitialized = false;
 
 function dismiss(delay = 300) {
     if (dismissTimer) clearTimeout(dismissTimer);
@@ -15,36 +15,18 @@ function dismiss(delay = 300) {
         hasInitialLoaded = true;
     }, delay);
 }
-
-// Inisialisasi router listeners HANYA 1x di level aplikasi (mencegah duplicate listener)
-if (!listenersInitialized && typeof window !== 'undefined') {
-    listenersInitialized = true;
-
-    router.on('start', () => {
-        if (dismissTimer) clearTimeout(dismissTimer);
-        isLoading.value = true;
-    });
-
-    router.on('finish', () => {
-        dismiss(280);
-    });
-
-    router.on('error', () => {
-        if (dismissTimer) clearTimeout(dismissTimer);
-        isLoading.value = false;
-    });
-}
 </script>
 
 <script setup>
 import { onMounted } from 'vue';
 
 onMounted(() => {
-    // Sesi intro hanya dipicu 1x saat pertama kali membuka website (fresh visit/refresh).
-    // Saat berpindah halaman selanjutnya (navigasi Inertia), blok ini TIDAK dipicu lagi,
-    // sehingga mengatasi bug set loading muncul 2x.
+    // Sesi pembuka: Hanya aktif 1x saat pertama kali membuka website (fresh visit / reload).
+    // Saat berpindah ke halaman lain via link/menu navigasi, TIDAK ADA lagi loading screen yang dipicu.
     if (!hasInitialLoaded) {
         dismiss(1650);
+    } else {
+        isLoading.value = false;
     }
 });
 </script>
@@ -53,11 +35,11 @@ onMounted(() => {
     <Transition name="loading-fade">
         <div 
             v-if="isLoading" 
-            class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#02130b]/80 backdrop-blur-md select-none pointer-events-auto overflow-hidden transition-all duration-500"
+            class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#01140c] select-none pointer-events-auto overflow-hidden transition-all duration-500"
             role="status"
             aria-label="Memuat Almubarak Wisata"
         >
-            <!-- 1. Ambient Center Radial Glow (Halus, hangat, translusen & tidak pekat kaku) -->
+            <!-- 1. Ambient Center Radial Glow (Solid Dark Background dengan Pendaran Halus di Tengah) -->
             <div class="absolute w-[360px] sm:w-[500px] h-[360px] sm:h-[500px] rounded-full bg-[radial-gradient(circle,_rgba(0,255,136,0.18)_0%,_rgba(16,185,129,0.08)_40%,_transparent_70%)] blur-2xl pointer-events-none alm-ambient-pulse"></div>
 
             <!-- 2. Logo Almubarak Container (Ukuran proporsional sesuai referensi TenagaAhli ~130px) -->
