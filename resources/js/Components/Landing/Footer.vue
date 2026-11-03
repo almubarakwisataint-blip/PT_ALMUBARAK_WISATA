@@ -29,7 +29,7 @@ const scrollToTop = () => {
                 <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/40 sm:to-white/25"></div>
             </div>
 
-            <div class="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="relative z-10 max-w-[1120px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
                 <!-- Left Text Content -->
                 <div class="max-w-2xl text-center lg:text-left">
                     <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-[#005138] text-xs font-bold uppercase tracking-wider mb-4 shadow-xs">
@@ -64,7 +64,7 @@ const scrollToTop = () => {
         <!-- ==================================================================== -->
         <!-- SECTION 2: FOOTER BODY LENGKAP & BERSIH (DENGAN GELEMBUNG MENGAMBANG)-->
         <!-- ==================================================================== -->
-        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-14 pb-12 border-t border-emerald-900/40">
+        <div class="relative w-full overflow-hidden bg-[#002b1c] text-white pt-12 pb-10 border-t border-emerald-900/40">
             
             <!-- Gelembung-Gelembung Mengambang di Dalam Footer (Sesuai Permintaan User) -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -87,9 +87,9 @@ const scrollToTop = () => {
                 <span v-for="i in 36" :key="i" class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
             </div>
 
-            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- 4 Kolom Grid Tertata Rapi, Seimbang & Selaras -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-white/10 items-start">
+            <div class="relative z-10 max-w-[1120px] mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- 4 Kolom Grid Tertata Rapi, Seimbang & Selaras (Lebar Pas & Tidak Berjauhan) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 border-b border-white/10 items-start">
                     
                     <!-- ============================================================ -->
                     <!-- KOLOM 1 (4 cols): Brand, Lisensi, Partner & Bank             -->
@@ -377,7 +377,7 @@ const scrollToTop = () => {
                 </div>
 
                 <!-- Bottom Copyright Strip (Privasi jadi, Fungsional) -->
-                <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/75">
+                <div class="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/75">
                     <div>
                         © 2026 PT ALMUBARAK WISATA INTERNATIONAL. {{ t('footer_rights') }}
                     </div>
