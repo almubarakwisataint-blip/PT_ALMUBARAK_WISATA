@@ -107,24 +107,8 @@ const isLinkActive = (path) => {
                 </Link>
             </nav>
 
-            <!-- Actions: Hotline, Language Dropdown & Admin Login -->
+            <!-- Actions: Language Dropdown & Mobile Menu Trigger (Tombol Masuk dan CS Hotline Dihapus Sesuai Permintaan) -->
             <div class="flex items-center gap-2 sm:gap-2.5">
-                <!-- WhatsApp 24/7 Hotline Badge Pill (Desktop Only) -->
-                <a 
-                    href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20konsultasi%20paket%20ibadah"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hidden md:inline-flex items-center gap-2 h-9 px-3.5 rounded-full bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-200 text-emerald-950 transition-all shadow-2xs group cursor-pointer"
-                >
-                    <span class="relative flex h-2 w-2 shrink-0">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-                    </span>
-                    <span class="font-label-md text-xs font-bold tracking-tight text-emerald-900 group-hover:text-emerald-950 whitespace-nowrap">
-                        CS Hotline 24 Jam
-                    </span>
-                </a>
-
                 <!-- Custom Language Dropdown (ID / EN) dengan Bendera Asli SVG (Tanpa Bug ID ID) -->
                 <div class="relative" ref="langDropdownRef">
                     <button 
@@ -195,15 +179,6 @@ const isLinkActive = (path) => {
                         </button>
                     </div>
                 </div>
-
-                <!-- Admin Login Button (Desktop) -->
-                <a 
-                    href="/admin/login" 
-                    class="hidden sm:inline-flex items-center gap-1.5 h-9 px-4 rounded-full font-label-md text-xs text-white bg-[#005138] hover:bg-[#003d2a] transition-all shadow-2xs hover:shadow-xs font-bold cursor-pointer"
-                >
-                    <span class="material-symbols-outlined text-[16px]">lock</span>
-                    <span>{{ t('nav_login') }}</span>
-                </a>
 
                 <!-- Mobile Hamburger Button -->
                 <button 
@@ -386,25 +361,6 @@ const isLinkActive = (path) => {
                                 </button>
                             </div>
                         </div>
-
-                        <!-- WhatsApp Quick Hotline -->
-                        <a 
-                            href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20konsultasi%20paket%20ibadah"
-                            target="_blank"
-                            class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs transition border border-emerald-200/80 shadow-xs"
-                        >
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                            <span>WhatsApp Konsultasi Cepat</span>
-                        </a>
-
-                        <!-- Admin Login Pill Button -->
-                        <a 
-                            href="/admin/login" 
-                            class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#005138] hover:bg-[#003d2a] text-white font-bold text-xs tracking-wide transition shadow-sm"
-                        >
-                            <span class="material-symbols-outlined text-[18px]">lock</span>
-                            <span>{{ t('nav_login') }}</span>
-                        </a>
                     </div>
                 </div>
             </Transition>
