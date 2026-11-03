@@ -108,33 +108,53 @@ const isLinkActive = (path) => {
             </nav>
 
             <!-- Actions: Hotline, Language Dropdown & Admin Login -->
-            <div class="flex items-center gap-space-sm sm:gap-space-md">
+            <div class="flex items-center gap-2 sm:gap-2.5">
                 <!-- WhatsApp 24/7 Hotline Badge Pill (Desktop Only) -->
                 <a 
                     href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20konsultasi%20paket%20ibadah"
                     target="_blank"
-                    class="hidden md:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container border border-emerald-500/25 hover:border-emerald-500 text-[#005138] transition-all shadow-2xs group"
+                    rel="noopener noreferrer"
+                    class="hidden md:inline-flex items-center gap-2 h-9 px-3.5 rounded-full bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-200 text-emerald-950 transition-all shadow-2xs group cursor-pointer"
                 >
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="font-label-md text-xs font-bold tracking-tight">CS Hotline 24 Jam</span>
+                    <span class="relative flex h-2 w-2 shrink-0">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                    </span>
+                    <span class="font-label-md text-xs font-bold tracking-tight text-emerald-900 group-hover:text-emerald-950 whitespace-nowrap">
+                        CS Hotline 24 Jam
+                    </span>
                 </a>
 
-                <!-- Custom Language Dropdown (ID / EN) -->
+                <!-- Custom Language Dropdown (ID / EN) dengan Bendera Asli SVG (Tanpa Bug ID ID) -->
                 <div class="relative" ref="langDropdownRef">
                     <button 
                         @click="isLangDropdownOpen = !isLangDropdownOpen"
-                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-label-md text-xs font-bold transition-all shadow-xs cursor-pointer"
+                        class="flex items-center gap-1.5 h-9 px-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-label-md text-xs font-bold transition-all shadow-2xs cursor-pointer"
                         type="button"
+                        aria-label="Pilih Bahasa"
                     >
-                        <span class="text-sm">{{ locale === 'ID' ? '🇮🇩' : '🇬🇧' }}</span>
-                        <span>{{ locale }}</span>
+                        <!-- Flag SVG Asli (Resolusi Tajam Tanpa Glitch Karakter Emoji) -->
+                        <span class="w-4 h-3 rounded-[2px] overflow-hidden shadow-2xs shrink-0 flex items-center justify-center border border-black/10">
+                            <svg v-if="locale === 'ID'" class="w-full h-full" viewBox="0 0 640 480">
+                                <path fill="#e70011" d="M0 0h640v240H0z"/>
+                                <path fill="#ffffff" d="M0 240h640v240H0z"/>
+                            </svg>
+                            <svg v-else class="w-full h-full" viewBox="0 0 640 480">
+                                <path fill="#012169" d="M0 0h640v480H0z"/>
+                                <path fill="#fff" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                                <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-152-82L56 40V0L320 199h-48zM0 440l191-141h48L0 476v-36zm640-400-192 142h-49L640 4v36z"/>
+                                <path fill="#fff" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                                <path fill="#C8102E" d="M267 0v480h106V0H267zM0 187v106h640V187H0z"/>
+                            </svg>
+                        </span>
+                        <span class="text-xs font-bold text-gray-800">{{ locale }}</span>
                         <span class="material-symbols-outlined text-[16px] text-gray-400 transition-transform duration-200" :class="{ 'rotate-180': isLangDropdownOpen }">expand_more</span>
                     </button>
 
                     <!-- Language Options Menu -->
                     <div 
                         v-show="isLangDropdownOpen"
-                        class="absolute right-0 mt-2 w-36 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-50 transition-all"
+                        class="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-50 transition-all"
                     >
                         <button 
                             @click="selectLang('ID')"
@@ -142,9 +162,14 @@ const isLinkActive = (path) => {
                             class="w-full text-left px-3.5 py-2 text-xs flex items-center justify-between transition-colors cursor-pointer"
                             type="button"
                         >
-                            <span class="flex items-center gap-2">
-                                <span>🇮🇩</span>
-                                <span>Indonesia</span>
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-4 h-3 rounded-[2px] overflow-hidden shadow-2xs shrink-0 border border-black/10">
+                                    <svg class="w-full h-full" viewBox="0 0 640 480">
+                                        <path fill="#e70011" d="M0 0h640v240H0z"/>
+                                        <path fill="#ffffff" d="M0 240h640v240H0z"/>
+                                    </svg>
+                                </span>
+                                <span>Indonesia (ID)</span>
                             </span>
                             <span v-if="locale === 'ID'" class="material-symbols-outlined text-[16px] text-emerald-600">check</span>
                         </button>
@@ -154,9 +179,17 @@ const isLinkActive = (path) => {
                             class="w-full text-left px-3.5 py-2 text-xs flex items-center justify-between transition-colors cursor-pointer"
                             type="button"
                         >
-                            <span class="flex items-center gap-2">
-                                <span>🇬🇧</span>
-                                <span>English</span>
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-4 h-3 rounded-[2px] overflow-hidden shadow-2xs shrink-0 border border-black/10">
+                                    <svg class="w-full h-full" viewBox="0 0 640 480">
+                                        <path fill="#012169" d="M0 0h640v480H0z"/>
+                                        <path fill="#fff" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                                        <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-152-82L56 40V0L320 199h-48zM0 440l191-141h48L0 476v-36zm640-400-192 142h-49L640 4v36z"/>
+                                        <path fill="#fff" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                                        <path fill="#C8102E" d="M267 0v480h106V0H267zM0 187v106h640V187H0z"/>
+                                    </svg>
+                                </span>
+                                <span>English (EN)</span>
                             </span>
                             <span v-if="locale === 'EN'" class="material-symbols-outlined text-[16px] text-emerald-600">check</span>
                         </button>
@@ -166,9 +199,9 @@ const isLinkActive = (path) => {
                 <!-- Admin Login Button (Desktop) -->
                 <a 
                     href="/admin/login" 
-                    class="hidden sm:inline-flex items-center gap-space-xs px-space-lg py-2 rounded-full font-label-lg text-label-lg text-white bg-primary hover:bg-primary-container transition-all shadow-sm font-bold cursor-pointer"
+                    class="hidden sm:inline-flex items-center gap-1.5 h-9 px-4 rounded-full font-label-md text-xs text-white bg-[#005138] hover:bg-[#003d2a] transition-all shadow-2xs hover:shadow-xs font-bold cursor-pointer"
                 >
-                    <span class="material-symbols-outlined text-[18px]">lock</span>
+                    <span class="material-symbols-outlined text-[16px]">lock</span>
                     <span>{{ t('nav_login') }}</span>
                 </a>
 
@@ -179,7 +212,7 @@ const isLinkActive = (path) => {
                     type="button"
                     aria-label="Toggle Navigation"
                 >
-                    <span class="material-symbols-outlined text-[28px] text-gray-800">
+                    <span class="material-symbols-outlined text-[26px] text-gray-800">
                         {{ isMobileMenuOpen ? 'close' : 'menu' }}
                     </span>
                 </button>
@@ -314,28 +347,41 @@ const isLinkActive = (path) => {
                     <!-- Bagian Bawah Drawer: Switcher Bahasa, WhatsApp & Tombol Login Admin -->
                     <!-- Bersih tanpa kolom footer sesuai permintaan -->
                     <div class="pt-5 border-t border-gray-100 flex flex-col gap-3">
-                        <!-- Switcher Bahasa -->
+                        <!-- Switcher Bahasa dengan Bendera Asli SVG -->
                         <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50 border border-gray-100">
                             <span class="text-xs font-bold text-gray-500 pl-2">
                                 {{ locale === 'ID' ? 'Pilihan Bahasa:' : 'Language:' }}
                             </span>
-                            <div class="flex items-center gap-1">
+                            <div class="flex items-center gap-1.5">
                                 <button 
                                     @click="selectLang('ID')"
                                     :class="locale === 'ID' ? 'bg-[#005138] text-white shadow-xs' : 'bg-transparent text-gray-700 hover:bg-gray-200/60'"
-                                    class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                    class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
                                     type="button"
                                 >
-                                    <span>🇮🇩</span>
+                                    <span class="w-4 h-3 rounded-[2px] overflow-hidden shadow-2xs shrink-0 border border-black/10">
+                                        <svg class="w-full h-full" viewBox="0 0 640 480">
+                                            <path fill="#e70011" d="M0 0h640v240H0z"/>
+                                            <path fill="#ffffff" d="M0 240h640v240H0z"/>
+                                        </svg>
+                                    </span>
                                     <span>ID</span>
                                 </button>
                                 <button 
                                     @click="selectLang('EN')"
                                     :class="locale === 'EN' ? 'bg-[#005138] text-white shadow-xs' : 'bg-transparent text-gray-700 hover:bg-gray-200/60'"
-                                    class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                    class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
                                     type="button"
                                 >
-                                    <span>🇬🇧</span>
+                                    <span class="w-4 h-3 rounded-[2px] overflow-hidden shadow-2xs shrink-0 border border-black/10">
+                                        <svg class="w-full h-full" viewBox="0 0 640 480">
+                                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                                            <path fill="#fff" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                                            <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-152-82L56 40V0L320 199h-48zM0 440l191-141h48L0 476v-36zm640-400-192 142h-49L640 4v36z"/>
+                                            <path fill="#fff" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                                            <path fill="#C8102E" d="M267 0v480h106V0H267zM0 187v106h640V187H0z"/>
+                                        </svg>
+                                    </span>
                                     <span>EN</span>
                                 </button>
                             </div>
@@ -364,6 +410,94 @@ const isLinkActive = (path) => {
             </Transition>
         </Teleport>
     </header>
+
+    <!-- ============================================================== -->
+    <!-- FLOATING MOBILE BOTTOM NAVIGATION BAR (PERSIS GAYA SURADE.COM) -->
+    <!-- Dilengkapi tombol bulat mengambang "+ Konsultasi" di tengah     -->
+    <!-- ============================================================== -->
+    <nav 
+        class="fixed bottom-0 left-0 right-0 z-40 bg-white/98 backdrop-blur-lg border-t border-gray-200/90 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] lg:hidden"
+        role="navigation"
+        aria-label="Navigasi Bawah Mobile"
+    >
+        <div class="max-w-md mx-auto px-2 py-1.5 grid grid-cols-5 items-end justify-items-center relative">
+            
+            <!-- 1. Beranda -->
+            <Link 
+                href="/"
+                :class="isLinkActive('/') ? 'text-[#005138] font-bold' : 'text-gray-500 hover:text-gray-800 font-medium'"
+                class="flex flex-col items-center justify-center w-full py-1 text-center transition-colors group cursor-pointer"
+            >
+                <span class="material-symbols-outlined text-[23px] transition-transform group-active:scale-90" :class="isLinkActive('/') ? 'text-[#005138]' : 'text-gray-500'">
+                    home
+                </span>
+                <span class="text-[10px] tracking-tight mt-0.5 leading-none">
+                    {{ t('nav_home') }}
+                </span>
+                <span v-if="isLinkActive('/')" class="w-1.5 h-1.5 rounded-full bg-[#005138] mt-1"></span>
+            </Link>
+
+            <!-- 2. Paket Umrah -->
+            <a 
+                href="/#paket-pilihan"
+                class="flex flex-col items-center justify-center w-full py-1 text-center transition-colors text-gray-500 hover:text-gray-800 font-medium group cursor-pointer"
+            >
+                <span class="material-symbols-outlined text-[23px] text-gray-500 group-hover:text-[#005138] transition-transform group-active:scale-90">
+                    luggage
+                </span>
+                <span class="text-[10px] tracking-tight mt-0.5 leading-none">
+                    {{ locale === 'ID' ? 'Paket Umrah' : 'Umrah Tour' }}
+                </span>
+            </a>
+
+            <!-- 3. TOMBOL MENGAPUNG TENGAH: + Konsultasi (Elevated Center Button Sesuai Gambar 5 Surade.com) -->
+            <div class="relative -top-5 flex flex-col items-center">
+                <a 
+                    href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20konsultasi%20paket%20ibadah"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-13 h-13 rounded-full bg-gradient-to-tr from-[#005138] via-[#006e4c] to-[#008f63] text-white flex items-center justify-center shadow-[0_6px_20px_rgba(0,81,56,0.38)] border-[3.5px] border-white active:scale-95 transition-transform cursor-pointer group"
+                    aria-label="Konsultasi WhatsApp Cepat"
+                >
+                    <span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform duration-300">add</span>
+                </a>
+                <span class="text-[10px] font-bold text-[#005138] tracking-tight mt-1 leading-none whitespace-nowrap">
+                    + Konsultasi
+                </span>
+            </div>
+
+            <!-- 4. Berita -->
+            <Link 
+                href="/news"
+                :class="isLinkActive('/news') ? 'text-[#005138] font-bold' : 'text-gray-500 hover:text-gray-800 font-medium'"
+                class="flex flex-col items-center justify-center w-full py-1 text-center transition-colors group cursor-pointer"
+            >
+                <span class="material-symbols-outlined text-[23px] transition-transform group-active:scale-90" :class="isLinkActive('/news') ? 'text-[#005138]' : 'text-gray-500'">
+                    newspaper
+                </span>
+                <span class="text-[10px] tracking-tight mt-0.5 leading-none">
+                    {{ t('nav_news') }}
+                </span>
+                <span v-if="isLinkActive('/news')" class="w-1.5 h-1.5 rounded-full bg-[#005138] mt-1"></span>
+            </Link>
+
+            <!-- 5. Menu Drawer Trigger -->
+            <button 
+                @click="isMobileMenuOpen = true"
+                type="button"
+                class="flex flex-col items-center justify-center w-full py-1 text-center transition-colors text-gray-500 hover:text-gray-800 font-medium group cursor-pointer"
+                aria-label="Buka Menu Lengkap"
+            >
+                <span class="material-symbols-outlined text-[23px] text-gray-500 group-hover:text-[#005138] transition-transform group-active:scale-90">
+                    menu
+                </span>
+                <span class="text-[10px] tracking-tight mt-0.5 leading-none">
+                    Menu
+                </span>
+            </button>
+
+        </div>
+    </nav>
 </template>
 
 <style scoped>

@@ -13,7 +13,8 @@ const scrollToTop = () => {
 </script>
 
 <template>
-    <footer class="w-full">
+    <!-- Footer Khusus Desktop (Hidden pada Mobile Sesuai Permintaan: 'jangan pakai footer kalo menu mobile') -->
+    <footer class="hidden lg:block w-full">
         <!-- ==================================================================== -->
         <!-- SECTION 1: CTA BANNER (PUTIH & PESAWAT ALAMI)                        -->
         <!-- ==================================================================== -->

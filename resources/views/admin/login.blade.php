@@ -23,22 +23,22 @@
         <div class="relative lg:col-span-6 xl:col-span-7 flex flex-col justify-between p-8 sm:p-12 lg:p-16 text-white overflow-hidden min-h-[480px] lg:min-h-screen">
             <!-- 1. Background Foto Asli Mekah Masjidil Haram & Ka'bah -->
             <div 
-                class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+                class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105 filter brightness-100 contrast-105"
                 style="background-image: url('{{ asset('images/landing/hero-kaaba.jpg') }}');"
             ></div>
 
-            <!-- 2. Scrim Gradasi Hijau Zamrud Islami Mewah (Clean Tanpa Gelombang) -->
-            <div class="absolute inset-0 bg-gradient-to-br from-[#012617]/96 via-[#023823]/92 to-[#01140c]/98"></div>
+            <!-- 2. Scrim Gradasi Hijau Zamrud Islami Mewah (Transparan Halus agar Mekah & Ka'bah Terlihat Terang & Megah) -->
+            <div class="absolute inset-0 bg-gradient-to-br from-[#012617]/82 via-[#013320]/75 to-[#01140c]/88"></div>
 
             <!-- 3. Pendaran Cahaya Ambient Hijau Lembut -->
-            <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none"></div>
+            <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-emerald-500/25 blur-3xl pointer-events-none"></div>
 
-            <!-- Bagian Atas: Brand Logo Horizontal Resmi Almubarak (Gambar 2 User) -->
+            <!-- Bagian Atas: Brand Logo Horizontal Resmi Almubarak -->
             <div class="relative z-10 flex items-center">
                 <img 
                     src="{{ asset('images/logo-horizontal-white.png') }}" 
                     alt="ALMUBARAK WISATA INTERNASIONAL" 
-                    class="h-11 sm:h-12 w-auto object-contain filter drop-shadow-md"
+                    class="h-12 sm:h-14 w-auto object-contain filter drop-shadow-lg"
                 >
             </div>
 

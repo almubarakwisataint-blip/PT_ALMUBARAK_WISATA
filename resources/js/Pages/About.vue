@@ -23,11 +23,11 @@ const selectedAward = ref(null);
 
 const defaultTeams = [
     {
-        name: 'H. Ahmad Mubarak, Lc., M.A.',
+        name: 'H. Hendry Ferdiansyah, SE, MPar',
         positionId: 'Direktur Utama / CEO',
         positionEn: 'President Director / CEO',
-        descId: 'Alumni Universitas Islam Madinah dengan pengalaman lebih dari 15 tahun dalam bimbingan syar\'i dan manasik haji/umrah di Tanah Suci.',
-        descEn: 'Alumnus of Islamic University of Madinah with over 15 years experience in Sharia and pilgrimage ritual guidance.',
+        descId: 'Direktur Utama PT Almubarak Wisata Internasional dengan dedikasi lebih dari 15 tahun dalam manajemen bimbingan manasik, kepariwisataan halal internasional, dan pelayanan prima jamaah haji & umrah.',
+        descEn: 'President Director of PT Almubarak Wisata Internasional with over 15 years experience in pilgrimage hospitality and international travel management.',
         image: '/images/ceo-face.jpg',
         positionStyle: 'object-position: center;',
         phone: '6281260003484',

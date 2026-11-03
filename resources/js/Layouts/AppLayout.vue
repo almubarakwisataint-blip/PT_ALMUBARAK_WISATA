@@ -23,8 +23,8 @@ import LoadingScreen from '@/Components/Landing/LoadingScreen.vue';
         <!-- Sticky Header / Navbar -->
         <Navbar />
 
-        <!-- Main Content Area with top padding for navbar -->
-        <main class="w-full pt-20 bg-transparent relative z-10">
+        <!-- Main Content Area with top padding for navbar & bottom padding on mobile for floating bottom nav -->
+        <main class="w-full pt-20 pb-24 lg:pb-0 bg-transparent relative z-10">
             <slot />
         </main>
 
