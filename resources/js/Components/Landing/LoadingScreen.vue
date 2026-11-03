@@ -1,38 +1,51 @@
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+<script>
+import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 
+// Singleton State: Bersifat global di seluruh aplikasi (tidak ter-reset saat ganti halaman)
 const isLoading = ref(true);
-let finishTimeout = null;
-let initialTimer = null;
+let hasInitialLoaded = false;
+let dismissTimer = null;
+let listenersInitialized = false;
 
-const dismiss = (delay = 450) => {
-    if (finishTimeout) clearTimeout(finishTimeout);
-    finishTimeout = setTimeout(() => {
+function dismiss(delay = 300) {
+    if (dismissTimer) clearTimeout(dismissTimer);
+    dismissTimer = setTimeout(() => {
         isLoading.value = false;
+        hasInitialLoaded = true;
     }, delay);
-};
+}
 
-onMounted(() => {
-    // Sesi awal: Tampilkan animasi pembentukan logo secara smooth dan elegan
-    initialTimer = setTimeout(() => {
-        dismiss(300);
-    }, 1800);
+// Inisialisasi router listeners HANYA 1x di level aplikasi (mencegah duplicate listener)
+if (!listenersInitialized && typeof window !== 'undefined') {
+    listenersInitialized = true;
 
-    // Inertia page navigation hooks
     router.on('start', () => {
-        if (finishTimeout) clearTimeout(finishTimeout);
+        if (dismissTimer) clearTimeout(dismissTimer);
         isLoading.value = true;
     });
 
     router.on('finish', () => {
-        dismiss(400);
+        dismiss(280);
     });
-});
 
-onBeforeUnmount(() => {
-    if (initialTimer) clearTimeout(initialTimer);
-    if (finishTimeout) clearTimeout(finishTimeout);
+    router.on('error', () => {
+        if (dismissTimer) clearTimeout(dismissTimer);
+        isLoading.value = false;
+    });
+}
+</script>
+
+<script setup>
+import { onMounted } from 'vue';
+
+onMounted(() => {
+    // Sesi intro hanya dipicu 1x saat pertama kali membuka website (fresh visit/refresh).
+    // Saat berpindah halaman selanjutnya (navigasi Inertia), blok ini TIDAK dipicu lagi,
+    // sehingga mengatasi bug set loading muncul 2x.
+    if (!hasInitialLoaded) {
+        dismiss(1650);
+    }
 });
 </script>
 
@@ -90,7 +103,7 @@ onBeforeUnmount(() => {
 /* Transisi Kemunculan & Penutupan Seluruh Layar Loading */
 .loading-fade-enter-active,
 .loading-fade-leave-active {
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .loading-fade-enter-from,
