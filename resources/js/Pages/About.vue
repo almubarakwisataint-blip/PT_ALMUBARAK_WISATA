@@ -322,102 +322,157 @@ const contactMember = (member) => {
             </div>
         </section>
 
-        <!-- Company Profile & CEO Greeting Section -->
-        <section class="w-full py-12">
+        <!-- Company Profile Section (Penjelasan Komprehensif Almubarak, Bersih Tanpa Gambar Duplikat) -->
+        <section class="w-full py-14">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    <!-- Left: Company History & Mission Details -->
-                    <div class="lg:col-span-7 flex flex-col gap-6">
-                        <div>
-                            <span class="font-label-md text-xs text-secondary uppercase tracking-widest font-bold">
-                                {{ locale === 'ID' ? 'Profil Perusahaan' : 'Company Profile' }}
-                            </span>
-                            <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight mt-1">
-                                PT ALMUBARAK WISATA INTERNATIONAL
-                            </h2>
-                        </div>
-                        <p class="font-body-md text-base text-on-surface-variant leading-relaxed">
+                <div class="flex flex-col gap-10">
+                    <!-- Top Corporate Header & Overview -->
+                    <div class="max-w-4xl">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-secondary font-label-sm text-xs font-bold uppercase tracking-widest border border-emerald-200 mb-3">
+                            <span class="material-symbols-outlined text-[15px]">corporate_fare</span>
+                            {{ locale === 'ID' ? 'Profil Resmi Perusahaan' : 'Official Corporate Profile' }}
+                        </span>
+                        <h2 class="font-headline-lg text-3xl sm:text-4xl lg:text-5xl text-primary font-extrabold tracking-tight">
+                            PT ALMUBARAK WISATA INTERNATIONAL
+                        </h2>
+                        <p class="font-body-lg text-base sm:text-lg text-on-surface-variant mt-4 leading-relaxed">
                             <strong class="text-on-surface">PT ALMUBARAK WISATA INTERNATIONAL</strong>
                             {{ locale === 'ID' 
-                                ? ' adalah perusahaan travel terkemuka yang didirikan pada tanggal 15 Maret 2009 di Jakarta dan memiliki kantor operasional di Bogor. Sejak awal berdirinya, kami telah berkomitmen untuk menjadi spesialis dalam layanan perjalanan religi dan wisata halal, dengan visi memberikan pengalaman perjalanan yang berkesan, penuh berkah, dan sesuai dengan nilai-nilai syariat Islam.'
-                                : ' is a premier pilgrimage agency established on March 15, 2009 in Jakarta with operations in Bogor. Since our inception, we have been committed to excellence in Islamic travel, providing spiritually uplifting, secure, and blessed journeys adhering to authentic Islamic jurisprudence.'
+                                ? ' adalah biro perjalanan haji, umrah, dan wisata halal terkemuka berizin resmi Kementerian Agama Republik Indonesia (PPIU No. U.412 Tahun 2020 & PIHK Resmi). Didirikan pada tanggal 15 Maret 2009 di Jakarta dengan pusat operasional di Kota Bogor, Almubarak Wisata mendedikasikan diri untuk melayani para tamu Allah dengan prinsip kejujuran, kepastian, dan kemabruran sesuai sunnah Rasulullah ﷺ.'
+                                : ' is a premier licensed pilgrimage and halal travel agency accredited by the Ministry of Religious Affairs RI (PPIU No. U.412 Year 2020 & Official PIHK). Established on March 15, 2009 in Jakarta with main operations in Bogor, Almubarak Wisata is dedicated to serving the guests of Allah with utmost integrity, certainty, and spiritual excellence according to the authentic Sunnah.'
                             }}
                         </p>
-                        <p class="font-body-md text-base text-on-surface-variant leading-relaxed">
-                            {{ locale === 'ID'
-                                ? 'Kami telah melayani lebih dari 50.000 jamaah umroh dan haji, serta ribuan wisatawan muslim dari seluruh Indonesia dan mancanegara, membawa mereka ke Tanah Suci dan destinasi wisata halal dunia dengan hotel bintang lima yang strategis di pelataran ring 1, transportasi nyaman, serta pendampingan oleh tour leader dan muthawif berpengalaman lebih dari 15 tahun.'
-                                : 'We have served more than 50,000 Umrah and Hajj pilgrims as well as global travelers, providing 5-star ring 1 courtyard hotels, luxury transportation, and certified guidance from scholars with over 15 years of field experience.'
-                            }}
-                        </p>
+                    </div>
 
-                        <!-- Quick Navigation Buttons (Tim Kami & Penghargaan) -->
-                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-surface-container max-w-md">
-                            <!-- Button Tim Kami -->
-                            <button 
-                                @click="scrollTo('tim-kami')"
-                                class="p-4 rounded-2xl bg-surface-container-lowest hover:bg-surface-container border border-surface-container/70 shadow-xs hover:shadow-md transition-all text-center flex flex-col items-center gap-2 cursor-pointer group"
-                                type="button"
-                            >
-                                <div class="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-[28px]">groups</span>
+                    <!-- 4 Kartu Pilar Legalitas & Keunggulan Layanan -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Pilar 1: Legalitas Kemenag -->
+                        <div class="p-6 rounded-3xl bg-surface-container-lowest border border-surface-container shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-[#005138] flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-[26px]">verified</span>
                                 </div>
-                                <h4 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-primary transition-colors">
-                                    {{ locale === 'ID' ? 'Tim Kami' : 'Our Team' }}
-                                </h4>
-                                <p class="font-body-sm text-xs text-outline">{{ locale === 'ID' ? 'Profesional Berpengalaman' : 'Experienced Professionals' }}</p>
-                            </button>
+                                <h3 class="font-headline-sm text-base text-primary font-bold">
+                                    {{ locale === 'ID' ? 'Izin Resmi Kemenag RI' : 'Ministry Licensed' }}
+                                </h3>
+                                <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                                    {{ locale === 'ID' ? 'Memiliki izin PPIU No. U.412 Tahun 2020 & PIHK resmi, terdaftar aktif di SISKOPATUH serta e-Hajj Arab Saudi.' : 'Operating with official licenses PPIU No. U.412 & PIHK, verified active on SISKOPATUH & Saudi e-Hajj.' }}
+                                </p>
+                            </div>
+                            <span class="text-[11px] font-mono text-emerald-700 font-bold mt-4 pt-3 border-t border-surface-container block">
+                                SK No. U.412 / 2020
+                            </span>
+                        </div>
 
-                            <!-- Button Penghargaan -->
-                            <button 
-                                @click="scrollTo('penghargaan')"
-                                class="p-4 rounded-2xl bg-surface-container-lowest hover:bg-surface-container border border-surface-container/70 shadow-xs hover:shadow-md transition-all text-center flex flex-col items-center gap-2 cursor-pointer group"
-                                type="button"
-                            >
-                                <div class="w-14 h-14 rounded-full bg-secondary/10 text-secondary flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-[28px]">military_tech</span>
+                        <!-- Pilar 2: Akreditasi A & Organisasi -->
+                        <div class="p-6 rounded-3xl bg-surface-container-lowest border border-surface-container shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-[26px]">military_tech</span>
                                 </div>
-                                <h4 class="font-headline-sm text-base text-on-surface font-bold group-hover:text-secondary transition-colors">
-                                    {{ locale === 'ID' ? 'Penghargaan' : 'Awards' }}
-                                </h4>
-                                <p class="font-body-sm text-xs text-outline">{{ locale === 'ID' ? 'Prestasi Resmi' : 'Official Accolades' }}</p>
-                            </button>
+                                <h3 class="font-headline-sm text-base text-primary font-bold">
+                                    {{ locale === 'ID' ? 'Akreditasi A & Anggota ASITA' : 'Grade A Accreditation' }}
+                                </h3>
+                                <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                                    {{ locale === 'ID' ? 'Predikat Akreditasi A (Sangat Baik) Kemenag RI serta anggota resmi penuh ASITA & HIMPUH Indonesia.' : 'Accredited Grade A (Excellent) by Ministry of Religious Affairs and full certified member of ASITA & HIMPUH.' }}
+                                </p>
+                            </div>
+                            <span class="text-[11px] font-mono text-amber-800 font-bold mt-4 pt-3 border-t border-surface-container block">
+                                ASITA & HIMPUH Member
+                            </span>
+                        </div>
+
+                        <!-- Pilar 3: Fasilitas Hotel Ring 1 -->
+                        <div class="p-6 rounded-3xl bg-surface-container-lowest border border-surface-container shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-800 flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-[26px]">apartment</span>
+                                </div>
+                                <h3 class="font-headline-sm text-base text-primary font-bold">
+                                    {{ locale === 'ID' ? 'Hotel Bintang 5 Pelataran' : '5-Star Ring 1 Hotels' }}
+                                </h3>
+                                <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                                    {{ locale === 'ID' ? 'Akomodasi di pelataran ring 1 Masjidil Haram & Nabawi (Zamzam Tower, Pullman, Hilton) memudahkan jamaah beribadah.' : 'Strategic courtyard hotels near Masjidil Haram & Nabawi (Zamzam Tower, Pullman) providing effortless walking access.' }}
+                                </p>
+                            </div>
+                            <span class="text-[11px] font-mono text-blue-800 font-bold mt-4 pt-3 border-t border-surface-container block">
+                                Ring 1 Courtyard
+                            </span>
+                        </div>
+
+                        <!-- Pilar 4: Penerbangan Direct Saudia/Garuda -->
+                        <div class="p-6 rounded-3xl bg-surface-container-lowest border border-surface-container shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-[26px]">flight_takeoff</span>
+                                </div>
+                                <h3 class="font-headline-sm text-base text-primary font-bold">
+                                    {{ locale === 'ID' ? 'Penerbangan Direct Maskapai' : 'Direct Flights Guaranteed' }}
+                                </h3>
+                                <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                                    {{ locale === 'ID' ? 'Penerbangan direct tanpa transit Jakarta (CGK) - Jeddah/Madinah dengan Saudi Arabian Airlines & Garuda Indonesia.' : 'Direct flights without transit risks via Saudia & Garuda Indonesia, with confirmed PNR seat booking numbers.' }}
+                                </p>
+                            </div>
+                            <span class="text-[11px] font-mono text-teal-800 font-bold mt-4 pt-3 border-t border-surface-container block">
+                                Saudia & Garuda Partner
+                            </span>
                         </div>
                     </div>
 
-                    <!-- Right: CEO Card with Authentic images/ceo-face.jpg focused directly on face -->
-                    <div class="lg:col-span-5 flex flex-col items-center">
-                        <div class="relative w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl border border-surface-container bg-surface-container-lowest p-6 flex flex-col items-center text-center">
-                            <div class="w-52 h-52 rounded-2xl overflow-hidden shadow-lg mb-5 border-4 border-primary/20 bg-surface-container">
-                                <img 
-                                    src="/images/ceo-face.jpg" 
-                                    alt="Ahmad Mubarak - CEO" 
-                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                                    style="object-position: center;"
-                                />
-                            </div>
-                            <span class="px-3.5 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-xs font-bold uppercase tracking-widest mb-1">
-                                {{ locale === 'ID' ? 'Direktur Utama' : 'President Director' }}
-                            </span>
-                            <h3 class="font-headline-sm text-2xl text-on-surface font-extrabold mt-1">
-                                Ahmad Mubarak
-                            </h3>
-                            <p class="font-body-sm text-xs text-outline font-semibold">
-                                CEO - PT ALMUBARAK WISATA INTERNATIONAL
-                            </p>
-                            <p class="font-body-sm text-sm text-on-surface-variant mt-3 leading-relaxed italic">
-                                "{{ locale === 'ID' ? 'Komitmen kami adalah menghadirkan ketenangan, kepastian, dan kemabruran dalam setiap detak langkah ibadah Anda ke Baitullah.' : 'Our commitment is to bring peace of mind, certainty, and an accepted pilgrimage (mabrur) at every step of your journey to Baitullah.' }}"
-                            </p>
-                            <div class="w-full mt-5 pt-4 border-t border-surface-container">
-                                <a 
-                                    href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Pak%20Ahmad%20Mubarak,%20saya%20ingin%20bertanya%20terkait%20layanan%20PT%20Almubarak%20Wisata" 
-                                    target="_blank"
-                                    class="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm"
-                                >
-                                    <span class="material-symbols-outlined text-[16px]">chat</span>
-                                    <span>{{ locale === 'ID' ? 'Hubungi Direktur' : 'Contact Director' }}</span>
-                                </a>
-                            </div>
+                    <!-- Rekam Jejak Angka & Quick Action Navigation -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-3xl bg-gradient-to-r from-emerald-950 via-[#003827] to-emerald-900 text-white shadow-xl">
+                        <div class="text-center p-3">
+                            <span class="block text-2xl sm:text-3xl font-extrabold font-mono text-amber-400">15+</span>
+                            <span class="text-xs text-emerald-200 font-semibold mt-1 block">{{ locale === 'ID' ? 'Tahun Pengabdian' : 'Years Dedicated' }}</span>
                         </div>
+                        <div class="text-center p-3 border-l border-white/10">
+                            <span class="block text-2xl sm:text-3xl font-extrabold font-mono text-amber-400">50.000+</span>
+                            <span class="text-xs text-emerald-200 font-semibold mt-1 block">{{ locale === 'ID' ? 'Jamaah Diberangkatkan' : 'Pilgrims Served' }}</span>
+                        </div>
+                        <div class="text-center p-3 border-l border-white/10">
+                            <span class="block text-2xl sm:text-3xl font-extrabold font-mono text-amber-400">Akreditasi A</span>
+                            <span class="text-xs text-emerald-200 font-semibold mt-1 block">{{ locale === 'ID' ? 'Predikat Kemenag RI' : 'Accredited Grade A' }}</span>
+                        </div>
+                        <div class="text-center p-3 border-l border-white/10">
+                            <span class="block text-2xl sm:text-3xl font-extrabold font-mono text-amber-400">100%</span>
+                            <span class="text-xs text-emerald-200 font-semibold mt-1 block">{{ locale === 'ID' ? 'Garansi 5 Pasti Umrah' : 'Departure Certainty' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Navigation Buttons (Tim Kami & Penghargaan & Konsultasi) -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <!-- Button Tim Kami -->
+                        <button 
+                            @click="scrollTo('tim-kami')"
+                            class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-surface-container-lowest hover:bg-surface-container border border-surface-container shadow-xs hover:shadow-md transition-all text-primary font-bold text-xs cursor-pointer group"
+                            type="button"
+                        >
+                            <span class="material-symbols-outlined text-[18px] text-secondary">groups</span>
+                            <span>{{ locale === 'ID' ? 'Lihat Struktur Tim Profesional Kami' : 'View Our Professional Team' }}</span>
+                            <span class="material-symbols-outlined text-[16px] group-hover:translate-y-0.5 transition-transform">arrow_downward</span>
+                        </button>
+
+                        <!-- Button Penghargaan -->
+                        <button 
+                            @click="scrollTo('penghargaan')"
+                            class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-surface-container-lowest hover:bg-surface-container border border-surface-container shadow-xs hover:shadow-md transition-all text-primary font-bold text-xs cursor-pointer group"
+                            type="button"
+                        >
+                            <span class="material-symbols-outlined text-[18px] text-amber-600">military_tech</span>
+                            <span>{{ locale === 'ID' ? 'Lihat Bukti Sertifikasi & Penghargaan' : 'View Accreditations & Proof' }}</span>
+                            <span class="material-symbols-outlined text-[16px] group-hover:translate-y-0.5 transition-transform">arrow_downward</span>
+                        </button>
+
+                        <!-- Button Konsultasi WA -->
+                        <a 
+                            href="https://wa.me/6281260003484?text=Assalamu%27alaikum%20Almubarak%20Wisata,%20saya%20ingin%20berkonsultasi%20mengenai%20profil%20dan%20layanan%20resmi%20perusahaan"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs shadow-md hover:scale-105 transition-all ml-auto"
+                        >
+                            <span class="material-symbols-outlined text-[18px]">chat</span>
+                            <span>{{ locale === 'ID' ? 'Konsultasi Layanan Resmi via WA' : 'Consult via WhatsApp' }}</span>
+                        </a>
                     </div>
                 </div>
             </div>

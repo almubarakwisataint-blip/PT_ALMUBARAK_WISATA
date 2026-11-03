@@ -25,15 +25,18 @@ const handleSearch = () => {
             <div class="absolute inset-0 z-0">
                 <div 
                     class="w-full h-full bg-cover bg-center transition-transform duration-700 scale-100 hover:scale-105"
-                    style="background-image: url('/images/landing/hero-kaaba.jpg'); filter: brightness(0.72) contrast(1.05);"
+                    style="background-image: url('/images/landing/hero-kaaba.jpg'); filter: brightness(0.62) contrast(1.02);"
                 ></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/80"></div>
+                <!-- Scrim Gelap Merata & Halus: Menghilangkan bayangan menara yang memotong/melewat di dalam teks -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85 backdrop-blur-[0.5px]"></div>
+                <!-- Soft Radial Scrim agar kontras teks selalu bersih dan konsisten -->
+                <div class="absolute inset-0 bg-radial from-black/40 via-transparent to-black/60 pointer-events-none"></div>
             </div>
 
             <!-- Center Hero Content Area -->
             <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center mt-6 md:mt-10 w-full">
-                <!-- Main Title -->
-                <h1 class="font-headline-xl text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.15] text-white font-extrabold tracking-tight drop-shadow-md">
+                <!-- Main Title: Teks Bersih, Elegan & Kontras Tinggi Tanpa Bayangan Melewat -->
+                <h1 class="font-headline-xl text-[36px] sm:text-[46px] lg:text-[56px] leading-[1.15] text-white font-extrabold tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
                     {{ locale === 'ID' ? 'Temukan Perjalanan Ibadah & Umrah Terpercaya' : 'Discover Trusted Pilgrimage & Sacred Journeys' }}
                 </h1>
 

@@ -55,7 +55,7 @@ const translations = {
 
         // CTA Banner
         cta_badge: 'BANTUAN & INFORMASI HAJI & UMRAH RESMI',
-        cta_title: 'Masih Bingung Menentukan Jadwal & Pilihan Paket?',
+        cta_title: 'Masih Bingung Menentukan Pilihan Paket?',
         cta_desc: 'Tim kami siap membantu menghitung estimasi biaya, pemilihan tipe kamar (Double/Triple/Quad), dan pengurusan paspor & vaksinasi secara komprehensif.',
         cta_btn_wa: 'Chat WhatsApp',
 
@@ -162,7 +162,7 @@ const translations = {
 
         // CTA Banner
         cta_badge: 'OFFICIAL HAJJ & UMRAH GUIDANCE & SUPPORT',
-        cta_title: 'Still Deciding on Your Schedule & Package?',
+        cta_title: 'Still Undecided on Your Package Choice?',
         cta_desc: 'Our customer support team is ready to calculate estimated costs, assist with room selections (Double/Triple/Quad), and guide your passports & vaccinations.',
         cta_btn_wa: 'Chat WhatsApp',
 

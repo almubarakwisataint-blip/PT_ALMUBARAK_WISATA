@@ -205,22 +205,35 @@ const promoCards = computed(() => {
     }));
 });
 
-// Auto-scroll & Drag interaktif 60fps untuk kartu promo (otomatis meluncur halus & responsif digerakkan)
+// Auto-scroll & Drag interaktif 60fps untuk kartu promo (otomatis meluncur halus, bisa digerakkan & diam saat dipencet)
 const isDragging = ref(false);
+const isPaused = ref(false);
+const isHovered = ref(false);
 let startX = 0;
 let startScrollLeft = 0;
 let rafId = null;
 let lastTimestamp = 0;
 let currentScroll = 0;
 let isUserInteracting = false;
-const speed = 0.07; // pixels per ms (~70px/sec, pergerakan halus mantap tanpa lag)
+let dragMoved = false;
+const speed = 0.07; // pixels per ms (~70px/sec)
+
+const togglePause = () => {
+    isPaused.value = !isPaused.value;
+    if (!isPaused.value) {
+        lastTimestamp = 0;
+        if (scrollContainer.value) {
+            currentScroll = scrollContainer.value.scrollLeft;
+        }
+    }
+};
 
 const autoScrollLoop = (timestamp) => {
     if (!lastTimestamp) lastTimestamp = timestamp;
     const elapsed = Math.min(timestamp - lastTimestamp, 50);
     lastTimestamp = timestamp;
 
-    if (scrollContainer.value && !isDragging.value && !isUserInteracting) {
+    if (scrollContainer.value && !isDragging.value && !isUserInteracting && !isPaused.value && !isHovered.value) {
         currentScroll += speed * elapsed;
         const segmentWidth = scrollContainer.value.scrollWidth / 3;
         if (segmentWidth > 0 && currentScroll >= segmentWidth * 2) {
@@ -250,6 +263,7 @@ const stopPromoContinuousScroll = () => {
 const startDrag = (e) => {
     isDragging.value = true;
     isUserInteracting = true;
+    dragMoved = false;
     startX = e.pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
     currentScroll = startScrollLeft;
@@ -257,8 +271,11 @@ const startDrag = (e) => {
 
 const onDrag = (e) => {
     if (!isDragging.value || !scrollContainer.value) return;
-    e.preventDefault();
     const x = e.pageX - scrollContainer.value.offsetLeft;
+    if (Math.abs(x - startX) > 4) {
+        dragMoved = true;
+    }
+    e.preventDefault();
     const walk = (x - startX);
     currentScroll = startScrollLeft - walk;
     scrollContainer.value.scrollLeft = currentScroll;
@@ -275,8 +292,16 @@ const stopDrag = () => {
     }
 };
 
+const handleContainerClick = () => {
+    // Jika diklik/dipencet tanpa drag, kartu berhenti diam ("diem")
+    if (!dragMoved) {
+        togglePause();
+    }
+};
+
 const onTouchStart = (e) => {
     isUserInteracting = true;
+    dragMoved = false;
     startX = e.touches[0].pageX - (scrollContainer.value ? scrollContainer.value.offsetLeft : 0);
     startScrollLeft = scrollContainer.value ? scrollContainer.value.scrollLeft : 0;
     currentScroll = startScrollLeft;
@@ -285,6 +310,9 @@ const onTouchStart = (e) => {
 const onTouchMove = (e) => {
     if (!scrollContainer.value) return;
     const x = e.touches[0].pageX - scrollContainer.value.offsetLeft;
+    if (Math.abs(x - startX) > 4) {
+        dragMoved = true;
+    }
     const walk = (x - startX);
     currentScroll = startScrollLeft - walk;
     scrollContainer.value.scrollLeft = currentScroll;
@@ -295,6 +323,9 @@ const onTouchEnd = () => {
     lastTimestamp = 0;
     if (scrollContainer.value) {
         currentScroll = scrollContainer.value.scrollLeft;
+    }
+    if (!dragMoved) {
+        isPaused.value = true;
     }
 };
 
@@ -511,19 +542,38 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- ================================================================ -->
-        <!-- 2. KATALOG PROMO TIKET KUPON (OTOMATIS JALAN & BISA DIGERAKIN SENDIRI) -->
+        <!-- 2. KATALOG PROMO TIKET KUPON (OTOMATIS JALAN & BERHENTI DIAM SAAT DIPENCET) -->
         <!-- ================================================================ -->
         <div class="relative w-full overflow-hidden py-1">
-            <!-- Scroll Container (Bisa digerakkan bebas & jalan otomatis terus-menerus) -->
+            <!-- Header Kontrol Jeda / Jalankan (Sesuai Permintaan: Saat dipencet kartu berhenti diam) -->
+            <div class="flex items-center justify-between px-1 mb-2">
+                <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full" :class="isPaused ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500 animate-ping'"></span>
+                    <span>{{ isPaused ? (locale === 'ID' ? 'Katalog Dijeda (Klik lagi untuk melanjutkan)' : 'Promo Paused (Click to resume)') : (locale === 'ID' ? 'Katalog Promo Berjalan (Klik / Sentuh untuk jeda)' : 'Promo Carousel Gliding (Click to pause)') }}</span>
+                </span>
+                <button 
+                    @click.stop="togglePause" 
+                    type="button"
+                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border shadow-xs cursor-pointer"
+                    :class="isPaused ? 'bg-amber-500 text-white border-amber-600 hover:bg-amber-600' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'"
+                >
+                    <span class="material-symbols-outlined text-[15px]">{{ isPaused ? 'play_arrow' : 'pause' }}</span>
+                    <span>{{ isPaused ? (locale === 'ID' ? 'Jalankan' : 'Play') : (locale === 'ID' ? 'Jeda' : 'Pause') }}</span>
+                </button>
+            </div>
+
+            <!-- Scroll Container (Bisa digerakkan bebas & diam saat dipencet) -->
             <div 
                 ref="scrollContainer"
                 @mousedown="startDrag"
                 @mousemove="onDrag"
                 @mouseup="stopDrag"
-                @mouseleave="stopDrag"
+                @mouseleave="stopDrag(); isHovered = false"
+                @mouseenter="isHovered = true"
                 @touchstart="onTouchStart"
                 @touchmove="onTouchMove"
                 @touchend="onTouchEnd"
+                @click="handleContainerClick"
                 class="flex gap-5 overflow-x-auto pb-4 pt-1 px-1 select-none cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                 <div 
