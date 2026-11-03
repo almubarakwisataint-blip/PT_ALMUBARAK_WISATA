@@ -27,36 +27,22 @@
                 style="background-image: url('{{ asset('images/landing/hero-kaaba.jpg') }}');"
             ></div>
 
-            <!-- 2. Scrim Gradasi Hijau Zamrud Islami Mewah (TenagaAhli Style) -->
+            <!-- 2. Scrim Gradasi Hijau Zamrud Islami Mewah (Clean Tanpa Gelombang) -->
             <div class="absolute inset-0 bg-gradient-to-br from-[#012617]/96 via-[#023823]/92 to-[#01140c]/98"></div>
 
-            <!-- 3. Elemen Garis Gelombang Anggun (TenagaAhli Wavy Line Pattern) -->
-            <svg class="absolute inset-0 w-full h-full opacity-15 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-                <path d="M0,250 C300,180 600,320 1000,220 L1000,1000 L0,1000 Z" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-300" />
-                <path d="M0,450 C350,380 650,520 1000,420" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-200" />
-                <path d="M0,650 C280,580 720,720 1000,620" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-200" />
-                <path d="M0,850 C320,780 680,920 1000,820" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-200" />
-            </svg>
-
-            <!-- 4. Pendaran Cahaya Ambient Hijau -->
+            <!-- 3. Pendaran Cahaya Ambient Hijau Lembut -->
             <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none"></div>
 
-            <!-- Bagian Atas: Brand Logo & Identitas Resmi -->
-            <div class="relative z-10 flex items-center gap-3.5">
-                <div class="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-2 flex items-center justify-center shadow-lg">
-                    <img src="{{ asset('images/logo.png') }}" alt="Almubarak Wisata" class="w-full h-full object-contain">
-                </div>
-                <div>
-                    <span class="text-2xl font-black tracking-tight text-white flex items-center gap-1">
-                        Almubarak<span class="text-emerald-400">.com</span>
-                    </span>
-                    <span class="block text-[11px] font-bold text-emerald-200/90 tracking-widest uppercase">
-                        Haji Khusus & Umrah Premium
-                    </span>
-                </div>
+            <!-- Bagian Atas: Brand Logo Horizontal Resmi Almubarak (Gambar 2 User) -->
+            <div class="relative z-10 flex items-center">
+                <img 
+                    src="{{ asset('images/logo-horizontal-white.png') }}" 
+                    alt="ALMUBARAK WISATA INTERNASIONAL" 
+                    class="h-11 sm:h-12 w-auto object-contain filter drop-shadow-md"
+                >
             </div>
 
-            <!-- Bagian Tengah: Headline Utama & 3 Poin Keunggulan (Persis TenagaAhli) -->
+            <!-- Bagian Tengah: Headline Utama & 3 Poin Keunggulan -->
             <div class="relative z-10 my-10 lg:my-0 max-w-xl">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold mb-4 backdrop-blur-xs">
                     <span class="material-symbols-outlined text-[15px]">verified_user</span>
@@ -110,17 +96,18 @@
         </div>
 
         <!-- ============================================================== -->
-        <!-- KOLOM KANAN (SESUAI GAMBAR 2): FORM LOGIN MINIMALIS & BERSIH   -->
+        <!-- KOLOM KANAN: FORM LOGIN BERSIH DENGAN LOGO RESMI (GAMBAR 2)   -->
         <!-- ============================================================== -->
         <div class="lg:col-span-6 xl:col-span-5 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-12 bg-white relative">
             <div class="max-w-md w-full mx-auto">
                 
-                <!-- Logo & Judul Form -->
+                <!-- Logo Horizontal Resmi & Judul Form -->
                 <div class="mb-8">
-                    <div class="inline-flex items-center gap-2 mb-3">
-                        <img src="{{ asset('images/logo.png') }}" alt="Almubarak Wisata" class="h-10 w-auto">
-                        <span class="text-lg font-black text-gray-900 tracking-tight">Almubarak<span class="text-emerald-600">.com</span></span>
-                    </div>
+                    <img 
+                        src="{{ asset('images/logo-horizontal.png') }}" 
+                        alt="ALMUBARAK WISATA INTERNASIONAL" 
+                        class="h-10 sm:h-12 w-auto object-contain mb-4"
+                    >
                     <h2 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
                         Masuk
                     </h2>
@@ -165,16 +152,11 @@
                         </div>
                     </div>
 
-                    <!-- Input Password dengan Toggle Lihat Password (Mata) -->
+                    <!-- Input Password dengan Toggle Lihat Password (Tanpa Lupa Password Sesuai Permintaan) -->
                     <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label for="password" class="block text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                KATA SANDI
-                            </label>
-                            <a href="https://wa.me/6281260003484?text=Halo%20Admin%20Almubarak,%20saya%20lupa%20kata%20sandi%20panel%20admin" target="_blank" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 transition">
-                                Lupa Password?
-                            </a>
-                        </div>
+                        <label for="password" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">
+                            KATA SANDI
+                        </label>
                         <div class="relative">
                             <input 
                                 type="password" 

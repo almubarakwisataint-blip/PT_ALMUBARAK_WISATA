@@ -21,16 +21,20 @@ const handleSearch = () => {
     <!-- HERO SECTION: Matching reference layout -->
     <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
         <div class="relative w-full rounded-[32px] md:rounded-[40px] overflow-hidden min-h-[580px] lg:min-h-[640px] flex flex-col justify-between items-center text-center p-6 sm:p-10 lg:p-14 shadow-2xl border border-surface-container">
-            <!-- Background image with authentic Kaaba view + subtle dark gradient scrim -->
-            <div class="absolute inset-0 z-0">
-                <div 
-                    class="w-full h-full bg-cover bg-center transition-transform duration-700 scale-100 hover:scale-105"
-                    style="background-image: url('/images/landing/hero-kaaba.jpg'); filter: brightness(0.62) contrast(1.02);"
-                ></div>
-                <!-- Scrim Gelap Merata & Halus: Menghilangkan bayangan menara yang memotong/melewat di dalam teks -->
-                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85 backdrop-blur-[0.5px]"></div>
-                <!-- Soft Radial Scrim agar kontras teks selalu bersih dan konsisten -->
-                <div class="absolute inset-0 bg-radial from-black/40 via-transparent to-black/60 pointer-events-none"></div>
+            <!-- Background Video Ka'bah & Masjidil Haram dengan Scrim Elegan -->
+            <div class="absolute inset-0 z-0 overflow-hidden">
+                <video 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline 
+                    class="w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.05]"
+                >
+                    <source src="/videos/hero-kaaba.mp4" type="video/mp4">
+                </video>
+                <!-- Scrim Gelap Merata & Halus: Menjaga kontras teks selalu bersih dan tajam -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/80"></div>
+                <div class="absolute inset-0 bg-radial from-black/30 via-transparent to-black/60 pointer-events-none"></div>
             </div>
 
             <!-- Center Hero Content Area -->
@@ -45,8 +49,8 @@ const handleSearch = () => {
                     {{ locale === 'ID' ? 'Platform resmi bimbingan umrah & haji khusus berizin Kemenag RI di Indonesia.' : 'Official platform for verified Umrah and VIP Hajj accredited by the Ministry of Religious Affairs.' }}
                 </p>
 
-                <!-- Accent Highlight Text -->
-                <p class="text-[#fbbd23] font-label-lg text-[15px] sm:text-[17px] font-bold mt-2 tracking-wide drop-shadow">
+                <!-- Accent Highlight Text: Warna Emerald Resmi Almubarak (Bukan Kream) -->
+                <p class="text-emerald-400 font-label-lg text-[15px] sm:text-[17px] font-bold mt-2 tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                     {{ locale === 'ID' ? 'Wujudkan keberangkatan & kuota Anda di almubarak.com' : 'Secure your seat and pilgrimage quota at almubarak.com' }}
                 </p>
 
